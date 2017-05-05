@@ -9,13 +9,19 @@ const minimize = process.argv.indexOf('--minimize') !== -1;
 
 module.exports = {
     // 页面入口文件配置
-    entry: path.resolve(__dirname + '/views/js/index.js'),
+    entry: {
+        index:path.resolve(__dirname + '/views/js/index.js'),
+        signin:path.resolve(__dirname + '/views/js/signin.js'),
+    },
     // 入口文件输出配置
     output: {
         path: path.resolve(__dirname + '/src/main/resources/static'),
         filename: '[name].bundle.js'
     },
     module: {
+        // avoid webpack trying to shim process
+        noParse: /es6-promise\.js$/,
+
         // 加载器配置
         loaders: [
             {
@@ -40,11 +46,9 @@ module.exports = {
         plugins: ['transform-runtime']
     },
     resolve: {
-        root: path.join(__dirname, 'node_modules'),
         alias: {
-            components: '../../components' // 组件别名,js里引用路径可直接 'components/xxx/yyy'
-        },
-        extensions: ['', '.js', '.vue', '.scss', '.css']
+            'vue$': 'vue/dist/vue.common.js'
+        }
     },
 
 

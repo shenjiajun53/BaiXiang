@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>白相</title>
+
+    <script th:src="@{https://unpkg.com/vue/dist/vue.js}"></script>
+
+    <link rel="stylesheet" type="text/css" th:href="@{http://unpkg.com/iview/dist/styles/iview.css}"/>
+    <script type="text/javascript" th:src="@{http://vuejs.org/js/vue.min.js}"></script>
+    <script type="text/javascript" th:src="@{http://unpkg.com/iview/dist/iview.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{https://unpkg.com/vue/dist/vue.js}"></script>
+    <!-- 引入组件库 -->
+    <script type="text/javascript" th:src="@{https://unpkg.com/element-ui/lib/index.js}"></script>
 </head>
 <body>
+<div th:replace="layout/header::header"></div>
 
 <h1>home page</h1>
 
 <div id="app">
-    {{ message }}
+    <p v-if="show">
+        {{ message }}
+    </p>
+    <el-button v-on:click="toggleShow">button</el-button>
+
 </div>
 
 <script type="text/javascript" th:src="@{/index.bundle.js}"></script>

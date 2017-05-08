@@ -3,11 +3,58 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+
 </head>
 <body>
+<style>
+    .topBar {
+
+    }
+
+    .topItem {
+
+    }
+
+</style>
+
 
 <div th:fragment="header">
-    <H1>Header!</H1>
+    <el-card style="background-color: #757575">
+        <div class="topBar"
+             style="color: white;
+        background-color: #E91E63;
+        padding: 5px;
+        width: 800px;
+        height: 48px;
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+align-items: center">
+            <el-button class="topItem" style="flex: 1;font-size: large;">
+                首页
+            </el-button>
+            <div class="topItem" style="flex: 1;font-size: large;">
+                动画
+            </div>
+            <div class="topItem" style="flex: 1;font-size: large;">
+                美剧
+            </div>
+            <div class="topItem" style="flex: 1;font-size: large;">
+                登录
+            </div>
+        </div>
+    </el-card>
 </div>
+
+
 </body>
+
+
 </html>

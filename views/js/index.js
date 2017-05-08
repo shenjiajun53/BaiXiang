@@ -5,10 +5,10 @@ import Vue from "vue";
 // import jouery from "jquery";
 // import bootstrap from "bootstrap";
 import 'iview/dist/styles/iview.css';    // 使用 CSS
-import iView from "iview"
+import ElementUI from 'element-ui'
 
 
-Vue.use(iView);
+Vue.use(ElementUI);
 
 let app = new Vue({
     el: '#app',

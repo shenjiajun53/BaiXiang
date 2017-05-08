@@ -4,9 +4,11 @@
     <meta charset="UTF-8"/>
     <title>白相</title>
 
-    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css"/>
-    <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
-    <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
@@ -17,28 +19,29 @@
     <p v-if="show">
         {{ message }}
     </p>
-    <i-button v-on:click="toggleShow">button</i-button>
+    <el-button v-on:click="toggleShow">button</el-button>
 
 </div>
 
 <div id="app2">
-    <i-button @click="show">Click me!</i-button>
-    <Modal v-model="visible" title="Welcome">欢迎使用 iView</Modal>
+    <el-button @click="visible = true">按钮</el-button>
+    <el-dialog v-model="visible" title="Hello world">
+        <p>欢迎使用 Element</p>
+    </el-dialog>
 </div>
+
+</body>
+
+
 <script>
     new Vue({
         el: '#app2',
-        data: {
-            visible: false
-        },
-        methods: {
-            show: function () {
-                this.visible = true;
-            }
+        data: function() {
+            return { visible: false }
         }
     })
 </script>
 
 <script type="text/javascript" th:src="@{/index.bundle.js}"></script>
-</body>
+
 </html>

@@ -10,8 +10,8 @@ const minimize = process.argv.indexOf('--minimize') !== -1;
 module.exports = {
     // 页面入口文件配置
     entry: {
-        index:path.resolve(__dirname + '/views/js/index.js'),
-        signin:path.resolve(__dirname + '/views/js/signin.js'),
+        index: path.resolve(__dirname + '/views/js/index.js'),
+        signin: path.resolve(__dirname + '/views/js/signin.js'),
     },
     // 入口文件输出配置
     output: {
@@ -38,6 +38,17 @@ module.exports = {
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+                loader: 'file-loader'
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
+                loader: 'file-loader',
+                query: {
+                    name: '[name].[ext]?[hash]'
+                }
             }
         ]
     },
@@ -54,18 +65,18 @@ module.exports = {
 
     // 插件项
     plugins: minimize ? [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false,
-                },
-                output: {
-                    comments: false,
-                },
-            }),
-            new webpack.DefinePlugin({
-                'process.env': {
-                    NODE_ENV: JSON.stringify('production')
-                }
-            }),
-        ] : []
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+            output: {
+                comments: false,
+            },
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+    ] : []
 };

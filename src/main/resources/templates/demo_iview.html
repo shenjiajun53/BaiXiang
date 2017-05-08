@@ -1,33 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <title>白相</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 
-    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css"/>
+    <link rel="stylesheet" type="text/css" href="http://unpkg.com/iview/dist/styles/iview.css">
     <script type="text/javascript" src="http://vuejs.org/js/vue.min.js"></script>
     <script type="text/javascript" src="http://unpkg.com/iview/dist/iview.min.js"></script>
 </head>
 <body>
-<div th:replace="layout/header::header"></div>
-
-<h1>home page</h1>
-
 <div id="app">
-    <p v-if="show">
-        {{ message }}
-    </p>
-    <i-button v-on:click="toggleShow">button</i-button>
-
-</div>
-
-<div id="app2">
     <i-button @click="show">Click me!</i-button>
     <Modal v-model="visible" title="Welcome">欢迎使用 iView</Modal>
 </div>
 <script>
     new Vue({
-        el: '#app2',
+        el: '#app',
         data: {
             visible: false
         },
@@ -38,7 +26,5 @@
         }
     })
 </script>
-
-<script type="text/javascript" th:src="@{/index.bundle.js}"></script>
 </body>
 </html>

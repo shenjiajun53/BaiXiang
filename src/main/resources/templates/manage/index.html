@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>白相</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div th:replace="layout/manage_header::header"></div>
+
+<div id="films">
+    <el-button v-on:click="toEditFilm">添加影片</el-button>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: "#header",
+        data: {
+            text: "123"
+        }
+    })
+
+    new Vue({
+        el: "#films",
+        methods: {
+            toEditFilm: function () {
+                console.log("onclick");
+                window.location.pathname = "/manage/edit_film"
+            }
+        }
+    })
+</script>
+
+</html>

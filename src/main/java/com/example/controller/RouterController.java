@@ -13,14 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class RouterController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("/index");
+        ModelAndView modelAndView = new ModelAndView("/service/index");
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/SignIn")
     public ModelAndView signIn() {
-        ModelAndView modelAndView = new ModelAndView("/signin");
+        ModelAndView modelAndView = new ModelAndView("/service/signin");
 
         return modelAndView;
     }

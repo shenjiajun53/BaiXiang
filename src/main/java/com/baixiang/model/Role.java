@@ -1,4 +1,4 @@
-package com.example.model;
+package com.baixiang.model;
 
 /**
  * Created by shenjj on 2017/5/9.

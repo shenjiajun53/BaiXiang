@@ -16,21 +16,28 @@
 <div id="edit_film">
     <h1>上传图片</h1>
 
-    <el-upload
-            action="https://jsonplaceholder.typicode.com/posts/"
-            list-type="picture-card"
-            :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
-        <i class="el-icon-plus"></i>
-    </el-upload>
-    <el-dialog v-model="dialogVisible" size="tiny">
-        <img width="100%" :src="dialogImageUrl" alt="">
-    </el-dialog>
+    <input type="file"
+           multiple="multiple"
+           accept="image/*"
+           ref="uploadInput"
+           name="uploadInput"
+           v-on:change="avatarSelected"
+    />
+
+    <el-input
+            type="textarea"
+            :rows="10"
+            placeholder="请输入电影介绍"
+            v-model="filmInfo">
+    </el-input>
+
+    <el-button @click="submit">提交</el-button>
 </div>
 
 </body>
 
 <script>
+    var file;
     new Vue({
         el: "#header",
     });
@@ -40,16 +47,47 @@
         data() {
             return {
                 dialogImageUrl: '',
-                dialogVisible: false
+                dialogVisible: false,
+                filmInfo: ""
             };
         },
         methods: {
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
+            avatarSelected(event) {
+                // console.info("event=" + uploadInput.files.length);
+                file = this.$refs.uploadInput.files[0];
+                console.info("file=" + file.name);
+                // let objectURL = window.URL.createObjectURL(file);
+                // console.info("event=" + objectURL);
+                // window.URL.revokeObjectURL(objectURL);
             },
-            handlePictureCardPreview(file) {
-                this.dialogImageUrl = file.url;
-                this.dialogVisible = true;
+            submit(){
+                console.log("onSubmit");
+                let formData = new FormData();
+                formData.append('poster', file);
+                formData.append('filmInfo', this.filmInfo);
+
+                let url = "/manage/edit_film";
+                fetch(url, {
+                    method: "post",
+                    // body: data,
+                    body: formData,
+                    headers: {
+                        // 'Content-Type': 'multipart/form-data'
+                        // 'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    credentials: 'include'     //很重要，设置session,cookie可用
+                }).then(
+                    (response) => {
+                        return response.json();
+                    }
+                ).then(
+                    (json) => {
+                        console.log(JSON.stringify(json));
+                    }
+                ).catch(
+                    (ex) => {
+                        console.error('parsing failed', ex);
+                    });
             }
         }
     })

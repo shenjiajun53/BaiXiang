@@ -1,5 +1,6 @@
-package com.example.controller;
+package com.baixiang.controller;
 
+import com.baixiang.model.User;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ public class RouterController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
-
+        modelAndView.addObject("user", new User("shenjiajun", "123"));
         return modelAndView;
     }
 

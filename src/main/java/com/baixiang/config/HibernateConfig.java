@@ -4,12 +4,16 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.hibernate.cfg.AvailableSettings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -18,7 +22,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource(value = { "classpath:application.properties" })
 public class HibernateConfig {
+
+    @Autowired
+    private Environment environment;
 
     @Value("${jdbc.driver}")
     private String DB_DRIVER;
@@ -59,11 +67,21 @@ public class HibernateConfig {
         LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
         sessionFactoryBean.setDataSource(dataSource());
         sessionFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
+
         Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
-        hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
-        hibernateProperties.put("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
+        hibernateProperties.put(AvailableSettings.DIALECT, HIBERNATE_DIALECT);
+        hibernateProperties.put(AvailableSettings.SHOW_SQL, HIBERNATE_SHOW_SQL);
+        hibernateProperties.put(AvailableSettings.HBM2DDL_AUTO, HIBERNATE_HBM2DDL_AUTO);
+
+        hibernateProperties.put(AvailableSettings.STATEMENT_BATCH_SIZE, environment.getRequiredProperty("hibernate.batch.size"));
+        hibernateProperties.put(AvailableSettings.CURRENT_SESSION_CONTEXT_CLASS, environment.getRequiredProperty("hibernate.current.session.context.class"));
+
         sessionFactoryBean.setHibernateProperties(hibernateProperties);
+
+
+//        MetadataSources metadataSources = new MetadataSources();
+//        metadataSources.addAnnotatedClass(Movie.class);
+//        sessionFactoryBean.setMetadataSources(metadataSources);
 
         return sessionFactoryBean;
     }

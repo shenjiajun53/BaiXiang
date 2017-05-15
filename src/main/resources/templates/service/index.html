@@ -28,10 +28,7 @@
 </div>
 
 <div id="app2">
-    <el-button @click="visible = true">按钮</el-button>
-    <el-dialog v-model="visible" title="Hello world">
-        <p>欢迎使用 Element</p>
-    </el-dialog>
+    <el-button @click="toManage">去管理页</el-button>
 </div>
 
 </body>
@@ -51,6 +48,12 @@
         el: '#app2',
         data: function () {
             return {visible: false}
+        },
+        methods: {
+            toManage: function () {
+                console.log("onclick");
+                window.location.pathname = "/manage"
+            }
         }
     })
 </script>

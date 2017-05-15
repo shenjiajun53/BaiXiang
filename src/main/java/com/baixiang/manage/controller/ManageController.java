@@ -1,7 +1,6 @@
 package com.baixiang.manage.controller;
 
-import com.baixiang.dao.MovieDao;
-import com.baixiang.model.MovieBean;
+import com.baixiang.model.Movie;
 import com.baixiang.repository.MovieRepository;
 import com.baixiang.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by shenjj on 2017/5/9.
@@ -29,6 +29,9 @@ public class ManageController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
 
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        System.out.printf("movie=" + movieArrayList.size());
+        modelAndView.addObject("movieList", movieArrayList);
         return modelAndView;
     }
 
@@ -46,7 +49,7 @@ public class ManageController {
 
         System.out.printf("filename=" + poster.getOriginalFilename());
 
-        MovieBean movieBean = new MovieBean(filmInfo, filmInfo);
+        Movie movie = new Movie(filmInfo, filmInfo);
 
         if (!poster.isEmpty()) {
             try {
@@ -57,13 +60,13 @@ public class ManageController {
                 String fileName = System.currentTimeMillis() + "-" + poster.getOriginalFilename();
                 File file = new File(staticPath + filePath + fileName);
                 poster.transferTo(file);
-                movieBean.setPoster(filePath + fileName);
+                movie.setPoster(filePath + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        movieRepository.save(movieBean);
+        movieRepository.save(movie);
 
         return modelAndView;
     }

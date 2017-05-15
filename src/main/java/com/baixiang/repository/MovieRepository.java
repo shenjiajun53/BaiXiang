@@ -1,6 +1,6 @@
 package com.baixiang.repository;
 
-import com.baixiang.model.MovieBean;
+import com.baixiang.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +24,26 @@ public class MovieRepository {
         return sessionFactory.getCurrentSession();
     }
 
-    public void save(MovieBean movie) {
+    public void save(Movie movie) {
         getSession().save(movie);
         return;
     }
 
-    public void delete(MovieBean movie) {
+    public void delete(Movie movie) {
         getSession().delete(movie);
         return;
     }
 
     @SuppressWarnings("unchecked")
-    public List<MovieBean> getAll() {
+    public List<Movie> getAll() {
         return getSession().createQuery("from Movie").list();
     }
 
-    public MovieBean getById(long id) {
-        return (MovieBean) getSession().load(MovieBean.class, id);
+    public Movie getById(long id) {
+        return (Movie) getSession().load(Movie.class, id);
     }
 
-    public void update(MovieBean movie) {
+    public void update(Movie movie) {
         getSession().update(movie);
         return;
     }

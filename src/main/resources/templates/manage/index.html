@@ -13,6 +13,10 @@
 <body>
 <div th:replace="layout/manage_header::header"></div>
 
+<div th:each="movie :${movieList}">
+    <div th:text="${movie.filmName}"></div>
+</div>
+
 <div id="films">
     <el-button v-on:click="toEditFilm">添加影片</el-button>
 </div>

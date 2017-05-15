@@ -2,26 +2,30 @@ package com.baixiang.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by shenjj on 2017/5/12.
  */
 
 @Entity
-@Table(name = "Movie")
-public class MovieBean {
+@Table(name = "movies")
+public class Movie {
 
     @Id
-    @GeneratedValue
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String filmName;
     private String filmInfo;
     private String poster;
     private String screenShot;
 
-    public MovieBean(String filmName, String filmInfo) {
+    public Movie() {
+    }
+
+    public Movie(String filmName, String filmInfo) {
         this.filmName = filmName;
         this.filmInfo = filmInfo;
     }
@@ -64,5 +68,16 @@ public class MovieBean {
 
     public void setScreenShot(String screenShot) {
         this.screenShot = screenShot;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", filmName='" + filmName + '\'' +
+                ", filmInfo='" + filmInfo + '\'' +
+                ", poster='" + poster + '\'' +
+                ", screenShot='" + screenShot + '\'' +
+                '}';
     }
 }

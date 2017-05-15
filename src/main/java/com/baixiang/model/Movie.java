@@ -17,17 +17,17 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String filmName;
-    private String filmInfo;
+    private String movieName;
+    private String movieInfo;
     private String poster;
     private String screenShot;
 
     public Movie() {
     }
 
-    public Movie(String filmName, String filmInfo) {
-        this.filmName = filmName;
-        this.filmInfo = filmInfo;
+    public Movie(String movieName, String movieInfo) {
+        this.movieName = movieName;
+        this.movieInfo = movieInfo;
     }
 
     public long getId() {
@@ -38,20 +38,24 @@ public class Movie {
         this.id = id;
     }
 
-    public String getFilmName() {
-        return filmName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setFilmName(String filmName) {
-        this.filmName = filmName;
+    public String getMovieName() {
+        return movieName;
     }
 
-    public String getFilmInfo() {
-        return filmInfo;
+    public void setMovieName(String movieName) {
+        this.movieName = movieName;
     }
 
-    public void setFilmInfo(String filmInfo) {
-        this.filmInfo = filmInfo;
+    public String getMovieInfo() {
+        return movieInfo;
+    }
+
+    public void setMovieInfo(String movieInfo) {
+        this.movieInfo = movieInfo;
     }
 
     public String getPoster() {
@@ -74,8 +78,8 @@ public class Movie {
     public String toString() {
         return "Movie{" +
                 "id=" + id +
-                ", filmName='" + filmName + '\'' +
-                ", filmInfo='" + filmInfo + '\'' +
+                ", movieName='" + movieName + '\'' +
+                ", movieInfo='" + movieInfo + '\'' +
                 ", poster='" + poster + '\'' +
                 ", screenShot='" + screenShot + '\'' +
                 '}';

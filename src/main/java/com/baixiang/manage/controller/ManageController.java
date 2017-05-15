@@ -35,26 +35,26 @@ public class ManageController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/manage/edit_film", method = RequestMethod.GET)
+    @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.GET)
     public ModelAndView editFilm() {
-        ModelAndView modelAndView = new ModelAndView("/manage/edit_film");
+        ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/manage/edit_film", method = RequestMethod.POST)
-    public ModelAndView postFilm(@RequestParam(value = "filmInfo") String filmInfo,
+    @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.POST)
+    public ModelAndView postMovie(@RequestParam(value = "movieInfo") String movieInfo,
                                  @RequestParam("poster") MultipartFile poster) {
-        ModelAndView modelAndView = new ModelAndView("/manage/edit_film");
+        ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
 
         System.out.printf("filename=" + poster.getOriginalFilename());
 
-        Movie movie = new Movie(filmInfo, filmInfo);
+        Movie movie = new Movie(movieInfo, movieInfo);
 
         if (!poster.isEmpty()) {
             try {
                 String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
-                String filePath = "/files/film/posters/";
+                String filePath = "/files/movie/posters/";
                 FileUtil.createOrExistsDir(staticPath + filePath);
 
                 String fileName = System.currentTimeMillis() + "-" + poster.getOriginalFilename();

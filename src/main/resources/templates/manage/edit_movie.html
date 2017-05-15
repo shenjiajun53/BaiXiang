@@ -28,7 +28,7 @@
             type="textarea"
             :rows="10"
             placeholder="请输入电影介绍"
-            v-model="filmInfo">
+            v-model="movieInfo">
     </el-input>
 
     <el-button @click="submit">提交</el-button>
@@ -48,7 +48,7 @@
             return {
                 dialogImageUrl: '',
                 dialogVisible: false,
-                filmInfo: ""
+                movieInfo: ""
             };
         },
         methods: {
@@ -64,9 +64,9 @@
                 console.log("onSubmit");
                 let formData = new FormData();
                 formData.append('poster', file);
-                formData.append('filmInfo', this.filmInfo);
+                formData.append('movieInfo', this.movieInfo);
 
-                let url = "/manage/edit_film";
+                let url = "/manage/edit_movie";
                 fetch(url, {
                     method: "post",
                     // body: data,

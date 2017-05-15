@@ -13,11 +13,19 @@
 <body>
 <div th:replace="layout/manage_header::header"></div>
 
-<div th:each="movie :${movieList}">
-    <div th:text="${movie.filmName}"></div>
-</div>
 
-<div id="films">
+<div id="films" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
+    <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
+        <div th:each="movie :${movieList}"
+             style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
+            <el-card :body-style="{ padding: '0px' }" style="width: 200px">
+                <a th:href="${'/edit_movie?movieId='+movie.id}">
+                    <img th:src="${movie.poster}" style="height: 150px"/>
+                </a>
+                <div th:text="${movie.movieName}"></div>
+            </el-card>
+        </div>
+    </div>
     <el-button v-on:click="toEditFilm">添加影片</el-button>
 </div>
 </body>
@@ -35,7 +43,7 @@
         methods: {
             toEditFilm: function () {
                 console.log("onclick");
-                window.location.pathname = "/manage/edit_film"
+                window.location.pathname = "/manage/edit_movie"
             }
         }
     })

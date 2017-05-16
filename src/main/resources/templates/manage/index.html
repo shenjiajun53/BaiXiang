@@ -9,6 +9,19 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <style>
+
+        .topBar {
+
+        }
+
+        .topItem:hover {
+            color: #BDBDBD;
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 <body>
 <div th:replace="layout/manage_header::header"></div>
@@ -31,12 +44,7 @@
 </body>
 
 <script>
-    new Vue({
-        el: "#header",
-        data: {
-            text: "123"
-        }
-    })
+
 
     new Vue({
         el: "#films",
@@ -48,5 +56,5 @@
         }
     })
 </script>
-
+<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
 </html>

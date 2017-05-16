@@ -30,7 +30,6 @@ public class ManageController {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
 
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
-        System.out.printf("movie=" + movieArrayList.size());
         modelAndView.addObject("movieList", movieArrayList);
         return modelAndView;
     }
@@ -44,7 +43,7 @@ public class ManageController {
 
     @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.POST)
     public ModelAndView postMovie(@RequestParam(value = "movieInfo") String movieInfo,
-                                 @RequestParam("poster") MultipartFile poster) {
+                                  @RequestParam("poster") MultipartFile poster) {
         ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
 
         System.out.printf("filename=" + poster.getOriginalFilename());

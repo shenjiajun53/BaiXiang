@@ -13,39 +13,35 @@
 <body>
 <div th:replace="layout/header::header"></div>
 
-<h1>home page</h1>
-
-<div th:object="${user}">123</div>
-
-</div>
-
-<div id="app">
-    <p v-if="show">
-        {{ message }}
-    </p>
-    <el-button v-on:click="toggleShow">button</el-button>
-
-</div>
-
-<div id="app2">
+<div id="films" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
+    <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
+        <div th:each="movie :${movieList}"
+             style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
+            <el-card :body-style="{ padding: '0px' }" style="width: 200px">
+                <a th:href="${'/edit_movie?movieId='+movie.id}">
+                    <img th:src="${movie.poster}" style="height: 150px"/>
+                </a>
+                <div th:text="${movie.movieName}"></div>
+            </el-card>
+        </div>
+    </div>
     <el-button @click="toManage">去管理页</el-button>
+</div>
+
 </div>
 
 </body>
 
 <script>
     new Vue({
-        el: "#header",
-        data: {
-            text: "123"
-        }
+        el: "#header"
     })
 </script>
 
 
 <script>
     new Vue({
-        el: '#app2',
+        el: '#films',
         data: function () {
             return {visible: false}
         },

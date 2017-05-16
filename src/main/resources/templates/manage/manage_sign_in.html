@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>白相</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <style>
+
+        .topBar {
+
+        }
+
+        .topItem:hover {
+            color: #BDBDBD;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="layout/manage_header::header"></div>
+</body>
+<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+</html>

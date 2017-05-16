@@ -1,4 +1,4 @@
-package com.baixiang.controller;
+package com.baixiang.service.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

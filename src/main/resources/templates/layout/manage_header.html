@@ -6,35 +6,35 @@
 
 </head>
 <body>
-<style>
-    .topBar {
-
-    }
-
-    .topItem {
-
-    }
-
-</style>
-
 
 <div th:fragment="header" id="header">
+
     <el-card
             style="background-color: #E91E63;  height: 48px; display: flex;flex-direction: row;align-items: center">
         <div class="topBar"
              style="color: white;padding: 5px;width: 800px;flex: 1;display: flex;flex-direction: row;">
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
-                电影
-            </el-button>
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
+            <div class="topItem" style="flex: 1;font-size: large;">
+                <a>
+                    电影</a>
+            </div>
+            <div class="topItem" style="flex: 1;font-size: large;">
                 用户
-            </el-button>
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
+            </div>
+            <div class="topItem" style="flex: 1;font-size: large;">
                 登录
-            </el-button>
+            </div>
+
+            <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link" style="flex: 1;font-size: large;color: #FFFFFF">
+                    用户<i class="el-icon-caret-bottom el-icon--right"></i>
+                 </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="login"><a href="/manage/sign_in">登录</a></el-dropdown-item>
+                    <el-dropdown-item command="signUp"><a href="/manage/sign_up">注册</a></el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
     </el-card>
-
 
 </div>
 </body>

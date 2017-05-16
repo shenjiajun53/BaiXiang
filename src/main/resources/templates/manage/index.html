@@ -10,24 +10,13 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
-    <style>
 
-        .topBar {
-
-        }
-
-        .topItem:hover {
-            color: #BDBDBD;
-            cursor: pointer;
-        }
-
-    </style>
 </head>
 <body>
 <div th:replace="layout/manage_header::header"></div>
 
 
-<div id="films" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
+<div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
     <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
         <div th:each="movie :${movieList}"
              style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
@@ -44,10 +33,8 @@
 </body>
 
 <script>
-
-
     new Vue({
-        el: "#films",
+        el: "#container",
         methods: {
             toEditFilm: function () {
                 console.log("onclick");
@@ -57,4 +44,5 @@
     })
 </script>
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+<link rel="stylesheet" th:href="@{/css/manage_header.css}">
 </html>

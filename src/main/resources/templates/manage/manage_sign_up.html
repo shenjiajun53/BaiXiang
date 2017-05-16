@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="">
 <head>
     <meta charset="UTF-8"/>
     <title>白相</title>
@@ -9,22 +9,73 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
-
-    <style>
-
-        .topBar {
-
-        }
-
-        .topItem:hover {
-            color: #BDBDBD;
-            cursor: pointer;
-        }
-
-    </style>
 </head>
 <body>
 <div th:replace="layout/manage_header::header"></div>
+
+<div id="container" style="display: flex; flex-direction: column;align-items: center">
+    <el-card style="margin-top: 20px;">
+        <div style="padding: 16px;display: flex;flex-direction: column">
+            <div>用户名*</div>
+            <el-input v-model="name_str" placeholder="请输入用户名"></el-input>
+            <div>
+                密码*
+            </div>
+            <el-input v-model="pass_str" placeholder="请输入密码"></el-input>
+            <div>
+                重复密码*
+            </div>
+            <el-input v-model="passConfirm" placeholder="请输入密码"></el-input>
+
+            <div>性别*</div>
+            <select v-model="sex">
+                <option>男</option>
+                <option>女</option>
+                <option>保密</option>
+            </select>
+
+            <div>个人介绍*</div>
+            <el-input
+                    type="textarea"
+                    :autosize="{ minRows: 2, maxRows: 7}"
+                    placeholder="请输入内容"
+                    v-model="textarea3">
+            </el-input>
+        </div>
+    </el-card>
+
+</div>
+
+
 </body>
+
+<script>
+    new Vue({
+        el: "#container",
+        data: {
+            sex: "男"
+        },
+        methods: {
+            sexOnClick: function (id) {
+                console.log("command=" + id);
+                switch (id) {
+                    case 0:
+                        this.sex = "保密";
+                        break;
+                    case 1:
+                        this.sex = "男";
+                        break;
+                    case 2:
+                        this.sex = "女";
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    })
+</script>
+
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+<link rel="stylesheet" th:href="@{/css/manage_header.css}">
 </html>

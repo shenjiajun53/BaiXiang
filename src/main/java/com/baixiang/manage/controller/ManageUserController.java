@@ -38,6 +38,12 @@ public class ManageUserController {
         ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_in");
         return modelAndView;
     }
+    
+    @RequestMapping(value = "/manage/sign_in")
+    public void signIn(@RequestParam(value = "userName")String userName,
+                       @RequestParam(value = "pass")String pass){
+        
+    }
 
     @RequestMapping(value = "/manage/sign_up", method = RequestMethod.POST)
     public Response<BaseBean> signUp(@RequestParam(value = "userName") String userName,

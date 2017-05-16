@@ -13,9 +13,72 @@
 <body>
 <div th:replace="layout/manage_header::header"></div>
 
+<div id="container" style="display: flex; flex-direction: column;align-items: center">
+    <el-card style="margin-top: 20px;">
+        <div style="padding: 16px;display: flex;flex-direction: column">
+            <div style="margin-bottom: 0.5em">用户名*</div>
+            <el-input v-model="nameStr" placeholder="请输入用户名" style="margin-bottom: 1em"></el-input>
+            <div style="margin-bottom: 0.5em">
+                密码*
+            </div>
+            <el-input v-model="passStr" placeholder="请输入密码" style="margin-bottom: 1em"></el-input>
+            <el-button type="primary" style="margin-bottom: 1em" @click="onSubmit">登录</el-button>
+        </div>
+    </el-card>
 
+</div>
 
 </body>
+<script>
+    new Vue({
+        el: "#container",
+        data: {
+            nameStr: "",
+            passStr: "",
+        },
+        methods: {
+            onSubmit(){
+                let formData = new FormData();
+                formData.append('userName', this.nameStr);
+                formData.append('pass', this.passStr);
+                let url = "/manage/sign_in";
+                fetch(url, {
+                    method: "post",
+                    // body: data,
+                    body: formData,
+                    headers: {
+                        // 'Content-Type': 'multipart/form-data'
+                        // 'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    credentials: 'include'     //很重要，设置session,cookie可用
+                }).then(
+                    (response) => {
+                        return response.json();
+                    }
+                ).then(
+                    (json) => {
+                        console.log(JSON.stringify(json));
+                        if (json.result) {
+                            let result = json.result;
+                            if (result.status == 1) {
+//                                this.onSignIn();
+                            }
+                        } else if (json.error) {
+                            this.setState({
+                                nameError: json.error.errorMsg
+                            })
+                        }
+                    }
+                ).catch(
+                    (ex) => {
+                        console.error('parsing failed', ex);
+                    });
+            }
+        }
+    })
+</script>
+
+
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
 <link rel="stylesheet" th:href="@{/css/manage_header.css}">
 </html>

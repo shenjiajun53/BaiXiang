@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind="">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:v-bind=""
+      xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>白相</title>
@@ -16,31 +17,47 @@
 <div id="container" style="display: flex; flex-direction: column;align-items: center">
     <el-card style="margin-top: 20px;">
         <div style="padding: 16px;display: flex;flex-direction: column">
-            <div>用户名*</div>
-            <el-input v-model="name_str" placeholder="请输入用户名"></el-input>
-            <div>
+            <div style="margin-bottom: 0.5em">用户名*</div>
+            <el-input v-model="nameStr" placeholder="请输入用户名" style="margin-bottom: 1em"></el-input>
+            <div style="margin-bottom: 0.5em">
                 密码*
             </div>
-            <el-input v-model="pass_str" placeholder="请输入密码"></el-input>
-            <div>
+            <el-input v-model="passStr" placeholder="请输入密码" style="margin-bottom: 1em"></el-input>
+            <div style="margin-bottom: 0.5em">
                 重复密码*
             </div>
-            <el-input v-model="passConfirm" placeholder="请输入密码"></el-input>
+            <el-input v-model="passConfirmStr" placeholder="请输入密码" style="margin-bottom: 1em"></el-input>
 
-            <div>性别*</div>
-            <select v-model="sex">
+
+            <div style="margin-bottom: 0.5em">
+                头像*
+            </div>
+            <input type="file"
+                   multiple="multiple"
+                   accept="image/*"
+                   ref="avatarInput"
+                   name="avatarInput"
+                   style="margin-bottom: 1em"
+                   v-on:change="avatarSelected"
+            />
+
+            <div style="margin-bottom: 0.5em">性别*</div>
+            <select v-model="sex" style="margin-bottom: 1em">
                 <option>男</option>
                 <option>女</option>
                 <option>保密</option>
             </select>
 
-            <div>个人介绍*</div>
+            <div style="margin-bottom: 0.5em">个人介绍*</div>
             <el-input
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 7}"
                     placeholder="请输入内容"
-                    v-model="textarea3">
+                    v-model="userIntroStr"
+                    style="margin-bottom: 1em">
             </el-input>
+
+            <el-button type="primary" style="margin-bottom: 1em" @click="onSubmit">注册</el-button>
         </div>
     </el-card>
 
@@ -50,27 +67,64 @@
 </body>
 
 <script>
+    var file;
     new Vue({
         el: "#container",
         data: {
-            sex: "男"
+            sex: "男",
+            nameStr: "",
+            passStr: "",
+            passConfirmStr: "",
+            userIntroStr: "",
         },
         methods: {
-            sexOnClick: function (id) {
-                console.log("command=" + id);
-                switch (id) {
-                    case 0:
-                        this.sex = "保密";
-                        break;
-                    case 1:
-                        this.sex = "男";
-                        break;
-                    case 2:
-                        this.sex = "女";
-                        break;
-                    default:
-                        break;
-                }
+            avatarSelected(event) {
+                // console.info("event=" + uploadInput.files.length);
+                file = this.$refs.avatarInput.files[0];
+                console.info("file=" + file.name);
+                // let objectURL = window.URL.createObjectURL(file);
+                // console.info("event=" + objectURL);
+                // window.URL.revokeObjectURL(objectURL);
+            },
+            onSubmit(){
+                let formData = new FormData();
+                formData.append('avatar', file);
+                formData.append('userName', this.nameStr);
+                formData.append('pass', this.passStr);
+                formData.append('userIntro', this.userIntroStr);
+                formData.append('sex', this.sex);
+                let url = "/manage/sign_up";
+                fetch(url, {
+                    method: "post",
+                    // body: data,
+                    body: formData,
+                    headers: {
+                        // 'Content-Type': 'multipart/form-data'
+                        // 'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    credentials: 'include'     //很重要，设置session,cookie可用
+                }).then(
+                    (response) => {
+                        return response.json();
+                    }
+                ).then(
+                    (json) => {
+                        console.log(JSON.stringify(json));
+                        if (json.result) {
+                            let result=json.result;
+                            if (result.status==1) {
+//                                this.onSignIn();
+                            }
+                        }else if(json.error){
+                            this.setState({
+                                nameError: json.error.errorMsg
+                            })
+                        }
+                    }
+                ).catch(
+                    (ex) => {
+                        console.error('parsing failed', ex);
+                    });
             }
         }
     })

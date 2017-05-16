@@ -6,8 +6,9 @@
 let header=new Vue({
     el: "#header",
     methods: {
-        handleCommand(command) {
-            this.$message('click on item ' + command);
+        reLocation(herf){
+            // this.$message('click on item ' + herf);
+            window.location.pathname=herf;
         }
     }
 });

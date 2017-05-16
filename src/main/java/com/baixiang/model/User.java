@@ -1,41 +1,42 @@
 package com.baixiang.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.persistence.*;
 
 /**
  * Created by shenjiajun on 2017/4/3.
  */
 
-@Document(collection = "User")
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-
-    @Indexed(unique = true,dropDups = true)
     private String userName;
     private String pass;
     private String avatarPath;
     private String userIntro;
+    private String sex;
 
-    private Set<Role> roles = new HashSet<Role>();
+
+
+    public User() {
+    }
 
     public User(String userName, String pass) {
         this.userName = userName;
         this.pass = pass;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,12 +72,12 @@ public class User {
         this.userIntro = userIntro;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getSex() {
+        return sex;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     @Override
@@ -87,43 +88,7 @@ public class User {
                 ", pass='" + pass + '\'' +
                 ", avatarPath='" + avatarPath + '\'' +
                 ", userIntro='" + userIntro + '\'' +
+                ", sex='" + sex + '\'' +
                 '}';
     }
-
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-//        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-//        return grantedAuthorities;
-//    }
-//
-//    @Override
-//    public String getPassword() {
-//        return pass;
-//    }
-//
-//    @Override
-//    public String getUsername() {
-//        return userName;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
 }

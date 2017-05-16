@@ -21,7 +21,7 @@
            accept="image/*"
            ref="uploadInput"
            name="uploadInput"
-           v-on:change="avatarSelected"
+           v-on:change="posterSelected"
     />
 
     <el-input
@@ -52,7 +52,7 @@
             };
         },
         methods: {
-            avatarSelected(event) {
+            posterSelected(event) {
                 // console.info("event=" + uploadInput.files.length);
                 file = this.$refs.uploadInput.files[0];
                 console.info("file=" + file.name);

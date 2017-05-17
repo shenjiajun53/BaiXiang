@@ -116,9 +116,7 @@
 //                                this.onSignIn();
                             }
                         }else if(json.error){
-                            this.setState({
-                                nameError: json.error.errorMsg
-                            })
+                            this.$message.error(json.error.errorMsg);
                         }
                     }
                 ).catch(

@@ -1,28 +1,30 @@
 package com.baixiang.model;
 
 
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by shenjiajun on 2017/4/3.
  */
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"userName", "id"}))
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
+    @Column(unique = true)
     private String userName;
     private String pass;
     private String avatarPath;
     private String userIntro;
     private String sex;
 
-
+    private String roleSetId;
 
     public User() {
     }
@@ -78,6 +80,14 @@ public class User {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getRoleSetId() {
+        return roleSetId;
+    }
+
+    public void setRoleSetId(String roleSetId) {
+        this.roleSetId = roleSetId;
     }
 
     @Override

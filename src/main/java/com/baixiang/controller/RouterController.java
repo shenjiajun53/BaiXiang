@@ -1,4 +1,4 @@
-package com.baixiang.service.controller;
+package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;

@@ -1,4 +1,4 @@
-package com.baixiang.manage.controller;
+package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.repository.MovieRepository;

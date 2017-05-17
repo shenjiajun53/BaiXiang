@@ -42,6 +42,13 @@ public class UserRepository {
         return (User) getSession().load(User.class, id);
     }
 
+    public User getByName(String userName) {
+        return (User) getSession().createQuery(
+                "from User where userName = :userName")
+                .setParameter("userName", userName)
+                .uniqueResult();
+    }
+
     public void update(User user) {
         getSession().update(user);
         return;

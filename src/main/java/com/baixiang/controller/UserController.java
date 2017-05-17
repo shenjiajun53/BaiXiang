@@ -5,12 +5,12 @@ import com.baixiang.model.*;
 import com.baixiang.model.Error;
 import com.baixiang.repository.UserRepository;
 import com.baixiang.utils.FileUtil;
-import com.mongodb.DuplicateKeyException;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,26 +28,16 @@ import java.io.IOException;
 
 @ControllerAdvice
 @RestController
-public class ManageUserController {
-    private static final Logger logger = LoggerFactory.getLogger(ManageUserController.class);
+public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserRepository userRepository;
 
 
-    @RequestMapping(value = "/manage/sign_up")
-    public ModelAndView signUp() {
-        ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_up");
-        return modelAndView;
-    }
 
-    @RequestMapping(value = "/manage/sign_in")
-    public ModelAndView signIn() {
-        ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_in");
-        return modelAndView;
-    }
 
-    @RequestMapping(value = "/manage/sign_in", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/sign_in", method = RequestMethod.POST)
     public Response<RedirectBean> signIn(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass) {
         UsernamePasswordToken token = new UsernamePasswordToken(userName, pass, true);
@@ -62,7 +52,7 @@ public class ManageUserController {
             throw new UserNotFoundException();
         }
         if (currentUser.isAuthenticated()) {
-            RedirectBean redirectBean = new RedirectBean("/manage");
+            RedirectBean redirectBean = new RedirectBean(1,"/manage");
             Response<RedirectBean> response = new Response<>(redirectBean, null);
             return response;
         } else {
@@ -70,8 +60,8 @@ public class ManageUserController {
         }
     }
 
-    @RequestMapping(value = "/manage/sign_up", method = RequestMethod.POST)
-    public Response<BaseBean> signUp(@RequestParam(value = "userName") String userName,
+    @RequestMapping(value = "/api/sign_up", method = RequestMethod.POST)
+    public Response<RedirectBean> signUp(@RequestParam(value = "userName") String userName,
                                      @RequestParam(value = "pass") String pass,
                                      @RequestParam(value = "userIntro") String userIntro,
                                      @RequestParam(value = "sex") String sex,
@@ -94,17 +84,17 @@ public class ManageUserController {
             }
         }
         userRepository.save(user);
-        BaseBean baseBean;
+        RedirectBean redirectBean;
         if (user.getId() != 0) {
-            baseBean = new BaseBean(1);
+            return signIn(userName, pass);
         } else {
-            baseBean = new BaseBean(2);
+            redirectBean = new RedirectBean(2,"");
+            Response<RedirectBean> response = new Response<>(redirectBean, new Error("1","注册失败"));
+            return response;
         }
-        Response<BaseBean> response = new Response<>(baseBean, null);
-        return response;
     }
 
-    @RequestMapping(value = "/manage/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/logout", method = RequestMethod.GET)
     public String logout() {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
@@ -126,7 +116,7 @@ public class ManageUserController {
         return response;
     }
 
-    @ExceptionHandler(value = DuplicateKeyException.class)
+    @ExceptionHandler(value = ConstraintViolationException.class)
     public Response<Object> handleDuplicateKeyException() {
         System.out.println("handleDuplicateKeyException!!!!!!!!!");
         Response<Object> response = new Response(null, new Error("1", "此用户名已被占用"));

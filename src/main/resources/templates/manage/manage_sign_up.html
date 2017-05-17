@@ -93,7 +93,7 @@
                 formData.append('pass', this.passStr);
                 formData.append('userIntro', this.userIntroStr);
                 formData.append('sex', this.sex);
-                let url = "/manage/sign_up";
+                let url = "/api/sign_up";
                 fetch(url, {
                     method: "post",
                     // body: data,
@@ -111,11 +111,13 @@
                     (json) => {
                         console.log(JSON.stringify(json));
                         if (json.result) {
-                            let result=json.result;
+                            let result = json.result;
                             if (result.status==1) {
-//                                this.onSignIn();
+                                window.location.pathname = result.redirect;
+                            }else {
+                                this.$message.error(json.error.errorMsg);
                             }
-                        }else if(json.error){
+                        } else if (json.error) {
                             this.$message.error(json.error.errorMsg);
                         }
                     }

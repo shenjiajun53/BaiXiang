@@ -41,7 +41,7 @@
                 let formData = new FormData();
                 formData.append('userName', this.nameStr);
                 formData.append('pass', this.passStr);
-                let url = "/manage/sign_in";
+                let url = "/api/sign_in";
                 fetch(url, {
                     method: "post",
                     // body: data,
@@ -60,8 +60,8 @@
                         console.log(JSON.stringify(json));
                         if (json.result) {
                             let result = json.result;
-                            if (result.status == 1) {
-//                                this.onSignIn();
+                            if (result.status == 1&&result.redirect) {
+                                window.location.pathname = result.redirect;
                             }
                         } else if (json.error) {
                             this.$message.error(json.error.errorMsg);

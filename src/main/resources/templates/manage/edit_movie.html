@@ -69,12 +69,7 @@
                 let url = "/manage/edit_movie";
                 fetch(url, {
                     method: "post",
-                    // body: data,
                     body: formData,
-                    headers: {
-                        // 'Content-Type': 'multipart/form-data'
-                        // 'Content-Type': 'application/x-www-form-urlencoded'
-                    },
                     credentials: 'include'     //很重要，设置session,cookie可用
                 }).then(
                     (response) => {
@@ -83,6 +78,10 @@
                 ).then(
                     (json) => {
                         console.log(JSON.stringify(json));
+                        let result = json.result;
+                        if(result.status==1){
+                            window.location.pathname=result.redirect;
+                        }
                     }
                 ).catch(
                     (ex) => {

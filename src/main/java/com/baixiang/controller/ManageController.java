@@ -1,8 +1,12 @@
 package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
+import com.baixiang.model.User;
 import com.baixiang.repository.MovieRepository;
+import com.baixiang.repository.UserRepository;
 import com.baixiang.utils.FileUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +27,23 @@ import java.util.ArrayList;
 public class ManageController {
     @Autowired
     MovieRepository movieRepository;
+    @Autowired
+    UserRepository userRepository;
 
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
+        Subject subject = SecurityUtils.getSubject();
+        if (null != subject&&null!=subject.getPrincipal()) {
+
+            long userId = (long) subject.getPrincipal();
+            User user = userRepository.getById(userId);
+//            if (null != user) {
+//                System.out.printf("user=" + user.toString());
+//            }
+        }
+
 
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
         modelAndView.addObject("movieList", movieArrayList);
@@ -37,36 +53,19 @@ public class ManageController {
     @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.GET)
     public ModelAndView editFilm() {
         ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
-
         return modelAndView;
     }
 
-    @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.POST)
-    public ModelAndView postMovie(@RequestParam(value = "movieInfo") String movieInfo,
-                                  @RequestParam("poster") MultipartFile poster) {
-        ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
 
-        System.out.printf("filename=" + poster.getOriginalFilename());
+    @RequestMapping(value = "/manage/sign_up")
+    public ModelAndView signUp() {
+        ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_up");
+        return modelAndView;
+    }
 
-        Movie movie = new Movie(movieInfo, movieInfo);
-
-        if (!poster.isEmpty()) {
-            try {
-                String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
-                String filePath = "/files/movie/posters/";
-                FileUtil.createOrExistsDir(staticPath + filePath);
-
-                String fileName = System.currentTimeMillis() + "-" + poster.getOriginalFilename();
-                File file = new File(staticPath + filePath + fileName);
-                poster.transferTo(file);
-                movie.setPoster(filePath + fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        movieRepository.save(movie);
-
+    @RequestMapping(value = "/manage/sign_in")
+    public ModelAndView signIn() {
+        ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_in");
         return modelAndView;
     }
 }

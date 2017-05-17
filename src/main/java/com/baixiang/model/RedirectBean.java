@@ -5,8 +5,10 @@ package com.baixiang.model;
  */
 public class RedirectBean {
     String redirect;
+    int status;
 
-    public RedirectBean(String redirect) {
+    public RedirectBean(int status,String redirect) {
+        this.status=status;
         this.redirect = redirect;
     }
 
@@ -16,5 +18,13 @@ public class RedirectBean {
 
     public void setRedirect(String redirect) {
         this.redirect = redirect;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

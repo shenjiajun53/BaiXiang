@@ -28,14 +28,12 @@ public class MovieController {
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieInfo") String movieInfo,
                                             @RequestParam("poster") MultipartFile poster,
-                                            @RequestParam("screenShotList") MultipartFile screenShotList[]) {
-
-        System.out.printf("filename=" + poster.getOriginalFilename());
-
+                                            @RequestParam("screenShotList") MultipartFile[] screenShotList) {
         Movie movie = new Movie(movieInfo, movieInfo);
 
         if (!poster.isEmpty()) {
             try {
+                System.out.printf("filename=" + poster.getOriginalFilename());
                 String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
                 String filePath = "/files/movie/posters/";
                 FileUtil.createOrExistsDir(staticPath + filePath);
@@ -46,6 +44,27 @@ public class MovieController {
                 movie.setPoster(filePath + fileName);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+        System.out.printf("222 filename=" + screenShotList.length);
+        if (screenShotList.length > 0) {
+            for (int i = 0; i < screenShotList.length; i++) {
+                MultipartFile screenShot = screenShotList[i];
+                if (!screenShot.isEmpty()) {
+                    try {
+                        System.out.printf("222 filename=" + screenShot.getOriginalFilename());
+                        String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
+                        String filePath = "/files/movie/screenShots/";
+                        FileUtil.createOrExistsDir(staticPath + filePath);
+
+                        String fileName = System.currentTimeMillis() + "-" + screenShot.getOriginalFilename();
+                        File file = new File(staticPath + filePath + fileName);
+                        screenShot.transferTo(file);
+//                        movie.setPoster(filePath + fileName);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         movieRepository.save(movie);

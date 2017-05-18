@@ -109,7 +109,13 @@
                 formData.append('movieInfo', this.movieInfo);
                 formData.append('movieTitle', this.movieTitle);
                 formData.append('poster', this.poster.file);
-//                formData.append('screenShotList', this.screenShotList);
+                let screenShotFileList = new Array();
+                for (let i = 0; i < this.screenShotList.length; i++) {
+                    screenShotFileList.push(this.screenShotList[i].file);
+                    console.log("upload "+screenShotFileList[i].name)
+                }
+                console.log("screenShotFileList length="+screenShotFileList.length);
+                formData.append('screenShotList', screenShotFileList);
 
                 let url = "/api/edit_movie";
                 fetch(url, {
@@ -125,7 +131,7 @@
                         console.log(JSON.stringify(json));
                         let result = json.result;
                         if (result.status == 1) {
-                            window.location.pathname = result.redirect;
+//                            window.location.pathname = result.redirect;
                         }
                     }
                 ).catch(

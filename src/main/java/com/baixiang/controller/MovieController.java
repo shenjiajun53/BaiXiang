@@ -33,7 +33,7 @@ public class MovieController {
 
         if (!poster.isEmpty()) {
             try {
-                System.out.printf("filename=" + poster.getOriginalFilename());
+                System.out.printf("poster filename=" + poster.getOriginalFilename());
                 String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
                 String filePath = "/files/movie/posters/";
                 FileUtil.createOrExistsDir(staticPath + filePath);
@@ -46,13 +46,12 @@ public class MovieController {
                 e.printStackTrace();
             }
         }
-        System.out.printf("222 filename=" + screenShotList.length);
         if (screenShotList.length > 0) {
             for (int i = 0; i < screenShotList.length; i++) {
                 MultipartFile screenShot = screenShotList[i];
                 if (!screenShot.isEmpty()) {
                     try {
-                        System.out.printf("222 filename=" + screenShot.getOriginalFilename());
+                        System.out.printf("screenShot fileName=" + screenShot.getOriginalFilename());
                         String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
                         String filePath = "/files/movie/screenShots/";
                         FileUtil.createOrExistsDir(staticPath + filePath);

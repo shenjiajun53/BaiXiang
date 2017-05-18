@@ -109,13 +109,9 @@
                 formData.append('movieInfo', this.movieInfo);
                 formData.append('movieTitle', this.movieTitle);
                 formData.append('poster', this.poster.file);
-                let screenShotFileList = new Array();
                 for (let i = 0; i < this.screenShotList.length; i++) {
-                    screenShotFileList.push(this.screenShotList[i].file);
-                    console.log("upload "+screenShotFileList[i].name)
+                    formData.append('screenShotList', this.screenShotList[i].file);
                 }
-                console.log("screenShotFileList length="+screenShotFileList.length);
-                formData.append('screenShotList', screenShotFileList);
 
                 let url = "/api/edit_movie";
                 fetch(url, {

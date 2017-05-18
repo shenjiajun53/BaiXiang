@@ -4,6 +4,7 @@ import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.repository.MovieRepository;
 import com.baixiang.repository.UserRepository;
+import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -29,30 +30,25 @@ public class ManageController {
     MovieRepository movieRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserService userService;
 
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
-        Subject subject = SecurityUtils.getSubject();
-        if (null != subject&&null!=subject.getPrincipal()) {
-
-            long userId = (long) subject.getPrincipal();
-            User user = userRepository.getById(userId);
-//            if (null != user) {
-//                System.out.printf("user=" + user.toString());
-//            }
-        }
-
-
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
         modelAndView.addObject("movieList", movieArrayList);
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
     @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.GET)
     public ModelAndView editFilm() {
         ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
@@ -60,12 +56,16 @@ public class ManageController {
     @RequestMapping(value = "/manage/sign_up")
     public ModelAndView signUp() {
         ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_up");
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 
     @RequestMapping(value = "/manage/sign_in")
     public ModelAndView signIn() {
         ModelAndView modelAndView = new ModelAndView("/manage/manage_sign_in");
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 }

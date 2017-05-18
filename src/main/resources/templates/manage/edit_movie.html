@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>白相</title>
@@ -14,59 +15,103 @@
 <div th:replace="layout/manage_header::header"></div>
 
 <div id="edit_film">
-    <h1>上传图片</h1>
 
-    <input type="file"
-           multiple="multiple"
-           accept="image/*"
-           ref="uploadInput"
-           name="uploadInput"
-           v-on:change="posterSelected"
-    />
+    <div style="display: flex;flex-direction: column;align-items: flex-start">
+        <el-input v-model="movieTitle" placeholder="请输入影片标题" style="margin-top:0.5em;margin-bottom: 1em"></el-input>
 
-    <el-input
-            type="textarea"
-            :rows="10"
-            placeholder="请输入电影介绍"
-            v-model="movieInfo">
-    </el-input>
+        <el-button @click="onPosterClick" type="primary" style="margin-bottom: 0.5em">上传海报</el-button>
+        <input type="file"
+               multiple="multiple"
+               accept="image/*"
+               ref="posterInput"
+               name="posterInput"
+               v-on:change="posterSelected"
+               style="margin-bottom: 1em;display: none"
+        />
+        <el-card style="margin-bottom: 1em" :body-style="{ padding: '0px' }">
+            <img v-bind:src="poster.url" style="width: 200px;"/>
+        </el-card>
 
-    <el-button @click="submit">提交</el-button>
+        <el-input
+                style="margin-bottom: 1em"
+                type="textarea"
+                :rows="10"
+                placeholder="请输入电影介绍"
+                v-model="movieInfo">
+        </el-input>
+
+        <el-button @click="onScreenShotClick" type="primary" style="margin-bottom: 0.5em">上传截图</el-button>
+        <input type="file"
+               multiple="multiple"
+               accept="image/*"
+               ref="screenShotInput"
+               name="screenShotInput"
+               v-on:change="screenShotSelected"
+               style="margin-bottom: 1em;display: none"
+        />
+        <img v-for="screenShot of screenShotList" :src="screenShot.url" style="width: 200px"/>
+
+        <div style="margin-bottom: 0.5em">上传文件</div>
+
+        <el-button @click="submit">提交</el-button>
+    </div>
 </div>
 
 </body>
 
 <script>
-    var file;
-    new Vue({
-        el: "#header",
-    });
-
     new Vue({
         el: "#edit_film",
         data() {
             return {
-                dialogImageUrl: '',
-                dialogVisible: false,
-                movieInfo: ""
+                movieInfo: "",
+                movieTitle: "",
+                poster: {file: null, url: ""},
+                screenShotList: []
             };
         },
         methods: {
+            onPosterClick(){
+                this.$refs.posterInput.click();
+            },
             posterSelected(event) {
                 // console.info("event=" + uploadInput.files.length);
-                file = this.$refs.uploadInput.files[0];
+                var file = this.$refs.posterInput.files[0];
                 console.info("file=" + file.name);
                 // let objectURL = window.URL.createObjectURL(file);
                 // console.info("event=" + objectURL);
                 // window.URL.revokeObjectURL(objectURL);
+                if (file) {
+                    // 获取 window 的 URL 工具
+                    var URL = window.URL || window.webkitURL;
+                    // 通过 file 生成目标 url
+                    var url = URL.createObjectURL(file);
+                    this.poster = {file: file, url: url};
+                }
+            },
+            onScreenShotClick(){
+                this.$refs.screenShotInput.click();
+            },
+            screenShotSelected(event){
+                var file = this.$refs.screenShotInput.files[0];
+                console.info("file=" + file.name);
+                if (file) {
+                    // 获取 window 的 URL 工具
+                    var URL = window.URL || window.webkitURL;
+                    // 通过 file 生成目标 url
+                    var screenShotUrl = URL.createObjectURL(file);
+                    this.screenShotList.push({file: file, url: screenShotUrl});
+                }
             },
             submit(){
                 console.log("onSubmit");
                 let formData = new FormData();
-                formData.append('poster', file);
                 formData.append('movieInfo', this.movieInfo);
+                formData.append('movieTitle', this.movieTitle);
+                formData.append('poster', this.poster.file);
+//                formData.append('screenShotList', this.screenShotList);
 
-                let url = "/manage/edit_movie";
+                let url = "/api/edit_movie";
                 fetch(url, {
                     method: "post",
                     body: formData,
@@ -79,8 +124,8 @@
                     (json) => {
                         console.log(JSON.stringify(json));
                         let result = json.result;
-                        if(result.status==1){
-                            window.location.pathname=result.redirect;
+                        if (result.status == 1) {
+                            window.location.pathname = result.redirect;
                         }
                     }
                 ).catch(
@@ -91,5 +136,6 @@
         }
     })
 </script>
-
+<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+<link rel="stylesheet" th:href="@{/css/manage_header.css}">
 </html>

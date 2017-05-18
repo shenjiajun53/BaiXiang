@@ -39,7 +39,7 @@ public class UserRepository {
     }
 
     public User getById(long id) {
-        return (User) getSession().load(User.class, id);
+        return (User) getSession().createQuery("from User where id=:id").setParameter("id", id).uniqueResult();
     }
 
     public User getByName(String userName) {

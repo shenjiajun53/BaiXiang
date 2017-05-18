@@ -22,7 +22,7 @@
             </div>
 
             <div style="">
-                <el-dropdown @command="reLocation">
+                <el-dropdown @command="reLocation" th:if="${user==null}">
                 <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
                     用户<i class="el-icon-caret-bottom el-icon--right"></i>
                  </span>
@@ -31,6 +31,19 @@
                         <el-dropdown-item command="/manage/sign_up">注册</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
+
+                <el-dropdown @command="reLocation" th:if="${user!=null}">
+                <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
+                    用户<i class="el-icon-caret-bottom el-icon--right"></i>
+                 </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="/manage/sign_in">主页</el-dropdown-item>
+                        <el-dropdown-item command="/manage/sign_up">设置</el-dropdown-item>
+                        <el-dropdown-item command="/manage/sign_out">退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+
             </div>
         </div>
     </el-card>

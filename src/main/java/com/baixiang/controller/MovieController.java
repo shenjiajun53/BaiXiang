@@ -25,9 +25,10 @@ public class MovieController {
     @Autowired
     MovieRepository movieRepository;
 
-    @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieInfo") String movieInfo,
-                                  @RequestParam("poster") MultipartFile poster) {
+                                            @RequestParam("poster") MultipartFile poster,
+                                            @RequestParam("screenShotList") MultipartFile screenShotList[]) {
 
         System.out.printf("filename=" + poster.getOriginalFilename());
 
@@ -49,13 +50,13 @@ public class MovieController {
         }
         movieRepository.save(movie);
         RedirectBean redirectBean;
-        if(movie.getId()!=0){
-            redirectBean=new RedirectBean(1,"/manage");
-        }else {
-            redirectBean=new RedirectBean(2,"");
+        if (movie.getId() != 0) {
+            redirectBean = new RedirectBean(1, "/manage");
+        } else {
+            redirectBean = new RedirectBean(2, "");
 
         }
-        Response<RedirectBean> response=new Response<>(redirectBean,null);
+        Response<RedirectBean> response = new Response<>(redirectBean, null);
         return response;
     }
 }

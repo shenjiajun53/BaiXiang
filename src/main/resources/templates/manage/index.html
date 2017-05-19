@@ -21,7 +21,7 @@
         <div th:each="movie :${movieList}"
              style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
             <el-card :body-style="{ padding: '0px' }" style="width: 200px">
-                <a th:href="${'/edit_movie?movieId='+movie.id}">
+                <a th:href="${'/manage/edit_movie?movieId='+movie.id}">
                     <img th:src="${movie.poster}" style="height: 150px"/>
                 </a>
                 <div th:text="${movie.movieName}"></div>

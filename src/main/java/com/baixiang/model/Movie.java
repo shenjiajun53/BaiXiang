@@ -42,7 +42,7 @@ public class Movie implements Serializable {
 * 同时加载;后者表示关系类在被访问时才加载,默认值是FetchType. LAZY。
 *
 */
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
     private Set<MovieImage> screenShots=new HashSet<>();
 
@@ -133,7 +133,8 @@ public class Movie implements Serializable {
                 ", movieName='" + movieName + '\'' +
                 ", movieInfo='" + movieInfo + '\'' +
                 ", poster='" + poster + '\'' +
-                ", screenShot='" + screenShots + '\'' +
+                ", createDate=" + createDate +
+
                 '}';
     }
 }

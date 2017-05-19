@@ -6,9 +6,11 @@ import com.baixiang.repository.MovieRepository;
 import com.baixiang.repository.UserRepository;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
+import com.sun.istack.internal.Nullable;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,11 +46,17 @@ public class ManageController {
         return modelAndView;
     }
 
+
     @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.GET)
-    public ModelAndView editFilm() {
+    public ModelAndView editFilm(@RequestParam(value = "movieId", required = false) Integer movieId) {
         ModelAndView modelAndView = new ModelAndView("/manage/edit_movie");
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
+        if (null != movieId) {
+            Movie movie = movieRepository.getById(movieId);
+            System.out.printf("movie=" + movie.toString());
+            modelAndView.addObject("movie", movie);
+        }
         return modelAndView;
     }
 

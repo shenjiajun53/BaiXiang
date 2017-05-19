@@ -37,7 +37,8 @@
                 type="textarea"
                 :rows="10"
                 placeholder="请输入电影介绍"
-                v-model="movieInfo">
+                v-model="movieInfo"
+        >
         </el-input>
 
         <el-button @click="onScreenShotClick" type="primary" style="margin-bottom: 0.5em">上传截图</el-button>
@@ -59,14 +60,14 @@
 
 </body>
 
-<script>
+<script th:inline="javascript">
     new Vue({
         el: "#edit_film",
         data() {
             return {
-                movieInfo: "",
-                movieTitle: "",
-                poster: {file: null, url: ""},
+                movieInfo: [[${movie.movieInfo}]],
+                movieTitle: [[${movie.movieName}]],
+                poster: {file: null, url: [[${movie.poster}]]},
                 screenShotList: []
             };
         },
@@ -127,7 +128,7 @@
                         console.log(JSON.stringify(json));
                         let result = json.result;
                         if (result.status == 1) {
-//                            window.location.pathname = result.redirect;
+                            window.location.pathname = result.redirect;
                         }
                     }
                 ).catch(

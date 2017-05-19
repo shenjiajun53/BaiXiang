@@ -71,4 +71,14 @@ public class MovieImage implements Serializable{
     public void setMovie(Movie movie) {
         this.movie = movie;
     }
+
+    @Override
+    public String toString() {
+        return "MovieImage{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", movie=" + movie +
+                '}';
+    }
 }

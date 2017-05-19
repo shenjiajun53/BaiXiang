@@ -27,47 +27,20 @@ public class MovieController {
     MovieRepository movieRepository;
 
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
-    public Response<RedirectBean> postMovie(@RequestParam(value = "movieInfo") String movieInfo,
+    public Response<RedirectBean> postMovie(@RequestParam(value = "movieTitle") String movieTitle,
+                                            @RequestParam(value = "movieInfo") String movieInfo,
                                             @RequestParam("poster") MultipartFile poster,
                                             @RequestParam("screenShotList") MultipartFile[] screenShotList) {
-        Movie movie = new Movie(movieInfo, movieInfo);
+        Movie movie = new Movie(movieTitle, movieInfo);
 
-        if (!poster.isEmpty()) {
-            try {
-                System.out.printf("poster filename=" + poster.getOriginalFilename());
-                String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
-                String filePath = "/files/movie/posters/";
-                FileUtil.createOrExistsDir(staticPath + filePath);
-
-                String fileName = System.currentTimeMillis() + "-" + poster.getOriginalFilename();
-                File file = new File(staticPath + filePath + fileName);
-                poster.transferTo(file);
-                movie.setPoster(filePath + fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        movie.setPoster(saveFile(poster, "/files/movie/posters/"));
         if (screenShotList.length > 0) {
             for (int i = 0; i < screenShotList.length; i++) {
                 MultipartFile screenShot = screenShotList[i];
-                if (!screenShot.isEmpty()) {
-                    try {
-                        System.out.printf("screenShot fileName=" + screenShot.getOriginalFilename());
-                        String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
-                        String filePath = "/files/movie/screenShots/";
-                        FileUtil.createOrExistsDir(staticPath + filePath);
-
-                        String fileName = System.currentTimeMillis() + "-" + screenShot.getOriginalFilename();
-                        File file = new File(staticPath + filePath + fileName);
-                        screenShot.transferTo(file);
-                        MovieImage movieImage=new MovieImage();
-                        movieImage.setUrl(filePath + fileName);
-                        movieImage.setImageName(fileName);
-                        movie.addScreenShot(movieImage);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                MovieImage movieImage = new MovieImage();
+                movieImage.setUrl(saveFile(screenShot, "/files/movie/screenShots/"));
+//                movieImage.setImageName(saveFile(screenShot, "/files/movie/screenShots/"));
+                movie.addScreenShot(movieImage);
             }
         }
         movieRepository.save(movie);
@@ -80,5 +53,23 @@ public class MovieController {
         }
         Response<RedirectBean> response = new Response<>(redirectBean, null);
         return response;
+    }
+
+    private String saveFile(MultipartFile multipartFile, String filePath) {
+        if (!multipartFile.isEmpty()) {
+            try {
+                System.out.printf("filename=" + multipartFile.getOriginalFilename());
+                String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
+                FileUtil.createOrExistsDir(staticPath + filePath);
+
+                String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
+                File file = new File(staticPath + filePath + fileName);
+                multipartFile.transferTo(file);
+                return filePath + fileName;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }

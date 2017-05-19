@@ -1,6 +1,7 @@
 package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieImage;
 import com.baixiang.model.RedirectBean;
 import com.baixiang.model.Response;
 import com.baixiang.repository.MovieRepository;
@@ -59,7 +60,10 @@ public class MovieController {
                         String fileName = System.currentTimeMillis() + "-" + screenShot.getOriginalFilename();
                         File file = new File(staticPath + filePath + fileName);
                         screenShot.transferTo(file);
-//                        movie.setPoster(filePath + fileName);
+                        MovieImage movieImage=new MovieImage();
+                        movieImage.setUrl(filePath + fileName);
+                        movieImage.setImageName(fileName);
+                        movie.addScreenShot(movieImage);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

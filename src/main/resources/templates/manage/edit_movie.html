@@ -61,13 +61,14 @@
 </body>
 
 <script th:inline="javascript">
+
     new Vue({
         el: "#edit_film",
         data() {
             return {
-                movieInfo: [[${movie.movieInfo}]],
-                movieTitle: [[${movie.movieName}]],
-                poster: {file: null, url: [[${movie.poster}]]},
+                movieInfo: [[${movie!=null?movie.movieInfo:""}]],
+                movieTitle: [[${movie!=null?movie.movieName:""}]],
+                poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
                 screenShotList: []
             };
         },

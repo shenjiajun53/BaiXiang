@@ -6,6 +6,10 @@ import com.baixiang.model.RedirectBean;
 import com.baixiang.model.Response;
 import com.baixiang.repository.MovieRepository;
 import com.baixiang.utils.FileUtil;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
+import org.apache.shiro.authz.annotation.RequiresGuest;
+import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.authz.annotation.RequiresUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,13 +31,25 @@ public class MovieController {
     MovieRepository movieRepository;
 
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
-    public Response<RedirectBean> postMovie(@RequestParam(value = "movieTitle") String movieTitle,
+    public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
+                                            @RequestParam(value = "movieTitle") String movieTitle,
                                             @RequestParam(value = "movieInfo") String movieInfo,
-                                            @RequestParam("poster") MultipartFile poster,
-                                            @RequestParam("screenShotList") MultipartFile[] screenShotList) {
-        Movie movie = new Movie(movieTitle, movieInfo);
+                                            @RequestParam(value = "poster", required = false) MultipartFile poster,
+                                            @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList) {
 
-        movie.setPoster(saveFile(poster, "/files/movie/posters/"));
+        Movie movie;
+        if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
+            movie = movieRepository.getById(Long.parseLong(movieId));
+            movie.setMovieName(movieTitle);
+            movie.setMovieInfo(movieInfo);
+        } else {
+            movie = new Movie(movieTitle, movieInfo);
+        }
+
+
+        if (null != poster) {
+            movie.setPoster(saveFile(poster, "/files/movie/posters/"));
+        }
         if (screenShotList.length > 0) {
             for (int i = 0; i < screenShotList.length; i++) {
                 MultipartFile screenShot = screenShotList[i];
@@ -43,7 +59,11 @@ public class MovieController {
                 movie.addScreenShot(movieImage);
             }
         }
-        movieRepository.save(movie);
+        if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
+            movieRepository.update(movie);
+        } else {
+            movieRepository.save(movie);
+        }
         RedirectBean redirectBean;
         if (movie.getId() != 0) {
             redirectBean = new RedirectBean(1, "/manage");
@@ -56,7 +76,7 @@ public class MovieController {
     }
 
     private String saveFile(MultipartFile multipartFile, String filePath) {
-        if (!multipartFile.isEmpty()) {
+        if (null != multipartFile && !multipartFile.isEmpty()) {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
                 String staticPath = System.getProperty("user.dir") + "/src/main/webapp";

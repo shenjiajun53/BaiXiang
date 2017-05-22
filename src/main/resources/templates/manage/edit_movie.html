@@ -108,6 +108,7 @@
             submit(){
                 console.log("onSubmit");
                 let formData = new FormData();
+                formData.append('movieId', [[${movie!=null?movie.id:null}]]);
                 formData.append('movieInfo', this.movieInfo);
                 formData.append('movieTitle', this.movieTitle);
                 formData.append('poster', this.poster.file);

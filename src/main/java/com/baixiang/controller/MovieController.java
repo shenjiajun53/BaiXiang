@@ -1,9 +1,6 @@
 package com.baixiang.controller;
 
-import com.baixiang.model.Movie;
-import com.baixiang.model.MovieImage;
-import com.baixiang.model.RedirectBean;
-import com.baixiang.model.Response;
+import com.baixiang.model.*;
 import com.baixiang.repository.MovieRepository;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
@@ -35,7 +32,8 @@ public class MovieController {
                                             @RequestParam(value = "movieTitle") String movieTitle,
                                             @RequestParam(value = "movieInfo") String movieInfo,
                                             @RequestParam(value = "poster", required = false) MultipartFile poster,
-                                            @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList) {
+                                            @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
+                                            @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList) {
 
         Movie movie;
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
@@ -57,6 +55,15 @@ public class MovieController {
                 movieImage.setUrl(saveFile(screenShot, "/files/movie/screenShots/"));
 //                movieImage.setImageName(saveFile(screenShot, "/files/movie/screenShots/"));
                 movie.addScreenShot(movieImage);
+            }
+        }
+        if (torrentList.length > 0) {
+            for (int i = 0; i < torrentList.length; i++) {
+                MultipartFile screenShot = torrentList[i];
+                MovieTorrent movieTorrent = new MovieTorrent();
+                movieTorrent.setFilePath(saveFile(screenShot, "/files/movie/torrents/"));
+//                movieImage.setImageName(saveFile(screenShot, "/files/movie/screenShots/"));
+                movie.addTorrent(movieTorrent);
             }
         }
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {

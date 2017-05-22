@@ -46,6 +46,10 @@ public class Movie implements Serializable {
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
     private Set<MovieImage> screenShots=new HashSet<>();
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
+    private Set<MovieTorrent> movieTorrents=new HashSet<>();
+
     public Movie() {
     }
 
@@ -98,6 +102,14 @@ public class Movie implements Serializable {
         this.screenShots = screenShots;
     }
 
+    public Set<MovieTorrent> getMovieTorrents() {
+        return movieTorrents;
+    }
+
+    public void setMovieTorrents(Set<MovieTorrent> movieTorrents) {
+        this.movieTorrents = movieTorrents;
+    }
+
     //@Temporal注释用来指定java.util.Date 或java.util.Calendar 属性与数据库类型date,time 或timestamp 中的那一种类型进行映射
     @Temporal(value = TemporalType.TIMESTAMP)
     public Date getCreateDate() {
@@ -124,6 +136,21 @@ public class Movie implements Serializable {
     public void removeScreenShot(MovieImage screenShot) {
         screenShot.setMovie(null);
         this.screenShots.remove(screenShot);
+    }
+
+    public void addTorrent(MovieTorrent movieTorrent) {
+        if (!this.movieTorrents.contains(movieTorrent)) {
+            this.movieTorrents.add(movieTorrent);
+            movieTorrent.setMovie(this);
+        }
+    }
+
+    /*
+     * 删除订单
+     */
+    public void removTorrent(MovieTorrent movieTorrent) {
+        movieTorrent.setMovie(null);
+        this.movieTorrents.remove(movieTorrent);
     }
 
     @Override

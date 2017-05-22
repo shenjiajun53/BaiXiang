@@ -52,7 +52,18 @@
         />
         <img v-for="screenShot of screenShotList" :src="screenShot.url" style="width: 200px"/>
 
-        <div style="margin-bottom: 0.5em">上传文件</div>
+        <el-button @click="onTorrentClick" type="primary" style="margin-bottom: 0.5em">上传种子</el-button>
+        <input type="file"
+               multiple="multiple"
+               accept="image/*"
+               ref="torrentInput"
+               name="torrentInput"
+               v-on:change="torrentSelected"
+               style="margin-bottom: 1em;display: none"
+        />
+        <div v-for="torrentItem of torrentList" style="width: 200px">
+            {{torrentItem.file.name}}
+        </div>
 
         <el-button @click="submit">提交</el-button>
     </div>
@@ -69,7 +80,8 @@
                 movieInfo: [[${movie!=null?movie.movieInfo:""}]],
                 movieTitle: [[${movie!=null?movie.movieName:""}]],
                 poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
-                screenShotList: []
+                screenShotList: [],
+                torrentList: []
             };
         },
         methods: {
@@ -105,6 +117,21 @@
                     this.screenShotList.push({file: file, url: screenShotUrl});
                 }
             },
+            onTorrentClick(){
+                this.$refs.torrentInput.click();
+            },
+            torrentSelected(event){
+                var file = this.$refs.torrentInput.files[0];
+                console.info("file=" + file.name);
+                if (file) {
+                    // 获取 window 的 URL 工具
+                    var URL = window.URL || window.webkitURL;
+                    // 通过 file 生成目标 url
+                    var torrentUrl = URL.createObjectURL(file);
+                    this.torrentList.push({file: file, url: torrentUrl});
+                }
+            },
+
             submit(){
                 console.log("onSubmit");
                 let formData = new FormData();
@@ -114,6 +141,9 @@
                 formData.append('poster', this.poster.file);
                 for (let i = 0; i < this.screenShotList.length; i++) {
                     formData.append('screenShotList', this.screenShotList[i].file);
+                }
+                for (let i = 0; i < this.torrentList.length; i++) {
+                    formData.append('torrentList', this.torrentList[i].file);
                 }
 
                 let url = "/api/edit_movie";

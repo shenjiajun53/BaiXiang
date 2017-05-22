@@ -8,7 +8,7 @@ let header=new Vue({
     methods: {
         reLocation(herf){
             // this.$message('click on item ' + herf);
-            window.location.pathname=herf;
+            window.location.href=herf;
         }
     }
 });

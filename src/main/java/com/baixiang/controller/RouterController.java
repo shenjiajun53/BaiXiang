@@ -3,6 +3,7 @@ package com.baixiang.controller;
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.repository.MovieRepository;
+import com.baixiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,12 +20,16 @@ import java.util.ArrayList;
 public class RouterController {
     @Autowired
     MovieRepository movieRepository;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
         modelAndView.addObject("movieList", movieArrayList);
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
         return modelAndView;
     }
 }

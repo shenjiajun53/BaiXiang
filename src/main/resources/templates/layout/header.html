@@ -6,38 +6,46 @@
 
 </head>
 <body>
-<style>
-    .topBar {
-
-    }
-
-    .topItem {
-
-    }
-
-</style>
-
-
 <div th:fragment="header" id="header">
-    <el-card
-            style="background-color: #E91E63;  height: 48px; display: flex;flex-direction: row;align-items: center">
+
+    <el-card :body-style="{ padding: '0px' }">
         <div class="topBar"
-             style="color: white;padding: 5px;width: 800px;flex: 1;display: flex;flex-direction: row;">
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
-                首页
-            </el-button>
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
-                动画
-            </el-button>
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
-                美剧
-            </el-button>
-            <el-button class="topItem" type="text" style="flex: 1;font-size: large;">
-                登录
-            </el-button>
+             style=" height: 48px;align-items: center;color: white;padding:5px 30px;display: flex;flex-direction: row;background-color:  #E91E63;flex: 1">
+            <div style="display:flex;flex:1;flex-direction: row;">
+                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/manage')">
+                    电影
+                </div>
+                <div class="topItem" style=";font-size: large;">
+                    用户管理
+                </div>
+            </div>
+
+            <div style="">
+                <el-dropdown @command="reLocation" th:if="${user==null}">
+                <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
+                    用户<i class="el-icon-caret-bottom el-icon--right"></i>
+                 </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="/manage/sign_in">登录</el-dropdown-item>
+                        <el-dropdown-item command="/manage/sign_up">注册</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+                <el-dropdown @command="reLocation" th:if="${user!=null}">
+                <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
+                    用户<i class="el-icon-caret-bottom el-icon--right"></i>
+                 </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="/manage/sign_in">主页</el-dropdown-item>
+                        <el-dropdown-item command="/manage/sign_up">设置</el-dropdown-item>
+                        <el-dropdown-item command="/manage/sign_out">退出</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+
+
+            </div>
         </div>
     </el-card>
-
 
 </div>
 </body>

@@ -27,6 +27,11 @@ public class MovieController {
     @Autowired
     MovieRepository movieRepository;
 
+    private static final String STATIC_PATH = "/src/main/webapp";
+    private static final String POSTER_PATH = "/files/movie/posters/";
+    private static final String SCREEN_SHOT_PATH = "/files/movie/screenShots/";
+    private static final String TORRENT_PATH = "/files/movie/torrents/";
+
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                                             @RequestParam(value = "movieTitle") String movieTitle,
@@ -46,23 +51,32 @@ public class MovieController {
 
 
         if (null != poster) {
-            movie.setPoster(saveFile(poster, "/files/movie/posters/"));
+            String posterFileName = saveFile(poster, POSTER_PATH);
+            if (!posterFileName.equals(null)) {
+                movie.setPoster(POSTER_PATH + posterFileName);
+            }
         }
         if (screenShotList.length > 0) {
             for (int i = 0; i < screenShotList.length; i++) {
                 MultipartFile screenShot = screenShotList[i];
                 MovieImage movieImage = new MovieImage();
-                movieImage.setUrl(saveFile(screenShot, "/files/movie/screenShots/"));
-//                movieImage.setImageName(saveFile(screenShot, "/files/movie/screenShots/"));
+                String imageFileName = saveFile(screenShot, SCREEN_SHOT_PATH);
+                if (!imageFileName.equals(null)) {
+                    movieImage.setUrl(SCREEN_SHOT_PATH + imageFileName);
+                    movieImage.setImageName(imageFileName);
+                }
                 movie.addScreenShot(movieImage);
             }
         }
         if (torrentList.length > 0) {
             for (int i = 0; i < torrentList.length; i++) {
-                MultipartFile screenShot = torrentList[i];
+                MultipartFile torrent = torrentList[i];
                 MovieTorrent movieTorrent = new MovieTorrent();
-                movieTorrent.setFilePath(saveFile(screenShot, "/files/movie/torrents/"));
-//                movieImage.setImageName(saveFile(screenShot, "/files/movie/screenShots/"));
+                String torrentFileName = saveFile(torrent, TORRENT_PATH);
+                if (!torrentFileName.equals(null)) {
+                    movieTorrent.setFilePath(SCREEN_SHOT_PATH + torrentFileName);
+                    movieTorrent.setTorrentName(torrentFileName);
+                }
                 movie.addTorrent(movieTorrent);
             }
         }
@@ -86,13 +100,13 @@ public class MovieController {
         if (null != multipartFile && !multipartFile.isEmpty()) {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
-                String staticPath = System.getProperty("user.dir") + "/src/main/webapp";
+                String staticPath = System.getProperty("user.dir") + STATIC_PATH;
                 FileUtil.createOrExistsDir(staticPath + filePath);
 
                 String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
                 File file = new File(staticPath + filePath + fileName);
                 multipartFile.transferTo(file);
-                return filePath + fileName;
+                return fileName;
             } catch (IOException e) {
                 e.printStackTrace();
             }

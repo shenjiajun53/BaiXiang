@@ -74,7 +74,7 @@ public class MovieController {
                 MovieTorrent movieTorrent = new MovieTorrent();
                 String torrentFileName = saveFile(torrent, TORRENT_PATH);
                 if (!torrentFileName.equals(null)) {
-                    movieTorrent.setFilePath(SCREEN_SHOT_PATH + torrentFileName);
+                    movieTorrent.setFilePath(TORRENT_PATH + torrentFileName);
                     movieTorrent.setTorrentName(torrentFileName);
                 }
                 movie.addTorrent(movieTorrent);

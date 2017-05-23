@@ -7,6 +7,7 @@ import com.baixiang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,21 @@ public class RouterController {
         modelAndView.addObject("movieList", movieArrayList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
+    public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
+        ModelAndView modelAndView = new ModelAndView("/service/movie_detail");
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
+        if (null != movieId) {
+            Movie movie = movieRepository.getById(movieId);
+            System.out.printf("movie=" + movie.toString());
+            modelAndView.addObject("movie", movie);
+        } else {
+            modelAndView.setViewName("/default/error_page");
+        }
         return modelAndView;
     }
 }

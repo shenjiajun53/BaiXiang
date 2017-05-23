@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>白相</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div th:replace="layout/header::header"></div>
+
+<div id="container">
+
+    <div style="display: flex;flex-direction: column;align-items: flex-start">
+
+
+        <div th:text="${movie.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></div>
+
+
+        <el-card style="margin-bottom: 1em" :body-style="{ padding: '0px' }">
+            <img v-bind:src="poster.url" style="width: 200px;"/>
+        </el-card>
+
+        <div th:text="${movie.movieInfo}" style="margin-bottom: 1em"></div>
+
+        <div th:each="screenShot :${movie.screenShots}">
+            <img th:src="${screenShot.url}" style="width: 200px"/>
+        </div>
+
+        <div th:each="torrent :${movie.movieTorrents}">
+            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}"></a>
+        </div>
+
+        <a  href="/files/movie/screenShots/1495509141103-EarthArt_ZH-CN7715783871_1920x1080.jpg">123</a>
+    </div>
+</div>
+</body>
+
+<script th:inline="javascript">
+
+    new Vue({
+        el: "#container",
+        data() {
+            return {
+                movieInfo: [[${movie!=null?movie.movieInfo:""}]],
+                movieTitle: [[${movie!=null?movie.movieName:""}]],
+                poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
+                screenShotList: [],
+                torrentList: []
+            };
+        },
+        methods: {
+            downLoad(){
+
+            }
+        }
+    })
+</script>
+
+<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+<link rel="stylesheet" th:href="@{/css/manage_header.css}">
+</html>

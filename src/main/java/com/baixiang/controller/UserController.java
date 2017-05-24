@@ -86,6 +86,7 @@ public class UserController {
         userRepository.save(user);
         RedirectBean redirectBean;
         if (user.getId() != 0) {
+            logger.info("保存用户成功");
             return signIn(userName, pass);
         } else {
             redirectBean = new RedirectBean(2, "");

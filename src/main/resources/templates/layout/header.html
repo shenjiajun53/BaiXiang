@@ -12,11 +12,30 @@
         <div class="topBar"
              style=" height: 48px;align-items: center;color: white;padding:5px 30px;display: flex;flex-direction: row;background-color:  #E91E63;flex: 1">
             <div style="display:flex;flex:1;flex-direction: row;">
-                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/manage')">
-                    电影
+                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/')">
+                    首页
                 </div>
-                <div class="topItem" style=";font-size: large;">
-                    用户管理
+                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/movie_list?tag=new')">
+                    最新
+                </div>
+                <div class="topItem" style=";font-size: large;margin-right: 10px"
+                     @click="reLocation('/movie_list?tag=animation')">
+                    动画
+                </div>
+                <div class="topItem" style=";font-size: large;margin-right: 10px"
+                     @click="reLocation('/movie_list?tag=action')">
+                    动作
+                </div>
+                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/movie_list?tag=science')">
+                    科幻
+                </div>
+                <div class="topItem" style=";font-size: large;margin-right: 10px"
+                     @click="reLocation('/movie_list?tag=american')">
+                    美剧
+                </div>
+                <div class="topItem" style=";font-size: large;margin-right: 10px"
+                     @click="reLocation('/movie_list?tag=japanese')">
+                    日剧
                 </div>
             </div>
 

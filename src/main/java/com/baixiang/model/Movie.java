@@ -50,6 +50,11 @@ public class Movie implements Serializable {
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
     private Set<MovieTorrent> movieTorrents=new HashSet<>();
 
+    @ElementCollection
+    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "movie_tag")
+    private Set<String> movieTagSet=new HashSet<>();
+
     public Movie() {
     }
 

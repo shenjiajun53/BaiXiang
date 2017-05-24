@@ -34,6 +34,16 @@ public class RouterController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/movie_list", method = RequestMethod.GET)
+    public ModelAndView movieList(@RequestParam(value = "tag", required = true) String Tag) {
+        ModelAndView modelAndView = new ModelAndView("/service/movie_list");
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        modelAndView.addObject("movieList", movieArrayList);
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
     public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
         ModelAndView modelAndView = new ModelAndView("/service/movie_detail");

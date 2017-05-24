@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "movieTorrents")
+@Table(name = "movie_torrents")
 public class MovieTorrent implements Serializable {
     @Id
     @GeneratedValue

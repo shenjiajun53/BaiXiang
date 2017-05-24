@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 
 /**
  * Created by shenjj on 2017/5/16.
@@ -33,8 +34,6 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-
-
 
 
     @RequestMapping(value = "/api/sign_in", method = RequestMethod.POST)
@@ -52,7 +51,7 @@ public class UserController {
             throw new UserNotFoundException();
         }
         if (currentUser.isAuthenticated()) {
-            RedirectBean redirectBean = new RedirectBean(1,"/manage");
+            RedirectBean redirectBean = new RedirectBean(1, "/manage");
             Response<RedirectBean> response = new Response<>(redirectBean, null);
             return response;
         } else {
@@ -62,10 +61,10 @@ public class UserController {
 
     @RequestMapping(value = "/api/sign_up", method = RequestMethod.POST)
     public Response<RedirectBean> signUp(@RequestParam(value = "userName") String userName,
-                                     @RequestParam(value = "pass") String pass,
-                                     @RequestParam(value = "userIntro") String userIntro,
-                                     @RequestParam(value = "sex") String sex,
-                                     @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
+                                         @RequestParam(value = "pass") String pass,
+                                         @RequestParam(value = "userIntro") String userIntro,
+                                         @RequestParam(value = "sex") String sex,
+                                         @RequestParam(value = "avatar", required = false) MultipartFile avatar) {
         User user = new User(userName, pass);
         user.setSex(sex);
         user.setUserIntro(userIntro);
@@ -83,13 +82,15 @@ public class UserController {
                 e.printStackTrace();
             }
         }
+//        Role role = new Role("admin", "admin");
+        user.addRole(Role.BangZhu);
         userRepository.save(user);
         RedirectBean redirectBean;
         if (user.getId() != 0) {
             return signIn(userName, pass);
         } else {
-            redirectBean = new RedirectBean(2,"");
-            Response<RedirectBean> response = new Response<>(redirectBean, new Error("1","注册失败"));
+            redirectBean = new RedirectBean(2, "");
+            Response<RedirectBean> response = new Response<>(redirectBean, new Error("1", "注册失败"));
             return response;
         }
     }
@@ -98,7 +99,7 @@ public class UserController {
     public ModelAndView signOut() {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
-        ModelAndView modelAndView=new ModelAndView("redirect:/manage");
+        ModelAndView modelAndView = new ModelAndView("redirect:/manage");
         return modelAndView;
     }
 

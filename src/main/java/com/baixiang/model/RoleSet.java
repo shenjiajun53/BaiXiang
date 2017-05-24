@@ -12,7 +12,7 @@ import java.util.Set;
 @Document(collection = "RoleSets")
 public class RoleSet {
 
-    Set<Role> roleSet;
+//    Set<Role> roleSet;
 
     @Id
     String id;
@@ -25,11 +25,11 @@ public class RoleSet {
         this.id = id;
     }
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
-    }
-
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
-    }
+//    public Set<Role> getRoleSet() {
+//        return roleSet;
+//    }
+//
+//    public void setRoleSet(Set<Role> roleSet) {
+//        this.roleSet = roleSet;
+//    }
 }

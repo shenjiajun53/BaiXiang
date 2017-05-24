@@ -3,6 +3,8 @@ package com.baixiang.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by shenjiajun on 2017/4/3.
@@ -24,7 +26,10 @@ public class User {
     private String userIntro;
     private String sex;
 
-    private String roleSetId;
+    @ElementCollection
+    @CollectionTable(name = "role_types", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role_type")
+    private Set<Integer> roleTypeSet=new HashSet<>();
 
     public User() {
     }
@@ -82,12 +87,32 @@ public class User {
         this.sex = sex;
     }
 
-    public String getRoleSetId() {
-        return roleSetId;
+
+    public Set<Integer> getRoleTypeSet() {
+        return roleTypeSet;
     }
 
-    public void setRoleSetId(String roleSetId) {
-        this.roleSetId = roleSetId;
+    public void setRoleTypeSet(Set<Integer> roleTypeSet) {
+        this.roleTypeSet = roleTypeSet;
+    }
+
+    public void addRole(Role role) {
+        if (!this.roleTypeSet.contains(role.getType())) {
+            this.roleTypeSet.add(role.getType());
+        }
+    }
+
+    public void removeRole(Role role) {
+        this.roleTypeSet.remove(role.getType());
+    }
+
+    public HashSet<Role> getRoleSet() {
+        HashSet<Role> roleHashSet = new HashSet<>();
+        for (int roleType : roleTypeSet) {
+            Role role = Role.getRole(roleType);
+            roleHashSet.add(role);
+        }
+        return roleHashSet;
     }
 
     @Override

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 
 /**
  * Created by shenjj on 2017/5/17.
@@ -39,17 +40,20 @@ public class HibernateRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 //        Integer userId = (Integer) principals.fromRealm(getName()).iterator().next();
 //        User user = userRepository.getById(userId);
-        String currentLoginName = (String)principals.getPrimaryPrincipal();
-        User user=userService.getByName(currentLoginName);
+        Long currentLoginId = (Long) principals.getPrimaryPrincipal();
+        User user = userService.getById(currentLoginId);
 
         System.out.printf("user=" + user.toString());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            RoleSet roleSet = roleService.findRoleById(user.getRoleSetId());
-            for (Role role : roleSet.getRoleSet()) {
-                info.addRole(role.getName());
-                info.addStringPermissions(role.getPermissions());
+            HashSet<Role> roleHashSet= (HashSet<Role>) user.getRoleSet();
+            if(null!=roleHashSet){
+                for (Role role : roleHashSet) {
+                    info.addRole(role.getName());
+                    info.addStringPermissions(role.getPermissions());
+                }
             }
+
             return info;
         } else {
             return null;

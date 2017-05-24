@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "movieImages")
+@Table(name = "movie_images")
 public class MovieImage implements Serializable{
     @Id
     @GeneratedValue

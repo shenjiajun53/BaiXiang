@@ -21,6 +21,10 @@ public class UserService {
         return userRepository.getByName(userName);
     }
 
+    public User getById(Long userId) {
+        return userRepository.getById(userId);
+    }
+
     public User getUserBySession() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.getPrincipal() == null) {

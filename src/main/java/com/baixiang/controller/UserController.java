@@ -82,7 +82,6 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-//        Role role = new Role("admin", "admin");
         user.addRole(Role.BangZhu);
         userRepository.save(user);
         RedirectBean redirectBean;

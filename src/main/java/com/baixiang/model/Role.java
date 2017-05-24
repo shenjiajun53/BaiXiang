@@ -14,7 +14,7 @@ public enum Role {
     BangZhu(1, "BangZhu", "BangZhu", new ArrayList<String>(Arrays.asList("all", "edit_movie", "up_grade_role", "delete_role"))),
     ZhangLao(2, "ZhangLao", "ZhangLao", new ArrayList<String>(Arrays.asList("edit_movie", "delete_role"))),
     XiaoDi(3, "XiaoDi", "XiaoDi", new ArrayList<String>(Arrays.asList("edit_movie"))),
-    BaiXing(4, "BaiXing", "BaiXing", new ArrayList<String>(Arrays.asList("edit_movie")));
+    BaiXing(4, "BaiXing", "BaiXing", new ArrayList<String>(Arrays.asList()));
 
 
     private int type;

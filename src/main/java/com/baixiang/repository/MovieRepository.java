@@ -47,8 +47,8 @@ public class MovieRepository {
 //        String sql = "select * from movies inner join movie_tags on movies.id=movie_tags.movie_Id where movie_tags.movie_tag=" + "'" + tag + "'";
 //        logger.info("sql=" + sql);
 //        List result = getSession().createSQLQuery(sql).list();
-
-        return getSession().createQuery("from Movie as m join m.movieTagSet as tags on VALUE(tags.movie_tag)=:tag").setParameter("tag",tag).list();
+//        return getSession().createQuery("from Movie as m join fetch m.screenShots as screenShots where screenShots.imageName='1495715557811-P40618-095242_2869174.jpg'").list();
+        return getSession().createQuery("from Movie as m  where :tag in elements(m.movieTagSet) ").setParameter("tag", tag).list();
     }
 
     public Movie getById(long id) {

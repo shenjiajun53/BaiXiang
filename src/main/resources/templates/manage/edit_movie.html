@@ -72,13 +72,13 @@
         <el-button @click="onTorrentClick" type="primary" style="margin-bottom: 0.5em">上传种子</el-button>
         <input type="file"
                multiple="multiple"
-               accept="image/*"
+               accept=".torrent"
                ref="torrentInput"
                name="torrentInput"
                v-on:change="torrentSelected"
                style="margin-bottom: 1em;display: none"
         />
-        <div v-for="torrentItem of torrentList" style="width: 200px">
+        <div v-for="torrentItem of torrentList" style="width: 500px">
             {{torrentItem.file.name}}
         </div>
 
@@ -139,28 +139,30 @@
                 this.$refs.screenShotInput.click();
             },
             screenShotSelected(event){
-                var file = this.$refs.screenShotInput.files[0];
-                console.info("file=" + file.name);
-                if (file) {
-                    // 获取 window 的 URL 工具
-                    var URL = window.URL || window.webkitURL;
-                    // 通过 file 生成目标 url
-                    var screenShotUrl = URL.createObjectURL(file);
-                    this.screenShotList.push({file: file, url: screenShotUrl});
+                var files = this.$refs.screenShotInput.files;
+                if (files) {
+                    for(let i=0;i<files.length;i++){
+                        // 获取 window 的 URL 工具
+                        var URL = window.URL || window.webkitURL;
+                        // 通过 file 生成目标 url
+                        var screenShotUrl = URL.createObjectURL(files[i]);
+                        this.screenShotList.push({file: files[i], url: screenShotUrl});
+                    }
                 }
             },
             onTorrentClick(){
                 this.$refs.torrentInput.click();
             },
             torrentSelected(event){
-                var file = this.$refs.torrentInput.files[0];
-                console.info("file=" + file.name);
-                if (file) {
-                    // 获取 window 的 URL 工具
-                    var URL = window.URL || window.webkitURL;
-                    // 通过 file 生成目标 url
-                    var torrentUrl = URL.createObjectURL(file);
-                    this.torrentList.push({file: file, url: torrentUrl});
+                var files = this.$refs.torrentInput.files;
+                if (files) {
+                    for(let i=0;i<files.length;i++){
+                        // 获取 window 的 URL 工具
+                        var URL = window.URL || window.webkitURL;
+                        // 通过 file 生成目标 url
+                        var torrentUrl = URL.createObjectURL(files[i]);
+                        this.torrentList.push({file: files[i], url: torrentUrl});
+                    }
                 }
             },
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<configuration>
-
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+    <property name="LOG_PATH" value="/log_files" />
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
@@ -16,7 +16,7 @@
     <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>testFile-${bySecond}.log</file>
+        <file>${LOG_PATH}/testFile-${bySecond}.log</file>
         <append>true</append>
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
@@ -26,7 +26,7 @@
     </appender>
 
     <appender name="DAYFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logFile.log</file>
+        <file>${LOG_PATH}/logFile.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
@@ -42,9 +42,7 @@
         </encoder>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
-        <appender-ref ref="DAYFILE"/>
-        <appender-ref ref="FILE"/>
     </root>
 </configuration>

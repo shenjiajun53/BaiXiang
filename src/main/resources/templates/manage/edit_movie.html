@@ -32,6 +32,23 @@
             <img v-bind:src="poster.url" style="width: 200px;"/>
         </el-card>
 
+        <div style="margin-bottom: 1em">
+            <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选
+            </el-checkbox>
+            <div style="margin: 15px 0;"></div>
+            <el-checkbox-group v-model="checkedTags" @change="handleCheckedTagsChange">
+                <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+            </el-checkbox-group>
+        </div>
+
+        <el-date-picker
+                style="margin-bottom: 1em"
+                v-model="dateValue"
+                type="date"
+                placeholder="选择上映日期"
+        >
+        </el-date-picker>
+
         <el-input
                 style="margin-bottom: 1em"
                 type="textarea"
@@ -72,7 +89,7 @@
 </body>
 
 <script th:inline="javascript">
-
+    const movieTypeOptions = ['动画', '动作', '科幻', '美剧', "日剧"];
     new Vue({
         el: "#edit_film",
         data() {
@@ -81,10 +98,25 @@
                 movieTitle: [[${movie!=null?movie.movieName:""}]],
                 poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
                 screenShotList: [],
-                torrentList: []
+                torrentList: [],
+                checkAll: true,
+                checkedTags: [],
+                cities: movieTypeOptions,
+                isIndeterminate: true,
+                dateValue: '',
             };
         },
         methods: {
+            handleCheckAllChange(event) {
+                this.checkedTags = event.target.checked ? movieTypeOptions : [];
+                this.isIndeterminate = false;
+            },
+            handleCheckedTagsChange(value) {
+                let checkedCount = value.length;
+                this.checkAll = checkedCount === this.cities.length;
+                this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+            },
+
             onPosterClick(){
                 this.$refs.posterInput.click();
             },
@@ -145,6 +177,10 @@
                 for (let i = 0; i < this.torrentList.length; i++) {
                     formData.append('torrentList', this.torrentList[i].file);
                 }
+                for (let i = 0; i < this.checkedTags.length; i++) {
+                    formData.append("tagList",this.checkedTags[i]);
+                }
+                formData.append("movieDate",this.dateValue);
 
                 let url = "/api/edit_movie";
                 fetch(url, {

@@ -38,7 +38,9 @@ public class MovieController {
                                             @RequestParam(value = "movieInfo") String movieInfo,
                                             @RequestParam(value = "poster", required = false) MultipartFile poster,
                                             @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
-                                            @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList) {
+                                            @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
+                                            @RequestParam(value = "movieDate", required = false) String movieDate,
+                                            @RequestParam(value = "tagList", required = false) String[] tagList) {
 
         Movie movie;
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
@@ -49,6 +51,9 @@ public class MovieController {
             movie = new Movie(movieTitle, movieInfo);
         }
 
+        if (null != movieDate) {
+            movie.setReleaseDate(movieDate);
+        }
 
         if (null != poster) {
             String posterFileName = saveFile(poster, POSTER_PATH);
@@ -80,6 +85,12 @@ public class MovieController {
                 movie.addTorrent(movieTorrent);
             }
         }
+        if (tagList.length > 0) {
+            for (int i = 0; i < tagList.length; i++) {
+                movie.addTag(tagList[i]);
+            }
+        }
+
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
             movieRepository.update(movie);
         } else {

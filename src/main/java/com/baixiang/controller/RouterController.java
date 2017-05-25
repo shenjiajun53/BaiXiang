@@ -4,6 +4,8 @@ import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.repository.MovieRepository;
 import com.baixiang.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 
 @RestController
 public class RouterController {
+    private static final Logger logger = LoggerFactory.getLogger(RouterController.class);
     @Autowired
     MovieRepository movieRepository;
     @Autowired
@@ -28,6 +31,7 @@ public class RouterController {
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
@@ -35,9 +39,10 @@ public class RouterController {
     }
 
     @RequestMapping(value = "/movie_list", method = RequestMethod.GET)
-    public ModelAndView movieList(@RequestParam(value = "tag", required = true) String Tag) {
+    public ModelAndView movieList(@RequestParam(value = "tag", required = true) String tag) {
         ModelAndView modelAndView = new ModelAndView("/service/movie_list");
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getByTag(tag);
+        logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);

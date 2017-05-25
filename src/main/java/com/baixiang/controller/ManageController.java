@@ -9,6 +9,8 @@ import com.baixiang.utils.FileUtil;
 import com.sun.istack.internal.Nullable;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 
 @RestController(value = "")
 public class ManageController {
+    private static final Logger logger = LoggerFactory.getLogger(ManageController.class);
     @Autowired
     MovieRepository movieRepository;
     @Autowired

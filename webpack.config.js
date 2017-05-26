@@ -12,7 +12,8 @@ module.exports = {
     entry: {
         index: path.resolve(__dirname + '/views/js/index.js'),
         signin: path.resolve(__dirname + '/views/js/signin.js'),
-        manage_header: path.resolve(__dirname + '/views/js/manage_header.js')
+        manage_header: path.resolve(__dirname + '/views/js/manage_header.js'),
+        pagination: path.resolve(__dirname + '/views/js/component/Pagination.js')
     },
     // 入口文件输出配置
     output: {

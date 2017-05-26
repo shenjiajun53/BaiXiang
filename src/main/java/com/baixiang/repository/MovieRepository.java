@@ -51,6 +51,20 @@ public class MovieRepository {
         return getSession().createQuery("from Movie as m  where :tag in elements(m.movieTagSet) ").setParameter("tag", tag).list();
     }
 
+    public List<Movie> getByTag(String tag, int page, int pageSize) {
+        return getSession().createQuery("from Movie as m  where :tag in elements(m.movieTagSet) ")
+                .setParameter("tag", tag)
+                .setFirstResult(page * pageSize)
+                .setMaxResults(pageSize)
+                .list();
+    }
+
+    public int getSizeByTag(String tag) {
+        return getSession().createQuery("from Movie as m  where :tag in elements(m.movieTagSet) ")
+                .setParameter("tag", tag)
+                .list().size();
+    }
+
     public Movie getById(long id) {
         return (Movie) getSession().load(Movie.class, id);
     }

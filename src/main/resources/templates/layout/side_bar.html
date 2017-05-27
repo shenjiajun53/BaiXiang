@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="side_bar" id="side_bar">
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="最热" name="first">
+            <div th:each="movie : ${hotList} ">
+                <div th:text="${movie.movieName}"/>
+            </div>
+        </el-tab-pane>
+        <el-tab-pane label="最新" name="second">最新</el-tab-pane>
+    </el-tabs>
+
+</div>
+</body>
+</html>

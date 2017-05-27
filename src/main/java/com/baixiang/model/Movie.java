@@ -28,6 +28,8 @@ public class Movie implements Serializable {
 
     private String releaseDate;
 
+    private Long viewTimes;
+
     /*
 * @OneToMany: 指明Order 与OrderItem关联关系为一对多关系
 *
@@ -143,6 +145,14 @@ public class Movie implements Serializable {
         this.createDate = createDate;
     }
 
+    public Long getViewTimes() {
+        return viewTimes;
+    }
+
+    public void setViewTimes(Long viewTimes) {
+        this.viewTimes = viewTimes;
+    }
+
     public void addScreenShot(MovieImage screenShot) {
         if (!this.screenShots.contains(screenShot)) {
             this.screenShots.add(screenShot);
@@ -166,7 +176,6 @@ public class Movie implements Serializable {
         movieTorrent.setMovie(null);
         this.movieTorrents.remove(movieTorrent);
     }
-
 
 
     public void addTag(String tag) {

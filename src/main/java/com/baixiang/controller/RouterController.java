@@ -53,6 +53,8 @@ public class RouterController {
         int maxPage = (int) Math.ceil(((double) movieRepository.getSizeByTag(tag)) / PAGE_SIZE);  //进一
         logger.info("tag=" + tag + " maxPage=" + maxPage);
         modelAndView.addObject("maxPage", maxPage);
+        ArrayList<Movie> hotList= (ArrayList<Movie>) movieRepository.getHostest();
+        modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         return modelAndView;
@@ -66,6 +68,12 @@ public class RouterController {
         if (null != movieId) {
             Movie movie = movieRepository.getById(movieId);
             System.out.printf("movie=" + movie.toString());
+            Long viewTimes = movie.getViewTimes();
+            if (null == viewTimes) {
+                viewTimes = 0L;
+            }
+            movie.setViewTimes(++viewTimes);
+            movieRepository.update(movie);
             modelAndView.addObject("movie", movie);
         } else {
             modelAndView.setViewName("/default/error_page");

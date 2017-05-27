@@ -65,6 +65,14 @@ public class MovieRepository {
                 .list().size();
     }
 
+    public List<Movie> getHostest() {
+        return getSession().createQuery("from Movie as m order by m.viewTimes desc ").setMaxResults(15).list();
+    }
+
+    public List<Movie> getNewest() {
+        return getSession().createQuery("from Movie").setMaxResults(15).list();
+    }
+
     public Movie getById(long id) {
         return (Movie) getSession().load(Movie.class, id);
     }

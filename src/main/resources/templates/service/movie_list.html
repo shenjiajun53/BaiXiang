@@ -15,24 +15,26 @@
 <body>
 <div th:replace="layout/header::header"></div>
 
-<div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
-    <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
-        <div th:each="movie :${movieList}"
-             style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
-            <el-card :body-style="{ padding: '0px' }" style="width: 200px">
-                <a th:href="${'/movie_detail?movieId='+movie.id}">
-                    <img th:src="${movie.poster}" style="height: 150px"/>
-                </a>
-                <div th:text="${movie.movieName}"></div>
-            </el-card>
+<div style="display: flex;flex-direction: row">
+    <div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
+        <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
+            <div th:each="movie :${movieList}"
+                 style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
+                <el-card :body-style="{ padding: '0px' }" style="width: 200px">
+                    <a th:href="${'/movie_detail?movieId='+movie.id}">
+                        <img th:src="${movie.poster}" style="height: 150px"/>
+                    </a>
+                    <div th:text="${movie.movieName}"></div>
+                </el-card>
+            </div>
         </div>
+
+        <pagination :max-page="maxPage"/>
+        <el-button @click="toManage">去管理页</el-button>
     </div>
 
-    <pagination :max-page="maxPage"/>
-    <el-button @click="toManage">去管理页</el-button>
+    <div th:replace="layout/side_bar::side_bar"></div>
 </div>
-</div>
-
 </body>
 
 
@@ -52,5 +54,6 @@
     })
 </script>
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
+<script type="text/javascript" th:src="@{/side_bar.bundle.js}"></script>
 <link rel="stylesheet" th:href="@{/css/manage_header.css}">
 </html>

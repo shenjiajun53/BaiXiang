@@ -13,7 +13,7 @@ module.exports = {
         index: path.resolve(__dirname + '/views/js/index.js'),
         signin: path.resolve(__dirname + '/views/js/signin.js'),
         manage_header: path.resolve(__dirname + '/views/js/manage_header.js'),
-        pagination: path.resolve(__dirname + '/views/js/component/Pagination.js')
+        button: path.resolve(__dirname + '/views/component/button/button.js')
     },
     // 入口文件输出配置
     output: {
@@ -21,64 +21,64 @@ module.exports = {
         filename: '[name].bundle.js'
     },
     module: {
-        // avoid webpack trying to shim process
-        noParse: /es6-promise\.js$/,
-
-        // 加载器配置
-        loaders: [
+        rules: [
             {
                 test: /\.vue$/,
-                loader: 'vue'
+                loader: 'vue-loader',
             },
             {
                 test: /\.js$/,
-                // excluding some local linked packages.
-                // for normal use cases only node_modules is needed.
-                exclude: /node_modules|vue\/dist|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
-                loader: 'babel'
+                loader: 'babel-loader',
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
                 loader: 'style-loader!css-loader'
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
-                loader: 'file-loader'
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg)(\?\S*)?$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 loader: 'file-loader',
-                query: {
+                options: {
                     name: '[name].[ext]?[hash]'
                 }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+                loader: 'file-loader'
             }
         ]
     },
-    babel: {
-        presets: ['es2015'],
-        plugins: ['transform-runtime']
-    },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.common.js'
+            'vue$': 'vue/dist/vue.esm.js'
         }
     },
-
-
-    // 插件项
-    plugins: minimize ? [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-            },
-            output: {
-                comments: false,
-            },
-        }),
+    devServer: {
+        historyApiFallback: true,
+        noInfo: true
+    },
+    performance: {
+        hints: false
+    },
+    devtool: '#eval-source-map'
+};
+if (process.env.NODE_ENV === 'production') {
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('production')
+                NODE_ENV: '"production"'
             }
         }),
-    ] : []
-};
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true
+        })
+    ])
+}

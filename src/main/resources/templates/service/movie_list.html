@@ -10,13 +10,13 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
-    <script type="text/javascript" th:src="@{/pagination.bundle.js}"></script>
+    <script type="text/javascript" th:src="@{/button.bundle.js}"></script>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 
 <div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
-    <my-component></my-component>
+    <el-button> 333232</el-button>
 
     <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
         <div th:each="movie :${movieList}"

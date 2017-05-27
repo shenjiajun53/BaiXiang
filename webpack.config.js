@@ -13,7 +13,7 @@ module.exports = {
         index: path.resolve(__dirname + '/views/js/index.js'),
         signin: path.resolve(__dirname + '/views/js/signin.js'),
         manage_header: path.resolve(__dirname + '/views/js/manage_header.js'),
-        button: path.resolve(__dirname + '/views/component/button/button.js')
+        VueComponents: path.resolve(__dirname + '/views/component/VueComponents.js'),
     },
     // 入口文件输出配置
     output: {

@@ -1,5 +1,5 @@
 <template>
-    <button :disabled="disabled" class="el-button"
+    <button :disabled="disabled" class="my-button"
             @click="handleClick"
             :autofocus="autofocus"
             :type="nativeType"
@@ -20,7 +20,7 @@
 </template>
 <script>
     export default {
-        name: 'ElButton',
+        name: 'my-button',
         props: {
             type: {
                 type: String,
@@ -42,6 +42,7 @@
         },
         methods: {
             handleClick(evt) {
+                console.log("handleClick");
                 this.$emit('click', evt);
             }
         }

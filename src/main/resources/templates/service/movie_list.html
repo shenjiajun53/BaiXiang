@@ -10,14 +10,12 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
-    <script type="text/javascript" th:src="@{/button.bundle.js}"></script>
+    <script type="text/javascript" th:src="@{/VueComponents.bundle.js}"></script>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 
 <div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
-    <el-button> 333232</el-button>
-
     <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
         <div th:each="movie :${movieList}"
              style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
@@ -29,13 +27,8 @@
             </el-card>
         </div>
     </div>
-    <div style="display: flex;flex-direction: row">
-        <div v-for="pageItem in pageList" style="margin-left: 1em">
-            <a :href="originHref+'&page='+pageItem.itemValue">{{pageItem.itemValue}}</a>
-        </div>
-    </div>
 
-
+    <pagination></pagination>
     <el-button @click="toManage">去管理页</el-button>
 </div>
 </div>
@@ -44,69 +37,11 @@
 
 
 <script th:inline="javascript">
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-    let currentPage = Number(getQueryString("page"));
-    let currentTag = getQueryString("tag");
-    let maxPage = [[${maxPage}]];
-    console.log("href=" + window.location.href);
-    console.log("page=" + currentPage + " maxPage=" + maxPage);
-    console.log("tag=" + currentTag);
-    let pageList = [];
-    if (maxPage > 5) {
-        if (currentPage === 1) {
-            pageList = [
-                {itemValue: 1, checked: true},
-                {itemValue: 2, checked: false},
-                {itemValue: 3, checked: false},
-                {itemValue: 4, checked: false},
-                {itemValue: 5, checked: false}]
-        } else if (currentPage === 2) {
-            pageList = [
-                {itemValue: 1, checked: false},
-                {itemValue: 2, checked: true},
-                {itemValue: 3, checked: false},
-                {itemValue: 4, checked: false},
-                {itemValue: 5, checked: false}]
-        } else if (maxPage === currentPage) {
-            pageList = [
-                {itemValue: currentPage - 4, checked: false},
-                {itemValue: currentPage - 3, checked: false},
-                {itemValue: currentPage - 2, checked: false},
-                {itemValue: currentPage - 1, checked: false},
-                {itemValue: currentPage, checked: true}]
-        } else if ((maxPage - currentPage) === 1) {
-            pageList = [
-                {itemValue: currentPage - 3, checked: false},
-                {itemValue: currentPage - 2, checked: false},
-                {itemValue: currentPage - 1, checked: false},
-                {itemValue: currentPage, checked: true},
-                {itemValue: currentPage + 1, checked: false}]
-        } else {
-            pageList = [
-                {itemValue: currentPage - 2, checked: false},
-                {itemValue: currentPage - 1, checked: false},
-                {itemValue: currentPage, checked: true},
-                {itemValue: currentPage + 1, checked: false},
-                {itemValue: currentPage + 2, checked: false}]
-        }
-    } else {
-        for (let i = 1; i < maxPage + 1; i++) {
-            pageList.push({itemValue: i, checked: i === currentPage});
-        }
-    }
-
 
     new Vue({
         el: '#container',
         data: {
-            originHref: window.location.pathname + "?tag=" + currentTag,
-            currentPage: currentPage,
-            pageList: pageList
+            maxPage: [[${maxPage}]]
         },
         methods: {
             toManage: function () {

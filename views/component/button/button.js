@@ -1,12 +1,14 @@
 /**
  * Created by shenjj on 2017/5/26.
  */
-import ElButton  from './button.vue';
+import MyButton  from './button.vue';
 
 /* istanbul ignore next */
 /* istanbul ignore next */
-ElButton.install = function (Vue) {
-    Vue.component(ElButton.name, ElButton);
+console.log("component name=" + MyButton.name);
+
+MyButton.install = function (Vue) {
+    Vue.component(MyButton.name, MyButton);
 };
 
-export default ElButton;
+export default MyButton;

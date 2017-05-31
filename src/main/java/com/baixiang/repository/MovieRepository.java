@@ -1,6 +1,5 @@
 package com.baixiang.repository;
 
-import com.baixiang.controller.RouterController;
 import com.baixiang.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -75,6 +74,10 @@ public class MovieRepository {
 
     public Movie getById(long id) {
         return (Movie) getSession().load(Movie.class, id);
+    }
+
+    public List<Movie> getByName(String movieName) {
+        return (List<Movie>) getSession().createQuery("from Movie as m where m.movieName=:movieName").setParameter("movieName", movieName).list();
     }
 
     public void update(Movie movie) {

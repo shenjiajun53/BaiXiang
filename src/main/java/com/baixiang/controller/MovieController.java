@@ -7,6 +7,8 @@ import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.authz.annotation.RequiresUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2017/5/17.
@@ -24,6 +27,7 @@ import java.io.IOException;
 
 @RestController
 public class MovieController {
+    private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
     @Autowired
     MovieRepository movieRepository;
 
@@ -105,6 +109,14 @@ public class MovieController {
         }
         Response<RedirectBean> response = new Response<>(redirectBean, null);
         return response;
+    }
+
+    @RequestMapping(value = "/api/search_movie", method = RequestMethod.POST)
+    private Movie searchMovie(@RequestParam(value = "searchStr") String searchStr) {
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getByName(searchStr);
+//        Response<ArrayList<Movie>> response = new Response<>(movieArrayList, null);
+        logger.info("movie size=" + movieArrayList.size());
+        return movieArrayList.get(0);
     }
 
     private String saveFile(MultipartFile multipartFile, String filePath) {

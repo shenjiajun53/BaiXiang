@@ -6,6 +6,16 @@
 </head>
 <body>
 <div th:fragment="side_bar" id="side_bar">
+    <el-autocomplete
+            v-model="inputStr"
+            :fetch-suggestions="searchMovie"
+            placeholder="请输入影片名字"
+            icon="search"
+            :trigger-on-focus="false"
+            @select="handleSelect"
+    ></el-autocomplete>
+
+
     <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="最热" name="first">
             <div th:each="movie : ${hotList} ">

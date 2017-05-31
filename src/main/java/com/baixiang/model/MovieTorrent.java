@@ -1,5 +1,7 @@
 package com.baixiang.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "movie_torrents")
+@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class MovieTorrent implements Serializable {
     @Id
     @GeneratedValue
@@ -33,7 +36,7 @@ public class MovieTorrent implements Serializable {
      * @JoinColumn:指明了被维护端（OrderItem）的外键字段为order_id，它和维护端的主键(orderid)连接,unique= true 指明order_id列的值不可重复。
      */
 
-    @ManyToOne(cascade = CascadeType.REFRESH, optional = false)
+    @ManyToOne(cascade = CascadeType.REFRESH, optional = false,fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id",referencedColumnName="id")
     private Movie movie;
 

@@ -20,8 +20,8 @@ import java.util.ArrayList;
  */
 
 @RestController
-public class RouterController {
-    private static final Logger logger = LoggerFactory.getLogger(RouterController.class);
+public class ServiceController {
+    private static final Logger logger = LoggerFactory.getLogger(ServiceController.class);
     @Autowired
     MovieRepository movieRepository;
     @Autowired
@@ -35,6 +35,8 @@ public class RouterController {
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
         logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
+        ArrayList<Movie> hotList= (ArrayList<Movie>) movieRepository.getHostest();
+        modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         return modelAndView;

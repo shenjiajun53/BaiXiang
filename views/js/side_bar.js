@@ -1,12 +1,27 @@
 /**
  * Created by shenjj on 2017/5/27.
  */
+Vue.component('my-item-zh', {
+    functional: true,
+    render: function (h, ctx) {
+        var item = ctx.props.item;
+        return h('li', ctx.data, [
+            h('div', {style: {textOverflow: "ellipsis", overFlow: "hidden"}}, [item.movieName]),
+            h('span', {style: {color: "#b4b4b4", fontSize: "12px"}}, [item.movieInfo])
+        ]);
+    },
+    props: {
+        item: {type: Object, required: true}
+    }
+});
+
 let header = new Vue({
     el: "#side_bar",
     data() {
         return {
             inputStr: '',
-            activeName: 'first'
+            activeName: 'first',
+            timeout: null
         };
     },
     methods: {
@@ -17,8 +32,8 @@ let header = new Vue({
         searchMovie(queryString, cb){
             console.log(queryString);
             let url = "/api/search_movie";
-            let formData=new FormData();
-            formData.append("searchStr",queryString);
+            let formData = new FormData();
+            formData.append("searchStr", queryString);
             fetch(url, {
                 method: "post",
                 body: formData,
@@ -29,16 +44,21 @@ let header = new Vue({
                 }
             ).then(
                 (json) => {
-                    console.log(JSON.stringify(json));
+                    // console.log(JSON.stringify(json));
                     let result = json.result;
-                    if (result.status == 1) {
-//                            window.location.href = result.redirect;
-                    }
+                    // var results = queryString ? result.filter(this.createStateFilter(queryString)) : result;
+                    console.log(JSON.stringify(result));
+                    cb(result);
                 }
             ).catch(
                 (ex) => {
                     console.error('parsing failed', ex);
                 });
+        },
+        createStateFilter(queryString) {
+            return (state) => {
+                return (state.value.indexOf(queryString.toLowerCase()) === 0);
+            };
         },
         handleSelect(item){
             console.log(item);

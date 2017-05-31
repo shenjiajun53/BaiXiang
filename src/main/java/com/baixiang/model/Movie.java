@@ -1,6 +1,7 @@
 package com.baixiang.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -17,7 +18,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "movies")
-@JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
 public class Movie implements Serializable {
 
     @Id
@@ -51,10 +51,12 @@ public class Movie implements Serializable {
 */
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
+    @JsonIgnore
     private Set<MovieImage> screenShots = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
+    @JsonIgnore
     private Set<MovieTorrent> movieTorrents = new HashSet<>();
 
     @ElementCollection

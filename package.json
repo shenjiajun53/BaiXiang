@@ -55,6 +55,7 @@
   },
   "scripts": {
     "build": "webpack",
+    "build-minify": "webpack --optimize-minimize",
     "build-watch": "webpack --watch"
   }
 }

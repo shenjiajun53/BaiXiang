@@ -17,12 +17,7 @@
 
 <div style="display: flex;flex-direction: row">
     <div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
-        <el-breadcrumb separator="/">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-        </el-breadcrumb>
+        <breadcrumb :breadcrumb-list="breadcrumbList"/>
         <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
             <div th:each="movie :${movieList}"
                  style="margin-bottom: 10px;margin-left: 10px;margin-right: 10px">
@@ -36,7 +31,6 @@
         </div>
 
         <pagination :max-page="maxPage"/>
-        <el-button @click="toManage">去管理页</el-button>
     </div>
 
     <div th:replace="layout/side_bar::side_bar"></div>
@@ -45,17 +39,45 @@
 
 
 <script th:inline="javascript">
-
+    function getQueryString(paramName) {
+        let reg = new RegExp("(^|&)" + paramName + "=([^&]*)(&|$)", "i");
+        let r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    let tagName = getQueryString("tag");
+    let tagZHName;
+    switch (tagName) {
+        case "New":
+            tagZHName = "最新";
+            break;
+        case "Animation":
+            tagZHName = "动画";
+            break;
+        case "Action":
+            tagZHName = "动作";
+            break;
+        case "Science":
+            tagZHName = "科幻";
+            break;
+        case "American":
+            tagZHName = "美剧";
+            break;
+        case "Japanese":
+            tagZHName = "日剧";
+            break;
+        default:
+            break;
+    }
     new Vue({
         el: '#container',
         data: {
-            maxPage: [[${maxPage}]]
+            maxPage: [[${maxPage}]],
+            breadcrumbList: [{url: "/", tagName: "首页"},
+                {url: "/movie_list?tag=" + tagName, tagName: tagZHName}]
         },
         methods: {
-            toManage: function () {
-                console.log("onclick");
-                window.location.pathname = "/manage"
-            }
+
         }
     })
 </script>

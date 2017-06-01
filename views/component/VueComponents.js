@@ -3,10 +3,12 @@
  */
 import MyButton from "./button/button"
 import Pagination from "./pagination/pagination"
+import BreadCrumb from "./BreadCrumb/BreadCrumb"
 
 const components=[
     MyButton,
-    Pagination
+    Pagination,
+    BreadCrumb
 ];
 
 const install = function(Vue, opts = {}) {

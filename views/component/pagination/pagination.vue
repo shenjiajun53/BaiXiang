@@ -11,19 +11,14 @@
 </template>
 
 <script>
-    function getQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
-        return null;
-    }
-    let currentPage = Number(getQueryString("page"));
+    import UrlUtil from "../../utils/UrlUtil";
+    let currentPage = Number(new UrlUtil().getQueryString("page"));
     if (currentPage === 0) {
         currentPage = 1;
     }
-    let currentTag = getQueryString("tag");
-    console.log("href=" + window.location.href);
-    console.log("tag=" + currentTag);
+    let currentTag = new UrlUtil().getQueryString("tag");
+//    console.log("href=" + window.location.href);
+//    console.log("tag=" + currentTag);
 
     export default{
         name: 'pagination',

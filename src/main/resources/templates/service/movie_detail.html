@@ -10,11 +10,15 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script type="text/javascript" th:src="@{/VueComponents.bundle.js}"></script>
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 
 <div id="container">
+
+    <breadcrumb :breadcrumb-list="breadcrumbList"/>
 
     <div style="display: flex;flex-direction: column;align-items: flex-start">
 
@@ -40,7 +44,31 @@
 </body>
 
 <script th:inline="javascript">
-
+    let tagName = [[${movie!=null?movie.movieTagSet[0]:""}]];
+    console.log("tagname="+tagName);
+    let tagZHName;
+    switch (tagName) {
+        case "New":
+            tagZHName = "最新";
+            break;
+        case "Animation":
+            tagZHName = "动画";
+            break;
+        case "Action":
+            tagZHName = "动作";
+            break;
+        case "Science":
+            tagZHName = "科幻";
+            break;
+        case "American":
+            tagZHName = "美剧";
+            break;
+        case "Japanese":
+            tagZHName = "日剧";
+            break;
+        default:
+            break;
+    }
     new Vue({
         el: "#container",
         data() {
@@ -49,7 +77,9 @@
                 movieTitle: [[${movie!=null?movie.movieName:""}]],
                 poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
                 screenShotList: [],
-                torrentList: []
+                torrentList: [],
+                breadcrumbList: [{url: "/", tagName: "首页"},
+                    {url: "/movie_list?tag=" + tagName, tagName: tagZHName}]
             };
         },
         methods: {

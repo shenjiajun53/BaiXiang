@@ -15,6 +15,7 @@ module.exports = {
         manage_header: path.resolve(__dirname + '/views/js/manage_header.js'),
         side_bar: path.resolve(__dirname + '/views/js/side_bar.js'),
         VueComponents: path.resolve(__dirname + '/views/component/VueComponents.js'),
+        UrlUtil: path.resolve(__dirname + '/views/utils/UrlUtil.js'),
     },
     // 入口文件输出配置
     output: {

@@ -60,8 +60,9 @@ let header = new Vue({
                 return (state.value.indexOf(queryString.toLowerCase()) === 0);
             };
         },
-        handleSelect(item){
-            console.log(item);
+        handleSelect(movie){
+            console.log(movie);
+            window.location.href='/movie_detail?movieId='+movie.id;
         }
     }
 });

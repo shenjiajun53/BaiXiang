@@ -80,6 +80,11 @@ public class MovieRepository {
         return (List<Movie>) getSession().createQuery("from Movie as m where m.movieName=:movieName").setParameter("movieName", movieName).list();
     }
 
+    public List<Movie> getIncludeName(String movieName) {
+        return (List<Movie>) getSession().createQuery("from Movie as m where m.movieName like :movieName").
+                setParameter("movieName", "%" + movieName + "%").list();
+    }
+
     public void update(Movie movie) {
         getSession().update(movie);
         return;

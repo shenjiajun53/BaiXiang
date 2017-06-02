@@ -40,6 +40,7 @@ public class UserController {
     public Response<RedirectBean> signIn(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass) {
         UsernamePasswordToken token = new UsernamePasswordToken(userName, pass, true);
+        token.setRememberMe(true);
         Subject currentUser = SecurityUtils.getSubject();
         try {
             logger.info("对用户[" + userName + "]进行登录验证..验证开始");

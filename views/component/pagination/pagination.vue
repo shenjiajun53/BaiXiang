@@ -1,12 +1,12 @@
 <template>
     <div style="display: flex;flex-direction: row" class="pagination">
-        <div v-if="showFirstBtn"><a :href="originHref+'&page='+1">首页</a></div>
-        <div v-if="showPreBtn"><a :href="originHref+'&page='+(currentPage-1)">上一页</a></div>
-        <div v-for="pageItem in pageList" style="margin-left: 1em">
-            <a :href="originHref+'&page='+pageItem.itemValue">{{pageItem.itemValue}}</a>
+        <div v-if="showFirstBtn"><a :href="originHref+'&page='+1" class="character-item">首页</a></div>
+        <div v-if="showPreBtn"><a :href="originHref+'&page='+(currentPage-1)" class="character-item">上一页</a></div>
+        <div v-for="pageItem in pageList">
+            <a :href="originHref+'&page='+pageItem.itemValue" class="number-item">{{pageItem.itemValue}}</a>
         </div>
-        <div v-if="showNextBtn"><a :href="originHref+'&page='+(currentPage+1)">下一页</a></div>
-        <div v-if="showLastBtn"><a :href="originHref+'&page='+maxPage">末页</a></div>
+        <div v-if="showNextBtn"><a :href="originHref+'&page='+(currentPage+1)" class="character-item">下一页</a></div>
+        <div v-if="showLastBtn"><a :href="originHref+'&page='+maxPage" class="character-item">末页</a></div>
     </div>
 </template>
 
@@ -98,9 +98,36 @@
 
 </script>
 <style scoped>
+    .number-item {
+        height: 1em;
+        width: 1em;
+        padding: 0.5em;
+        border-radius: 2em;
+    }
+
+    .character-item {
+        height: 1em;
+        padding: 0.5em;
+        border-radius: 1em;
+    }
+
     a {
-        color: #757575;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0.5em;
+        color: white;
         text-decoration: none;
+        background-color: #E91E63;
+        transition: background-color 0.3s;
+    }
+
+    a:hover {
+        background-color: #C2185B;
+    }
+
+    a:active {
+        background-color: #F8BBD0;
     }
 
     a:link {
@@ -108,10 +135,6 @@
     }
 
     a:visited {
-
-    }
-
-    a:hover {
 
     }
 </style>

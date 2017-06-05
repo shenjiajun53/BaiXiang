@@ -17,8 +17,8 @@
         currentPage = 1;
     }
     let currentTag = new UrlUtil().getQueryString("tag");
-//    console.log("href=" + window.location.href);
-//    console.log("tag=" + currentTag);
+    //    console.log("href=" + window.location.href);
+    //    console.log("tag=" + currentTag);
 
     export default{
         name: 'pagination',
@@ -97,3 +97,21 @@
     }
 
 </script>
+<style scoped>
+    a {
+        color: #757575;
+        text-decoration: none;
+    }
+
+    a:link {
+
+    }
+
+    a:visited {
+
+    }
+
+    a:hover {
+
+    }
+</style>

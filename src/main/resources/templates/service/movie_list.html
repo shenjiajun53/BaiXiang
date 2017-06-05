@@ -10,12 +10,14 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
+
     <script type="text/javascript" th:src="@{/VueComponents.bundle.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/paletee.css}">
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 
-<div style="display: flex;flex-direction: row">
+<div style="display: flex;flex-direction: row;justify-content: space-between">
     <div id="container" style="padding-left: 16px;padding-right: 16px;padding-bottom: 16px">
         <breadcrumb :breadcrumb-list="breadcrumbList"/>
         <div style="display: flex;flex-wrap: wrap;margin-top: 10px;margin-bottom: 10px">
@@ -42,43 +44,18 @@
     function getQueryString(paramName) {
         let reg = new RegExp("(^|&)" + paramName + "=([^&]*)(&|$)", "i");
         let r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]);
+        if (r != null) return decodeURI(r[2]);
         return null;
     }
     let tagName = getQueryString("tag");
-    let tagZHName;
-    switch (tagName) {
-        case "New":
-            tagZHName = "最新";
-            break;
-        case "Animation":
-            tagZHName = "动画";
-            break;
-        case "Action":
-            tagZHName = "动作";
-            break;
-        case "Science":
-            tagZHName = "科幻";
-            break;
-        case "American":
-            tagZHName = "美剧";
-            break;
-        case "Japanese":
-            tagZHName = "日剧";
-            break;
-        default:
-            break;
-    }
     new Vue({
         el: '#container',
         data: {
             maxPage: [[${maxPage}]],
             breadcrumbList: [{url: "/", tagName: "首页"},
-                {url: "/movie_list?tag=" + tagName, tagName: tagZHName}]
+                {url: "/movie_list?tag=" + tagName, tagName: tagName}]
         },
-        methods: {
-
-        }
+        methods: {}
     })
 </script>
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>

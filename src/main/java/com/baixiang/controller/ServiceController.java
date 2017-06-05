@@ -32,10 +32,10 @@ public class ServiceController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getByTag("推荐", 0, 20);
         logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
-        ArrayList<Movie> hotList= (ArrayList<Movie>) movieRepository.getHostest();
+        ArrayList<Movie> hotList = (ArrayList<Movie>) movieRepository.getHostest();
         modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
@@ -55,7 +55,7 @@ public class ServiceController {
         int maxPage = (int) Math.ceil(((double) movieRepository.getSizeByTag(tag)) / PAGE_SIZE);  //进一
         logger.info("tag=" + tag + " maxPage=" + maxPage);
         modelAndView.addObject("maxPage", maxPage);
-        ArrayList<Movie> hotList= (ArrayList<Movie>) movieRepository.getHostest();
+        ArrayList<Movie> hotList = (ArrayList<Movie>) movieRepository.getHostest();
         modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);

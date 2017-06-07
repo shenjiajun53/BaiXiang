@@ -46,7 +46,7 @@
                 this.showPreBtn = false;
                 this.showFirstBtn = false;
             }
-            if (currentPage === maxPage) {
+            if (currentPage === maxPage || maxPage === 0) {
                 this.showNextBtn = false;
                 this.showLastBtn = false;
             }
@@ -115,7 +115,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 0.5em;
+        margin-right: 0.5em;
         color: white;
         text-decoration: none;
         background-color: #E91E63;

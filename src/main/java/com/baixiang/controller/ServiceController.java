@@ -27,7 +27,7 @@ public class ServiceController {
     @Autowired
     UserService userService;
 
-    private static final int PAGE_SIZE = 3;
+    private static final int PAGE_SIZE = 10;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {

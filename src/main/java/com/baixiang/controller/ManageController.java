@@ -44,6 +44,8 @@ public class ManageController {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
         modelAndView.addObject("movieList", movieArrayList);
+        ArrayList<Movie> hotList = (ArrayList<Movie>) movieRepository.getHostest();
+        modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         return modelAndView;

@@ -42,6 +42,7 @@ public class UserController {
         UsernamePasswordToken token = new UsernamePasswordToken(userName, pass, true);
         token.setRememberMe(true);
         Subject currentUser = SecurityUtils.getSubject();
+        currentUser.getSession().setTimeout(-1000L);
         try {
             logger.info("对用户[" + userName + "]进行登录验证..验证开始");
             currentUser.login(token);

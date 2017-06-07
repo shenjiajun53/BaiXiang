@@ -9,6 +9,9 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/default.css}">
+
 </head>
 <body>
 <div th:replace="layout/manage_header::header"></div>
@@ -78,5 +81,5 @@
 
 
 <script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
-<link rel="stylesheet" th:href="@{/css/manage_header.css}">
+<link rel="stylesheet" th:href="@{/css/header.css}">
 </html>

@@ -12,11 +12,12 @@
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
     <script type="text/javascript" th:src="@{/VueComponents.bundle.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/default.css}">
 </head>
 <body>
 <div th:replace="layout/header::header"></div>
 
-<div id="container">
+<div id="vertical-container">
 
     <breadcrumb :breadcrumb-list="breadcrumbList"/>
 
@@ -45,9 +46,9 @@
 
 <script th:inline="javascript">
     let tagName = [[${movie!=null?movie.movieTagSet[0]:""}]];
-    console.log("tagname="+tagName);
+    console.log("tagname=" + tagName);
     new Vue({
-        el: "#container",
+        el: "#vertical-container",
         data() {
             return {
                 movieInfo: [[${movie!=null?movie.movieInfo:""}]],
@@ -67,6 +68,5 @@
     })
 </script>
 
-<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
-<link rel="stylesheet" th:href="@{/css/manage_header.css}">
+<script type="text/javascript" th:src="@{/header.bundle.js}"></script>
 </html>

@@ -10,11 +10,12 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" th:href="@{/css/default.css}">
 </head>
 <body>
 <div th:replace="layout/manage_header::header"></div>
 
-<div id="edit_film">
+<div id="vertical-container">
 
     <div style="display: flex;flex-direction: column;align-items: flex-start">
         <el-input v-model="movieTitle" placeholder="请输入影片标题" style="margin-top:0.5em;margin-bottom: 1em"></el-input>
@@ -99,7 +100,7 @@
         {value: '日剧', key: "日剧"},
         {value: '推荐', key: "推荐"}];
     new Vue({
-        el: "#edit_film",
+        el: "#vertical-container",
         data() {
             return {
                 movieInfo: [[${movie!=null?movie.movieInfo:""}]],
@@ -219,6 +220,5 @@
         }
     })
 </script>
-<script type="text/javascript" th:src="@{/manage_header.bundle.js}"></script>
-<link rel="stylesheet" th:href="@{/css/manage_header.css}">
+<script type="text/javascript" th:src="@{/header.bundle.js}"></script>
 </html>

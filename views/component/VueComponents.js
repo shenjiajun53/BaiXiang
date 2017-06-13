@@ -4,8 +4,10 @@
 import MyButton from "./button/button"
 import Pagination from "./pagination/pagination"
 import BreadCrumb from "./BreadCrumb/BreadCrumb"
+import Card from "./card/card"
 
 const components=[
+    Card,
     MyButton,
     Pagination,
     BreadCrumb

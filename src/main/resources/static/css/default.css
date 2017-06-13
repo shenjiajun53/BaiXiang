@@ -33,3 +33,12 @@
     color: #BDBDBD;
     cursor: pointer;
 }
+
+a {
+    text-decoration: none;
+    color: #212121;
+}
+
+a:visited {
+    color: #757575;
+}

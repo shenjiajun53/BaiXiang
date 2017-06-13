@@ -29,9 +29,8 @@
                v-on:change="posterSelected"
                style="margin-bottom: 1em;display: none"
         />
-        <el-card style="margin-bottom: 1em" :body-style="{ padding: '0px' }">
-            <img v-bind:src="poster.url" style="width: 200px;"/>
-        </el-card>
+
+        <img v-bind:src="poster.url" style="width: 200px;"/>
 
         <div style="margin-bottom: 1em">
             <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选

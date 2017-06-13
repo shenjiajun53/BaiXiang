@@ -20,7 +20,7 @@
     <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="最热" name="first">
             <div th:each="movie : ${hotList} ">
-                <div th:text="${movie.movieName}"/>
+                <a th:href="${'/movie_detail?movieId='+movie.id}" th:text="${movie.movieName}"/>
             </div>
         </el-tab-pane>
         <el-tab-pane label="最新" name="second">最新</el-tab-pane>

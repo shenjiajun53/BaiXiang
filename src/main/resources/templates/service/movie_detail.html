@@ -24,21 +24,20 @@
     <div style="display: flex;flex-direction: column;align-items: flex-start">
 
 
-        <div th:text="${movie.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></div>
+        <h1 th:text="${movie.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
 
-
-        <el-card style="margin-bottom: 1em" :body-style="{ padding: '0px' }">
-            <img v-bind:src="poster.url" style="width: 200px;"/>
-        </el-card>
+        <img v-bind:src="poster.url" style="width: 200px;margin-bottom: 1em"/>
 
         <div th:text="${movie.movieInfo}" style="margin-bottom: 1em"></div>
 
-        <div th:each="screenShot :${movie.screenShots}">
+        <div style="margin-bottom: 5px">截图</div>
+        <div th:each="screenShot :${movie.screenShots}" style="margin-bottom: 1em">
             <img th:src="${screenShot.url}" style="width: 200px"/>
         </div>
 
-        <div th:each="torrent :${movie.movieTorrents}">
-            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}"></a>
+        <div style="margin-bottom: 5px">种子下载</div>
+        <div th:each="torrent :${movie.movieTorrents}" style="margin-bottom: 5px">
+            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}" ></a>
         </div>
     </div>
 </div>

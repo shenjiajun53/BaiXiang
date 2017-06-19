@@ -22,13 +22,20 @@
             v-model="toggleBt"
             @change="btOnChange">
     </el-switch>
+    <br/>
+    <span>桃花</span>
+    <el-switch
+            v-model="toggleTaohua"
+            @change="taohuaOnChange">
+    </el-switch>
 </div>
 </body>
 <script>
     new Vue({
         el: "#container",
         data: {
-            toggleBt: false
+            toggleBt: false,
+            toggleTaohua:false
         },
         methods: {
             btOnChange(value){
@@ -38,6 +45,16 @@
                     this.post(url);
                 } else {
                     let url = "/api/stop_spider_bt";
+                    this.post(url);
+                }
+            },
+            taohuaOnChange(value){
+                console.log("" + value);
+                if (value) {
+                    let url = "/api/start_spider_taohua";
+                    this.post(url);
+                } else {
+                    let url = "/api/stop_spider_taohua";
                     this.post(url);
                 }
             },

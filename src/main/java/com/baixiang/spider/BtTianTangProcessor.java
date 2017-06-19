@@ -19,7 +19,7 @@ public class BtTianTangProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-//        page.addTargetRequests(page.getHtml().links().regex("(https://www\\.jianshu\\.com/[\\w\\-]+/[\\w\\-]+)").all());
+//        page.addTargetRequests(page.getHtml().links().regex("(http://www\\.bttiantangs\\.com/movie/[\\w\\-]+/[\\w\\-]+)").all());
         page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/movie/\\d+.*").all());
         page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.*").all());
         page.putField("movie_title", page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
@@ -33,6 +33,9 @@ public class BtTianTangProcessor implements PageProcessor {
 
     }
 
+    public static void main(String[] args) {
+        spider.run();
+    }
 
     public static void start() {
         spider.run();

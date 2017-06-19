@@ -8,8 +8,9 @@ import us.codecraft.webmagic.processor.PageProcessor;
 /**
  * Created by shenjj on 2017/6/19.
  */
-public class MovieProcessor implements PageProcessor {
+public class BtTianTangProcessor implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(10000);
+    private static Spider spider = Spider.create(new BtTianTangProcessor()).addUrl("http://www.bttiantangs.com/").thread(5);
 
     @Override
     public Site getSite() {
@@ -33,7 +34,11 @@ public class MovieProcessor implements PageProcessor {
     }
 
 
-    public static void main(String[] args) {
-        Spider.create(new MovieProcessor()).addUrl("http://www.bttiantangs.com/").thread(5).run();
+    public static void start() {
+        spider.run();
+    }
+
+    public static void stop() {
+        spider.stop();
     }
 }

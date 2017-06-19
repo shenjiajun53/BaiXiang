@@ -31,13 +31,18 @@
             toggleBt: false
         },
         methods: {
-            btOnChange(){
-                console.log("" + this.toggleBt);
-                if (this.toggleBt) {
-
+            btOnChange(value){
+                console.log("" + value);
+                if (value) {
+                    let url = "/api/start_spider_bt";
+                    this.post(url);
                 } else {
-
+                    let url = "/api/stop_spider_bt";
+                    this.post(url);
                 }
+            },
+            post(url){
+                fetch(url, {method: "post"});
             }
         }
     })

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>白相</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 先引入 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script type="text/javascript" th:src="@{/VueComponents.bundle.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/default.css}">
+</head>
+<body>
+<div th:replace="layout/manage_header::header"></div>
+
+<div id="container">
+    <span>BT天堂</span>
+    <el-switch
+            v-model="toggleBt"
+            @change="btOnChange">
+    </el-switch>
+</div>
+</body>
+<script>
+    new Vue({
+        el: "#container",
+        data: {
+            toggleBt: false
+        },
+        methods: {
+            btOnChange(){
+                console.log("" + this.toggleBt);
+                if (this.toggleBt) {
+
+                } else {
+
+                }
+            }
+        }
+    })
+</script>
+<script type="text/javascript" th:src="@{/header.bundle.js}"></script>
+</html>

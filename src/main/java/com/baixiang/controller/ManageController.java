@@ -81,4 +81,12 @@ public class ManageController {
         modelAndView.addObject("user", user);
         return modelAndView;
     }
+
+    @RequestMapping(value = "/manage/spider")
+    public ModelAndView spider() {
+        ModelAndView modelAndView = new ModelAndView("/manage/spider");
+        User user = userService.getUserBySession();
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
 }

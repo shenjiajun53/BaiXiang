@@ -27,9 +27,9 @@ public class Movie implements Serializable {
     private String movieName;
     private String movieInfo;
     private String poster;
-    private Date createDate;//订单创建日期
+    private Date createDate;//创建日期
 
-    private String releaseDate;
+    private String releaseDate;//上映日期
 
     private Long viewTimes;
 

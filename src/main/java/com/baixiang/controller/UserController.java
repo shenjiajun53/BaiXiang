@@ -4,6 +4,7 @@ import com.baixiang.exception.UserNotFoundException;
 import com.baixiang.model.*;
 import com.baixiang.model.Error;
 import com.baixiang.repository.UserRepository;
+import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

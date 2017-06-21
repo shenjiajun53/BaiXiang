@@ -6,7 +6,9 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
@@ -29,6 +31,17 @@ public class MovieRepository {
 
     public void save(Movie movie) {
         getSession().save(movie);
+        return;
+    }
+
+
+    public void update(Movie movie) {
+        getSession().update(movie);
+        return;
+    }
+
+    public void saveOrUpdate(Movie movie) {
+        getSession().saveOrUpdate(movie);
         return;
     }
 
@@ -84,10 +97,4 @@ public class MovieRepository {
         return (List<Movie>) getSession().createQuery("from Movie as m where m.movieName like :movieName").
                 setParameter("movieName", "%" + movieName + "%").list();
     }
-
-    public void update(Movie movie) {
-        getSession().update(movie);
-        return;
-    }
-
 }

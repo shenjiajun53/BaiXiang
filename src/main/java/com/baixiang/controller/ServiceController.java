@@ -69,7 +69,7 @@ public class ServiceController {
         modelAndView.addObject("user", user);
         if (null != movieId) {
             Movie movie = movieRepository.getById(movieId);
-            System.out.printf("movie=" + movie.toString());
+//            System.out.printf("movie=" + movie.toString());
             Long viewTimes = movie.getViewTimes();
             if (null == viewTimes) {
                 viewTimes = 0L;

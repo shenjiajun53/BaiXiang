@@ -25,6 +25,8 @@ public class Movie implements Serializable {
     private Long id;
 
     private String movieName;
+
+    @Column(columnDefinition="LONGTEXT")
     private String movieInfo;
     private String poster;
     private Date createDate;//创建日期

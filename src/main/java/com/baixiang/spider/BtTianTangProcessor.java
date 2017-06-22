@@ -35,7 +35,8 @@ public class BtTianTangProcessor implements PageProcessor {
         page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/movie/\\d+.*").all());
         page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.*").all());
         page.putField(MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
-        page.putField(MOVIE_INFO, page.getHtml().xpath("//div[@class='post_content']/text()").toString());
+        page.putField(MOVIE_INFO, page.getHtml().xpath("//div[@id='post_content']").toString());
+//        page.putField(MOVIE_INFO, page.getHtml().css("div#post_content").get());
         page.putField("torrent_content", page.getHtml().xpath("//div[@class='post_content']/p/text()").toString());
 //        page.putField("content", page.getHtml().css("div.show-content").toString());
         if (page.getResultItems().get("movie_title") == null) {

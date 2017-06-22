@@ -28,7 +28,7 @@
 
         <img v-bind:src="poster.url" style="width: 200px;margin-bottom: 1em"/>
 
-        <div th:text="${movie.movieInfo}" style="margin-bottom: 1em"></div>
+        <div th:utext="${movie.movieInfo}" style="margin-bottom: 1em"></div>
 
         <div style="margin-bottom: 5px">截图</div>
         <div th:each="screenShot :${movie.screenShots}" style="margin-bottom: 1em">
@@ -37,14 +37,17 @@
 
         <div style="margin-bottom: 5px">种子下载</div>
         <div th:each="torrent :${movie.movieTorrents}" style="margin-bottom: 5px">
-            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}" ></a>
+            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}"></a>
         </div>
     </div>
 </div>
 </body>
 
 <script th:inline="javascript">
-    let tagName = [[${movie!=null?movie.movieTagSet[0]:""}]];
+    let tagName;
+    if ([[${movie!=null}]] && [[${movie.movieTagSet!=null}]]) {
+        tagName = [[${movie.movieTagSet.size()>0?movie.movieTagSet[0]:""}]];
+    }
     console.log("tagname=" + tagName);
     new Vue({
         el: "#vertical-container",

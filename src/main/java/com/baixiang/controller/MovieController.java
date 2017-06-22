@@ -89,7 +89,7 @@ public class MovieController {
                 movie.addTorrent(movieTorrent);
             }
         }
-        if (tagList.length > 0) {
+        if (null != tagList && tagList.length > 0) {
             for (int i = 0; i < tagList.length; i++) {
                 movie.addTag(tagList[i]);
             }

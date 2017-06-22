@@ -21,10 +21,6 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 @Component
 public class MoviePipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
-
-    @Autowired
-    private MovieRepository movieRepository;
-
     public final static String MOVIE_TITLE = "movie_title";
     public final static String MOVIE_INFO = "movie_info";
 
@@ -36,10 +32,6 @@ public class MoviePipeline implements Pipeline {
             Movie movie = new Movie();
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
-//            if (null == movieRepository) {
-//                logger.error("movieRepository==null");
-//                return;
-//            }
             new MovieService().saveOrUpdate(movie);
         }
     }

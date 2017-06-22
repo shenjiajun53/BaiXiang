@@ -149,7 +149,18 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>aspectj-maven-plugin</artifactId>
-				<version>1.8</version>
+				<version>1.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>       <!-- use this goal to weave all your main classes -->
+							<goal>test-compile</goal>  <!-- use this goal to weave all your test classes -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<Xlint>adviceDidNotMatch=error,noGuardForLazyTjp=ignore</Xlint>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

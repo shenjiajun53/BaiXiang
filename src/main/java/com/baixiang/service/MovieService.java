@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,9 +16,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Configurable
+//@ComponentScan(value = "com.baixiang")
 public class MovieService {
     @Autowired
-    MovieRepository movieRepository;
+    private MovieRepository movieRepository;
 
     public void save(Movie movie) {
         movieRepository.save(movie);

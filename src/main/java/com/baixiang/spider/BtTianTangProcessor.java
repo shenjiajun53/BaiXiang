@@ -9,6 +9,7 @@ import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
 import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_INFO;
+import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_POSTER;
 import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_TITLE;
 
 /**
@@ -36,6 +37,7 @@ public class BtTianTangProcessor implements PageProcessor {
         page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.*").all());
         page.putField(MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
         page.putField(MOVIE_INFO, page.getHtml().xpath("//div[@id='post_content']").toString());
+        page.putField(MOVIE_POSTER, page.getHtml().xpath("//p[@class='tpic-cont-s']/img/src").toString());
 //        page.putField(MOVIE_INFO, page.getHtml().css("div#post_content").get());
         page.putField("torrent_content", page.getHtml().xpath("//div[@class='post_content']/p/text()").toString());
 //        page.putField("content", page.getHtml().css("div.show-content").toString());

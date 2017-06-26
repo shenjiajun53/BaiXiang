@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.baixiang.utils.FileUtil.*;
+
 /**
  * Created by Administrator on 2017/5/17.
  */
@@ -31,10 +33,6 @@ public class MovieController {
     @Autowired
     MovieRepository movieRepository;
 
-    private static final String STATIC_PATH = "/src/main/webapp";
-    private static final String POSTER_PATH = "/files/movie/posters/";
-    private static final String SCREEN_SHOT_PATH = "/files/movie/screenShots/";
-    private static final String TORRENT_PATH = "/files/movie/torrents/";
 
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,

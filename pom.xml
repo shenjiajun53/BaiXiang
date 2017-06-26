@@ -174,7 +174,7 @@
 							<artifactId>spring-aspects</artifactId>
 						</aspectLibrary>
 					</aspectLibraries>
-					<Xlint>adviceDidNotMatch=error,noGuardForLazyTjp=ignore</Xlint>
+					<Xlint>ignore</Xlint>
 				</configuration>
 			</plugin>
 		</plugins>

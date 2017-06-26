@@ -1,8 +1,7 @@
 package com.baixiang.controller;
 
-import com.baixiang.spider.BtTianTangProcessor;
+import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
 import com.baixiang.spider.TaohuaProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

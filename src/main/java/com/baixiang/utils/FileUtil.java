@@ -12,6 +12,11 @@ import java.util.List;
  * Created by shenjj on 2017/4/17.
  */
 public final class FileUtil {
+    public static final String STATIC_PATH = "/src/main/webapp";
+    public static final String POSTER_PATH = "/files/movie/posters/";
+    public static final String SCREEN_SHOT_PATH = "/files/movie/screenShots/";
+    public static final String TORRENT_PATH = "/files/movie/torrents/";
+
 
     private FileUtil() {
         throw new UnsupportedOperationException("u can't instantiate me...");

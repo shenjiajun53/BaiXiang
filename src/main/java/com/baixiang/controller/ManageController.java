@@ -59,7 +59,7 @@ public class ManageController {
         modelAndView.addObject("user", user);
         if (null != movieId) {
             Movie movie = movieRepository.getById(movieId);
-            System.out.printf("movie=" + movie.toString());
+//            System.out.printf("movie=" + movie.toString());
             modelAndView.addObject("movie", movie);
         }
         return modelAndView;

@@ -2,6 +2,8 @@ package com.baixiang.controller;
 
 import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
 import com.baixiang.spider.TaohuaProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,17 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
+@ComponentScan(value = "com.baixiang.spider")
 public class SpiderController {
 
+    @Autowired
+    BtTianTangProcessor btTianTangProcessor;
 
     @RequestMapping(value = "/api/start_spider_bt", method = RequestMethod.POST)
     public void startBt() {
-        BtTianTangProcessor.start();
+        btTianTangProcessor.start();
     }
 
     @RequestMapping(value = "/api/stop_spider_bt", method = RequestMethod.POST)
     public void stopBt() {
-        BtTianTangProcessor.stop();
+        btTianTangProcessor.stop();
     }
 
     @RequestMapping(value = "/api/start_spider_taohua", method = RequestMethod.POST)

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by shenjj on 2017/6/21.
  */
@@ -35,5 +37,9 @@ public class MovieService {
     public void saveOrUpdate(Movie movie) {
         movieRepository.saveOrUpdate(movie);
         return;
+    }
+
+    public List<Movie> getIncludeName(String movieName) {
+        return movieRepository.getIncludeName(movieName);
     }
 }

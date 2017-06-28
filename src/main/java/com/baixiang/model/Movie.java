@@ -17,7 +17,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "movies")
+@Table(name = "movies", uniqueConstraints = @UniqueConstraint(columnNames = {"movieName", "id"}))
 public class Movie implements Serializable {
 
     @Id
@@ -26,7 +26,7 @@ public class Movie implements Serializable {
 
     private String movieName;
 
-    @Column(columnDefinition="LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String movieInfo;
     private String poster;
     private Date createDate;//创建日期

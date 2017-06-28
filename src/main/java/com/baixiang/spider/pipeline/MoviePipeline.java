@@ -35,6 +35,9 @@ public class MoviePipeline implements Pipeline {
     public final static String MOVIE_INFO = "movie_info";
     public final static String MOVIE_POSTER = "movie_poster";
 
+    @Autowired
+    private MovieService movieService;
+
     @Override
     public void process(ResultItems resultItems, Task task) {
         String movieTitle = resultItems.get(MOVIE_TITLE);
@@ -52,7 +55,7 @@ public class MoviePipeline implements Pipeline {
             String filePath = getFilePath(POSTER_PATH, fileName);
             downLoadFile(filePath, moviePosterUrl);
             movie.setPoster(POSTER_PATH + fileName);
-            new MovieService().saveOrUpdate(movie);
+            movieService.saveOrUpdate(movie);
         }
     }
 

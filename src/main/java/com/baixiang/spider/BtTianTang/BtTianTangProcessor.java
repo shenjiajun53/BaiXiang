@@ -60,10 +60,15 @@ public class BtTianTangProcessor implements PageProcessor {
             page.putField(MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
             page.putField(MOVIE_INFO, page.getHtml().xpath("//p[@class='minfos']").toString());
             page.putField(MOVIE_POSTER, page.getHtml().xpath("//p[@class='tpic-cont-s']").css("img", "src").toString());
+
+            if (page.getResultItems().get(MOVIE_TITLE) == null) {
+                //skip this page
+                page.setSkip(true);
+            }
         }
         if (page.getUrl().toString().contains("www.bttiantangs.com/download")) {
             page.putField(TORRENT_MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/a/text()").toString());
-            page.putField(MAGNET_URL, page.getHtml().xpath("//span[@id='link_text_span']/p/text()").toString());
+            page.putField(MAGNET_URL, page.getHtml().xpath("//span[@id='link_text_span']/text()").toString());
             List<Selectable> contentNodes = page.getHtml().xpath("//div[@id='post_content']/p").nodes();
             for (int i = 0; i < contentNodes.size(); i++) {
                 if (contentNodes.get(i).toString().contains("名　　称")) {
@@ -81,14 +86,11 @@ public class BtTianTangProcessor implements PageProcessor {
                     }
                 }
             }
-        }
-//
-//        String[] filter1 = "<p>◎名　　称　Marvels.Agents.of.S.H.I.E.L.D.S04E05.Lockup.720p.WEB-DL.DD5.1.H264-AG<br>◎大  小　1.35GB</p>".split("　");
-//        logger.info("filter1=" + toString(filter1));
 
-        if (page.getResultItems().get(MOVIE_TITLE) == null || page.getResultItems().get(TORRENT_MOVIE_TITLE) == null) {
-            //skip this page
-            page.setSkip(true);
+            if (page.getResultItems().get(MOVIE_TITLE) == null || page.getResultItems().get(TORRENT_MOVIE_TITLE) == null) {
+                //skip this page
+                page.setSkip(true);
+            }
         }
     }
 
@@ -105,6 +107,7 @@ public class BtTianTangProcessor implements PageProcessor {
         spider = Spider.create(this)
                 .addPipeline(moviePipeline)
 //                .addPipeline(new ConsolePipeline())
+                .addPipeline(torrentPipeline)
                 .addUrl("http://www.bttiantangs.com/").thread(5);
         spider.run();
     }

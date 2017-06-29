@@ -41,6 +41,10 @@ public class MoviePipeline implements Pipeline {
 
     @Override
     public void process(ResultItems resultItems, Task task) {
+        logger.info("result=" + resultItems.getRequest().getUrl());
+        if (!resultItems.getRequest().getUrl().contains("www.bttiantangs.com/movie")) {
+            return;
+        }
         String movieTitle = resultItems.get(MOVIE_TITLE);
         String movieInfo = resultItems.get(MOVIE_INFO);
         String moviePosterUrl = resultItems.get(MOVIE_POSTER);

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 @Repository
+@Transactional
 public class TorrentRepository {
     private static final Logger logger = LoggerFactory.getLogger(TorrentRepository.class);
     @Autowired

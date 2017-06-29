@@ -37,7 +37,7 @@
 
         <div style="margin-bottom: 5px">种子下载</div>
         <div th:each="torrent :${movie.movieTorrents}" style="margin-bottom: 5px">
-            <a th:text="${torrent.torrentName}" th:href="${torrent.filePath}"></a>
+            <a th:text="${torrent.torrentName}" th:href="${torrent.magnetUrl}"></a>
         </div>
     </div>
 </div>

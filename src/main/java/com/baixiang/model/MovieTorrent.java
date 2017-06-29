@@ -20,7 +20,8 @@ public class MovieTorrent implements Serializable {
 
     private String torrentName;
 
-    private String magnentUrl;
+    @Column(columnDefinition = "LONGTEXT")
+    private String magnetUrl;
 
 
      /*
@@ -76,12 +77,12 @@ public class MovieTorrent implements Serializable {
         this.movie = movie;
     }
 
-    public String getMagnentUrl() {
-        return magnentUrl;
+    public String getMagnetUrl() {
+        return magnetUrl;
     }
 
-    public void setMagnentUrl(String magnentUrl) {
-        this.magnentUrl = magnentUrl;
+    public void setMagnetUrl(String magnetUrl) {
+        this.magnetUrl = magnetUrl;
     }
 
     @Override

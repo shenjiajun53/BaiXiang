@@ -6,6 +6,7 @@ import com.baixiang.repository.MovieRepository;
 import com.baixiang.repository.TorrentRepository;
 import com.baixiang.utils.FileUtil;
 import okhttp3.*;
+import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +43,33 @@ public class TorrentPipeline implements Pipeline {
 
     @Override
     public void process(ResultItems resultItems, Task task) {
+        if (!resultItems.getRequest().getUrl().contains("www.bttiantangs.com/download")) {
+            return;
+        }
+
         String movieTitle = resultItems.get(TORRENT_MOVIE_TITLE);
         String torrentName = resultItems.get(TORRENT_NAME);
         String magnetUrl = resultItems.get(MAGNET_URL);
-        if (null != movieTitle) {
-            if (movieRepository.getIncludeName(movieTitle).size() > 0) {
-                Movie movie = movieRepository.getIncludeName(movieTitle).get(0);
 
-                MovieTorrent movieTorrent = new MovieTorrent();
-                if (torrentRepository.getIncludeName(torrentName).size() > 0) {
-                    MovieTorrent oldTorrent = torrentRepository.getIncludeName(torrentName).get(0);
-                    oldTorrent.setMagnentUrl(magnetUrl);
-                    torrentRepository.update(oldTorrent);
+        if (!TextUtils.isEmpty(torrentName)) {
+            if (torrentRepository.getIncludeName(torrentName).size() > 0) {
+                MovieTorrent oldTorrent = torrentRepository.getIncludeName(torrentName).get(0);
+                oldTorrent.setMagnetUrl(magnetUrl);
+                torrentRepository.update(oldTorrent);
+            } else if (!TextUtils.isEmpty(movieTitle)) {
+                if (movieRepository.getIncludeName(movieTitle).size() > 0) {
+                    MovieTorrent movieTorrent = new MovieTorrent();
+                    movieTorrent.setTorrentName(torrentName);
+                    movieTorrent.setMagnetUrl(magnetUrl);
+
+                    Movie movie = movieRepository.getIncludeName(movieTitle).get(0);
+                    movie.addTorrent(movieTorrent);
+                    movieRepository.update(movie);
                 }
-
-                movieRepository.update(movie);
             }
         }
+
+
     }
 
     public String getFilePath(String dirPath, String fileName) {

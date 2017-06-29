@@ -1,20 +1,17 @@
 package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieTorrent;
 import com.baixiang.repository.MovieRepository;
-import com.baixiang.service.MovieService;
+import com.baixiang.repository.TorrentRepository;
 import com.baixiang.utils.FileUtil;
 import okhttp3.*;
-import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
-import us.codecraft.webmagic.pipeline.PageModelPipeline;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.io.File;
@@ -22,48 +19,44 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_TITLE;
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
 import static com.baixiang.utils.FileUtil.STATIC_PATH;
 
 /**
- * Created by shenjj on 2017/6/21.
+ * Created by shenjj on 2017/6/29.
  */
 
 @Component
-public class MoviePipeline implements Pipeline {
+public class TorrentPipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
-    public final static String MOVIE_TITLE = "movie_title";
-    public final static String MOVIE_INFO = "movie_info";
-    public final static String MOVIE_POSTER = "movie_poster";
+    public final static String TORRENT_NAME = "movie_title";
+    public final static String MAGNET_URL = "movie_info";
+    public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
 
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private TorrentRepository torrentRepository;
+
     @Override
     public void process(ResultItems resultItems, Task task) {
-        String movieTitle = resultItems.get(MOVIE_TITLE);
-        String movieInfo = resultItems.get(MOVIE_INFO);
-        String moviePosterUrl = resultItems.get(MOVIE_POSTER);
+        String movieTitle = resultItems.get(TORRENT_MOVIE_TITLE);
+        String torrentName = resultItems.get(TORRENT_NAME);
+        String magnetUrl = resultItems.get(MAGNET_URL);
         if (null != movieTitle) {
-            Movie movie = new Movie();
-            if (movieTitle.contains(":")) {
-                movieTitle = movieTitle.replace(":", "：");
-            }
-            movie.setMovieName(movieTitle);
-            movie.setMovieInfo(movieInfo);
-            if (!TextUtils.isEmpty(moviePosterUrl)) {
-                String fileName = System.currentTimeMillis() + "-" + movieTitle + ".jpg";
-//            logger.info(fileName);
-                String filePath = getFilePath(POSTER_PATH, fileName);
-                downLoadFile(filePath, moviePosterUrl);
-                movie.setPoster(POSTER_PATH + fileName);
-            }
             if (movieRepository.getIncludeName(movieTitle).size() > 0) {
-                Movie existMovie = movieRepository.getIncludeName(movieTitle).get(0);
-                movie.setId(existMovie.getId());
+                Movie movie = movieRepository.getIncludeName(movieTitle).get(0);
+
+                MovieTorrent movieTorrent = new MovieTorrent();
+                if (torrentRepository.getIncludeName(torrentName).size() > 0) {
+                    MovieTorrent oldTorrent = torrentRepository.getIncludeName(torrentName).get(0);
+                    oldTorrent.setMagnentUrl(magnetUrl);
+                    torrentRepository.update(oldTorrent);
+                }
+
                 movieRepository.update(movie);
-            } else {
-                movieRepository.save(movie);
             }
         }
     }

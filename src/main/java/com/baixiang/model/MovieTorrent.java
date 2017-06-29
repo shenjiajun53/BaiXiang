@@ -20,6 +20,8 @@ public class MovieTorrent implements Serializable {
 
     private String torrentName;
 
+    private String magnentUrl;
+
 
      /*
      * @ManyToOne指明OrderItem和Order之间为多对一关系，多个OrderItem实例关联的都是同一个Order对象。
@@ -72,6 +74,14 @@ public class MovieTorrent implements Serializable {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public String getMagnentUrl() {
+        return magnentUrl;
+    }
+
+    public void setMagnentUrl(String magnentUrl) {
+        this.magnentUrl = magnentUrl;
     }
 
     @Override

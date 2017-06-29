@@ -1,6 +1,7 @@
 package com.baixiang.repository;
 
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieTorrent;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;

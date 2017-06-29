@@ -19,6 +19,9 @@ public class SpiderController {
     @Autowired
     BtTianTangProcessor btTianTangProcessor;
 
+    @Autowired
+    TaohuaProcessor taohuaProcessor;
+
     @RequestMapping(value = "/api/start_spider_bt", method = RequestMethod.POST)
     public void startBt() {
         btTianTangProcessor.start();
@@ -31,11 +34,11 @@ public class SpiderController {
 
     @RequestMapping(value = "/api/start_spider_taohua", method = RequestMethod.POST)
     public void startTaohua() {
-        TaohuaProcessor.start();
+        taohuaProcessor.start();
     }
 
     @RequestMapping(value = "/api/stop_spider_taohua", method = RequestMethod.POST)
     public void stopTaohua() {
-        TaohuaProcessor.stop();
+        taohuaProcessor.stop();
     }
 }

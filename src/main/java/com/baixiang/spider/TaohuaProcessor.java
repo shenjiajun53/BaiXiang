@@ -1,6 +1,7 @@
 package com.baixiang.spider;
 
 import com.baixiang.utils.FileUtil;
+import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
@@ -14,11 +15,28 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2017/6/19.
  */
+
+@Component
 public class TaohuaProcessor implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(500).setTimeOut(10000);
-    private static Spider spider = Spider.create(new TaohuaProcessor()).addUrl("http://thzav.com/forum.php").thread(5);
+    private static Spider spider;
     private static final String STATIC_PATH = "/spider_file";
     private static final String FILE_PATH = "/taohua/";
+
+
+    public void start() {
+        spider = Spider.create(this)
+                .addUrl("http://thzav.com/forum.php").thread(5);
+        spider.run();
+    }
+
+    public void stop() {
+        spider.stop();
+    }
+
+    public void main(String[] args) {
+        spider.run();
+    }
 
     @Override
     public Site getSite() {
@@ -27,44 +45,45 @@ public class TaohuaProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
-//        page.addTargetRequests(page.getHtml().links().regex("(http://thzav\\.com/[\\w\\-]+/[\\w\\-]+)").all());
-        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/\\d+.*").all());
+//        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+.*").all());
+        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+-\\w+.*").all());
+        String s = "http://thzav.com/thread-1085966-1-1.html";
+        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/thread-\\w+-\\w+-\\w+.*").all());
         page.putField("movie_content", page.getHtml().xpath("//td[@class='t_f']/text()").toString());
-//        if (page.getResultItems().get("movie_content") == null) {
-//            //skip this page
-//            page.setSkip(true);
-//            if (page.getResultItems().get("movie_content").toString().contains("本田岬")) {
-//               writeFile(page.getResultItems().get("movie_content").toString());
-//            }
-//        }
+        if (page.getResultItems().toString().contains("本田岬")) {
+            writeFile(page.getUrl().toString() + " 本田岬 \n");
+        }
+        if (page.getResultItems().toString().contains("今永")) {
+            writeFile(page.getUrl().toString() + " 今永 \n");
+        }
+        if (page.getResultItems().toString().contains("三上悠亜")) {
+            writeFile(page.getUrl().toString() + " 三上悠亜 \n");
+        }
+        if (page.getResultItems().toString().contains("神咲詩織")) {
+            writeFile(page.getUrl().toString() + " 神咲詩織 \n");
+        }
+        if (page.getResultItems().toString().contains("水野朝陽")) {
+            writeFile(page.getUrl().toString() + " 水野朝陽 \n");
+        }
+        if (page.getResultItems().toString().contains("工藤美纱")) {
+            writeFile(page.getUrl().toString() + " 工藤美纱 \n");
+        }
     }
 
-    public static void writeFile(String str)
-    {
+    public static void writeFile(String str) {
         String staticPath = System.getProperty("user.dir") + STATIC_PATH;
         FileUtil.createOrExistsDir(staticPath + FILE_PATH);
 
-        String fileName = System.currentTimeMillis() + ".txt";
+        String fileName = "链接.txt";
         File file = new File(staticPath + FILE_PATH + fileName);
         try {
-            BufferedWriter bw=new BufferedWriter(new FileWriter(file,true));
-            bw.write(str+"\r\n\r\n");
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+            bw.write(str + "\r\n\r\n");
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void start() {
-        spider.run();
-    }
-
-    public static void stop() {
-        spider.stop();
-    }
-
-    public static void main(String[] args) {
-        spider.run();
-    }
 
 }

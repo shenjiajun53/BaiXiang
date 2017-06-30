@@ -1,5 +1,7 @@
 package com.baixiang.utils;
 
+import okhttp3.*;
+
 import java.io.*;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -1363,5 +1365,43 @@ public final class FileUtil {
             }
         }
         return true;
+    }
+
+
+    public static String getFilePath(String dirPath, String fileName) {
+        String staticPath = System.getProperty("user.dir") + STATIC_PATH;
+        FileUtil.createOrExistsDir(staticPath + dirPath);
+        String filePath = staticPath + dirPath + fileName;
+        return filePath;
+    }
+
+    public static void downLoadFile(String filePath, String url) {
+        File file = new File(filePath);
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Request request = new Request.Builder().url(url)
+                .build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                InputStream inputStream = response.body().byteStream();
+                try {
+                    FileOutputStream fout = new FileOutputStream(file);
+                    int l = -1;
+                    byte[] tmp = new byte[1024];
+                    while ((l = inputStream.read(tmp)) != -1) {
+                        fout.write(tmp, 0, l);
+                    }
+                    fout.flush();
+                    fout.close();
+                } finally {
+                    inputStream.close();
+                }
+            }
+        });
     }
 }

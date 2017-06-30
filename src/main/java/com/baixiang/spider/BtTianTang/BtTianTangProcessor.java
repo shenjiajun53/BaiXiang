@@ -20,9 +20,7 @@ import java.util.List;
 import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_INFO;
 import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_POSTER;
 import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_TITLE;
-import static com.baixiang.spider.pipeline.TorrentPipeline.MAGNET_URL;
-import static com.baixiang.spider.pipeline.TorrentPipeline.TORRENT_MOVIE_TITLE;
-import static com.baixiang.spider.pipeline.TorrentPipeline.TORRENT_NAME;
+import static com.baixiang.spider.pipeline.TorrentPipeline.*;
 
 /**
  * Created by shenjj on 2017/6/19.
@@ -79,15 +77,27 @@ public class BtTianTangProcessor implements PageProcessor {
                         String[] filter2 = filter1[3].split("<");
 //                    logger.info("filter2=" + toString(filter2));
                         String torrentName = filter2[0];
-                        logger.info("torrentName=" + torrentName);
+//                        logger.info("torrentName=" + torrentName);
                         page.putField(TORRENT_NAME, torrentName);
                     } catch (Exception e) {
 
                     }
                 }
             }
+            List<Selectable> downLoadNodes = page.getHtml().xpath("//a[@id='link_org_a']").nodes();
+            for (int i = 0; i < downLoadNodes.size(); i++) {
+                if (downLoadNodes.get(i).toString().contains("BT种子")) {
+//                    logger.info("url=" + downLoadNodes.get(i).css("a", "href").toString());
+                    String torrentUrl = downLoadNodes.get(i).css("a", "href").toString();
+//                    logger.info("11url=" + torrentUrl);
+                    if (torrentUrl.startsWith("https")) {
+                        logger.info("url=" + torrentUrl);
+                        page.putField(TORRENT_URL, torrentUrl);
+                    }
+                }
+            }
 
-            if (page.getResultItems().get(MOVIE_TITLE) == null || page.getResultItems().get(TORRENT_MOVIE_TITLE) == null) {
+            if (page.getResultItems().get(TORRENT_MOVIE_TITLE) == null) {
                 //skip this page
                 page.setSkip(true);
             }

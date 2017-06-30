@@ -41,7 +41,7 @@ public class MoviePipeline implements Pipeline {
 
     @Override
     public void process(ResultItems resultItems, Task task) {
-        logger.info("result=" + resultItems.getRequest().getUrl());
+//        logger.info("result=" + resultItems.getRequest().getUrl());
         if (!resultItems.getRequest().getUrl().contains("www.bttiantangs.com/movie")) {
             return;
         }
@@ -55,58 +55,28 @@ public class MoviePipeline implements Pipeline {
             }
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
-            if (!TextUtils.isEmpty(moviePosterUrl)) {
-                String fileName = System.currentTimeMillis() + "-" + movieTitle + ".jpg";
-//            logger.info(fileName);
-                String filePath = getFilePath(POSTER_PATH, fileName);
-                downLoadFile(filePath, moviePosterUrl);
-                movie.setPoster(POSTER_PATH + fileName);
-            }
+
             if (movieRepository.getIncludeName(movieTitle).size() > 0) {
                 Movie existMovie = movieRepository.getIncludeName(movieTitle).get(0);
                 movie.setId(existMovie.getId());
+                if (TextUtils.isEmpty(existMovie.getPoster())) {
+                    setPoster(movie, moviePosterUrl, movieTitle);
+                }
                 movieRepository.update(movie);
             } else {
+                setPoster(movie, moviePosterUrl, movieTitle);
                 movieRepository.save(movie);
             }
         }
     }
 
-    public String getFilePath(String dirPath, String fileName) {
-        String staticPath = System.getProperty("user.dir") + STATIC_PATH;
-        FileUtil.createOrExistsDir(staticPath + dirPath);
-        String filePath = staticPath + dirPath + fileName;
-        logger.info(filePath);
-        return filePath;
-    }
-
-    public void downLoadFile(String filePath, String url) {
-        File file = new File(filePath);
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(url)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                InputStream inputStream = response.body().byteStream();
-                try {
-                    FileOutputStream fout = new FileOutputStream(file);
-                    int l = -1;
-                    byte[] tmp = new byte[1024];
-                    while ((l = inputStream.read(tmp)) != -1) {
-                        fout.write(tmp, 0, l);
-                    }
-                    fout.flush();
-                    fout.close();
-                } finally {
-                    inputStream.close();
-                }
-            }
-        });
+    public void setPoster(Movie movie, String moviePosterUrl, String movieTitle) {
+        if (!TextUtils.isEmpty(moviePosterUrl)) {
+            String fileName = System.currentTimeMillis() + "-" + movieTitle + ".jpg";
+//            logger.info(fileName);
+            String filePath = FileUtil.getFilePath(POSTER_PATH, fileName);
+            FileUtil.downLoadFile(filePath, moviePosterUrl);
+            movie.setPoster(POSTER_PATH + fileName);
+        }
     }
 }

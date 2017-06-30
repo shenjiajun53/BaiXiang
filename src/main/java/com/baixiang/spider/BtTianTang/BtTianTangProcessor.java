@@ -42,6 +42,20 @@ public class BtTianTangProcessor implements PageProcessor {
     public BtTianTangProcessor() {
     }
 
+
+    public void start() {
+        spider = Spider.create(this)
+                .addPipeline(moviePipeline)
+//                .addPipeline(new ConsolePipeline())
+                .addPipeline(torrentPipeline)
+                .addUrl("http://www.bttiantangs.com/").thread(5);
+        spider.run();
+    }
+
+    public void stop() {
+        spider.stop();
+    }
+
     @Override
     public Site getSite() {
         return site;
@@ -110,19 +124,5 @@ public class BtTianTangProcessor implements PageProcessor {
             stringBuilder.append(arrayStr[i] + "|");
         }
         return stringBuilder.toString();
-    }
-
-
-    public void start() {
-        spider = Spider.create(this)
-                .addPipeline(moviePipeline)
-//                .addPipeline(new ConsolePipeline())
-                .addPipeline(torrentPipeline)
-                .addUrl("http://www.bttiantangs.com/").thread(5);
-        spider.run();
-    }
-
-    public void stop() {
-        spider.stop();
     }
 }

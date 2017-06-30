@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Component
 public class TaohuaProcessor implements PageProcessor {
-    private Site site = Site.me().setRetryTimes(3).setSleepTime(500).setTimeOut(10000);
+    private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(10000);
     private static Spider spider;
     private static final String STATIC_PATH = "/spider_file";
     private static final String FILE_PATH = "/taohua/";
@@ -46,9 +46,9 @@ public class TaohuaProcessor implements PageProcessor {
     @Override
     public void process(Page page) {
 //        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+.*").all());
-        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+-\\w+.*").all());
+        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+-1.*").all());
         String s = "http://thzav.com/thread-1085966-1-1.html";
-        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/thread-\\w+-\\w+-\\w+.*").all());
+        page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/thread-\\w+-1-\\w+.*").all());
         page.putField("movie_content", page.getHtml().xpath("//td[@class='t_f']/text()").toString());
         if (page.getResultItems().toString().contains("本田岬")) {
             writeFile(page.getUrl().toString() + " 本田岬 \n");

@@ -1,6 +1,7 @@
 package com.baixiang.spider;
 
 import com.baixiang.utils.FileUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -11,6 +12,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import static com.baixiang.spider.FilmPipeline.FILM_INFO;
+import static com.baixiang.spider.FilmPipeline.FILM_TITLE;
 
 /**
  * Created by Administrator on 2017/6/19.
@@ -23,9 +27,12 @@ public class TaohuaProcessor implements PageProcessor {
     private static final String STATIC_PATH = "/spider_file";
     private static final String FILE_PATH = "/taohua/";
 
+    @Autowired
+    private FilmPipeline filmPipeline;
 
     public void start() {
         spider = Spider.create(this)
+                .addPipeline(filmPipeline)
                 .addUrl("http://thzav.com/forum.php").thread(5);
         spider.run();
     }
@@ -49,7 +56,8 @@ public class TaohuaProcessor implements PageProcessor {
         page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/forum-\\w+-1.*").all());
         String s = "http://thzav.com/thread-1085966-1-1.html";
         page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/thread-\\w+-1-\\w+.*").all());
-        page.putField("movie_content", page.getHtml().xpath("//td[@class='t_f']/text()").toString());
+        page.putField(FILM_TITLE, page.getHtml().xpath("//span[@id='thread_subject']").toString());
+        page.putField(FILM_INFO, page.getHtml().xpath("//td[@class='t_f']").toString());
         if (page.getResultItems().toString().contains("本田岬")) {
             writeFile(page.getUrl().toString() + " 本田岬 \n");
         }

@@ -36,7 +36,7 @@ public class BtTianTangProcessor implements PageProcessor {
     @Autowired
     private TorrentPipeline torrentPipeline;
 
-    private Site site = Site.me().setRetryTimes(3).setSleepTime(1000).setTimeOut(10000);
+    private Site site = Site.me().setRetryTimes(3).setSleepTime(1500).setTimeOut(10000);
     private Spider spider;
 
     public BtTianTangProcessor() {

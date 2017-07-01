@@ -33,7 +33,9 @@ public class TaohuaProcessor implements PageProcessor {
     public void start() {
         spider = Spider.create(this)
                 .addPipeline(filmPipeline)
-                .addUrl("http://thzav.com/forum.php").thread(5);
+//                .addUrl("http://thzav.com/forum.php")
+                .addUrl("http://thzav.com/thread-918681-1-1.html")
+                .thread(5);
         spider.run();
     }
 

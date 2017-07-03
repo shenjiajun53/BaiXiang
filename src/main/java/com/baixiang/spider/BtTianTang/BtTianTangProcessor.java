@@ -17,9 +17,7 @@ import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.List;
 
-import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_INFO;
-import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_POSTER;
-import static com.baixiang.spider.pipeline.MoviePipeline.MOVIE_TITLE;
+import static com.baixiang.spider.pipeline.MoviePipeline.*;
 import static com.baixiang.spider.pipeline.TorrentPipeline.*;
 
 /**
@@ -72,7 +70,10 @@ public class BtTianTangProcessor implements PageProcessor {
             page.putField(MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
             page.putField(MOVIE_INFO, page.getHtml().xpath("//p[@class='minfos']").toString());
             page.putField(MOVIE_POSTER, page.getHtml().xpath("//p[@class='tpic-cont-s']").css("img", "src").toString());
-
+            List<Selectable> tagNodes = page.getHtml().xpath("//span[@class='info_category']/a").nodes();
+            for (int i = 0; i < tagNodes.size(); i++) {
+                logger.info(tagNodes.size() + ":" + tagNodes.get(i).toString());
+            }
             if (page.getResultItems().get(MOVIE_TITLE) == null) {
                 //skip this page
                 page.setSkip(true);

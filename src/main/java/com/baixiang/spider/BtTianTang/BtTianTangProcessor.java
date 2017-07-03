@@ -15,7 +15,10 @@ import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.selector.Selectable;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.baixiang.spider.pipeline.MoviePipeline.*;
 import static com.baixiang.spider.pipeline.TorrentPipeline.*;
@@ -71,9 +74,12 @@ public class BtTianTangProcessor implements PageProcessor {
             page.putField(MOVIE_INFO, page.getHtml().xpath("//p[@class='minfos']").toString());
             page.putField(MOVIE_POSTER, page.getHtml().xpath("//p[@class='tpic-cont-s']").css("img", "src").toString());
             List<Selectable> tagNodes = page.getHtml().xpath("//span[@class='info_category']/a").nodes();
+            Set<String> tagList = new HashSet<>();
             for (int i = 0; i < tagNodes.size(); i++) {
-                logger.info(tagNodes.size() + ":" + tagNodes.get(i).toString());
+                logger.info(tagNodes.size() + ":" + tagNodes.get(i).xpath("/text()").toString());
+                tagList.add(tagNodes.get(i).xpath("/text()").toString());
             }
+            page.putField(MOVIE_TAGS, tagList);
             if (page.getResultItems().get(MOVIE_TITLE) == null) {
                 //skip this page
                 page.setSkip(true);

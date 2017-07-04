@@ -21,6 +21,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
 import static com.baixiang.utils.FileUtil.STATIC_PATH;
@@ -35,6 +38,7 @@ public class MoviePipeline implements Pipeline {
     public final static String MOVIE_TITLE = "movie_title";
     public final static String MOVIE_INFO = "movie_info";
     public final static String MOVIE_POSTER = "movie_poster";
+    public final static String MOVIE_TAGS = "movie_tags";
 
     @Autowired
     private MovieRepository movieRepository;
@@ -48,6 +52,7 @@ public class MoviePipeline implements Pipeline {
         String movieTitle = resultItems.get(MOVIE_TITLE);
         String movieInfo = resultItems.get(MOVIE_INFO);
         String moviePosterUrl = resultItems.get(MOVIE_POSTER);
+        HashSet<String> tagSet = resultItems.get(MOVIE_TAGS);
         if (null != movieTitle) {
             Movie movie = new Movie();
             if (movieTitle.contains(":")) {
@@ -55,6 +60,7 @@ public class MoviePipeline implements Pipeline {
             }
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
+            movie.setMovieTagSet(tagSet);
 
             if (movieRepository.getIncludeName(movieTitle).size() > 0) {
                 Movie existMovie = movieRepository.getIncludeName(movieTitle).get(0);

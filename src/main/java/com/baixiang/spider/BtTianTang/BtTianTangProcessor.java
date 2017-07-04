@@ -73,11 +73,11 @@ public class BtTianTangProcessor implements PageProcessor {
             page.putField(MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/text()").toString());
             page.putField(MOVIE_INFO, page.getHtml().xpath("//p[@class='minfos']").toString());
             page.putField(MOVIE_POSTER, page.getHtml().xpath("//p[@class='tpic-cont-s']").css("img", "src").toString());
-            List<Selectable> tagNodes = page.getHtml().xpath("//span[@class='info_category']/a").nodes();
+            List<Selectable> tagNodes = page.getHtml().xpath("//span[@class='info_category']/a/text()").nodes();
             Set<String> tagList = new HashSet<>();
             for (int i = 0; i < tagNodes.size(); i++) {
-                logger.info(tagNodes.size() + ":" + tagNodes.get(i).xpath("/text()").toString());
-                tagList.add(tagNodes.get(i).xpath("/text()").toString());
+//                logger.info(tagNodes.size() + ":" + tagNodes.get(i).get());
+                tagList.add(tagNodes.get(i).get());
             }
             page.putField(MOVIE_TAGS, tagList);
             if (page.getResultItems().get(MOVIE_TITLE) == null) {

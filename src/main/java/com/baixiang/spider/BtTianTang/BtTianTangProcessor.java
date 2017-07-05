@@ -80,6 +80,14 @@ public class BtTianTangProcessor implements PageProcessor {
                 tagList.add(tagNodes.get(i).get());
             }
             page.putField(MOVIE_TAGS, tagList);
+            List<Selectable> actorNodes = page.getHtml().xpath("//div[@id='post_content']/p[2]/a").nodes();
+            Set<String> actorSet = new HashSet<>();
+            for (int i = 0; i < actorNodes.size(); i++) {
+                if(actorNodes.get(i).css("a","href").get().contains("/zhuyan/")){
+                    actorSet.add(actorNodes.get(i).xpath("/a/text()").get());
+                }
+            }
+            page.putField(MOVIE_ACTORS, actorSet);
             if (page.getResultItems().get(MOVIE_TITLE) == null) {
                 //skip this page
                 page.setSkip(true);

@@ -39,6 +39,7 @@ public class MoviePipeline implements Pipeline {
     public final static String MOVIE_INFO = "movie_info";
     public final static String MOVIE_POSTER = "movie_poster";
     public final static String MOVIE_TAGS = "movie_tags";
+    public final static String MOVIE_ACTORS = "movie_actors";
 
     @Autowired
     private MovieRepository movieRepository;

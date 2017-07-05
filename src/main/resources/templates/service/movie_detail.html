@@ -30,12 +30,12 @@
 
         <div th:utext="${movie.movieInfo}" style="margin-bottom: 1em"></div>
 
-        <div style="margin-bottom: 5px">截图</div>
+        <div style="margin-bottom: 5px" th:hidden="${movie.screenShots.size()==0}">截图</div>
         <div th:each="screenShot :${movie.screenShots}" style="margin-bottom: 1em">
             <img th:src="${screenShot.url}" style="width: 200px"/>
         </div>
 
-        <div style="margin-bottom: 5px">种子下载</div>
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.movieTorrents.size()==0}">种子下载</h2>
         <div th:each="torrent :${movie.movieTorrents}" style="margin-bottom: 5px">
             <a th:text="${torrent.torrentName}" th:href="${torrent.magnetUrl}"></a>
         </div>

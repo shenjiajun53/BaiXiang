@@ -3,6 +3,7 @@ package com.baixiang.controller;
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.repository.MovieHibernateRepository;
+import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +27,16 @@ public class ManageController {
     MovieHibernateRepository movieRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    MovieService movieService;
 
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/manage/index");
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getAll();
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getNewest();
         modelAndView.addObject("movieList", movieArrayList);
-        ArrayList<Movie> hotList = (ArrayList<Movie>) movieRepository.getHostest();
+        ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
@@ -47,7 +50,7 @@ public class ManageController {
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         if (null != movieId) {
-            Movie movie = movieRepository.getById(movieId);
+            Movie movie = movieService.getById(movieId);
 //            System.out.printf("movie=" + movie.toString());
             modelAndView.addObject("movie", movie);
         }

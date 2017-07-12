@@ -21,7 +21,8 @@ import java.util.Set;
 public class Movie implements Serializable {
 
     @Id
-    @GeneratedValue
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String movieName;

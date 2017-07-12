@@ -44,7 +44,7 @@ public class MovieController {
 
         Movie movie;
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
-            movie = movieRepository.getById(Long.parseLong(movieId));
+            movie = movieService.getById(Long.parseLong(movieId));
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
         } else {
@@ -92,9 +92,9 @@ public class MovieController {
         }
 
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
-            movieRepository.update(movie);
+            movieService.update(movie);
         } else {
-            movieRepository.save(movie);
+            movieService.save(movie);
         }
         RedirectBean redirectBean;
         if (movie.getId() != 0) {

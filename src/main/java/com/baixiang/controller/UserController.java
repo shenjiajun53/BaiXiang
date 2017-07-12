@@ -84,7 +84,7 @@ public class UserController {
             }
         }
         user.addRole(Role.BangZhu);
-        userService.save(user);
+        user = userService.save(user);
         RedirectBean redirectBean;
         if (user.getId() != 0) {
             logger.info("保存用户成功");

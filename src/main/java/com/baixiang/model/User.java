@@ -15,18 +15,20 @@ import java.util.Set;
 public class User {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
-    @Column(unique = true)
+//    @NotNull
+//    @Column(unique = true)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userName;
     private String pass;
     private String avatarPath;
     private String userIntro;
     private String sex;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "role_types", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role_type")
     private Set<Integer> roleTypeSet = new HashSet<>();

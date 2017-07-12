@@ -32,16 +32,16 @@ public class UserService {
     }
 
     public User getByName(String userName) {
-        return userRepository.getByUserName(userName);
+        return userRepository.getFirstByUserName(userName);
     }
 
     public User getById(Long userId) {
         return userRepository.getById(userId);
     }
 
-    public void save(User user) {
-        userRepository.save(user);
-        return;
+    public User save(User user) {
+        userRepository.saveAndFlush(user);
+        return user;
     }
 
     public void delete(User user) {

@@ -42,13 +42,13 @@ public class HibernateRealm extends AuthorizingRealm {
         System.out.printf("user=" + user.toString());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-//            HashSet<Role> roleHashSet= (HashSet<Role>) user.getRoleSet();
-//            if(null!=roleHashSet){
-//                for (Role role : roleHashSet) {
-//                    info.addRole(role.getName());
-//                    info.addStringPermissions(role.getPermissions());
-//                }
-//            }
+            HashSet<Role> roleHashSet= (HashSet<Role>) user.getRoleSet();
+            if(null!=roleHashSet){
+                for (Role role : roleHashSet) {
+                    info.addRole(role.getName());
+                    info.addStringPermissions(role.getPermissions());
+                }
+            }
 
             return info;
         } else {

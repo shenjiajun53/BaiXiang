@@ -13,12 +13,9 @@ import java.util.List;
 @org.springframework.stereotype.Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User getByUserName(String userName);
+    User getFirstByUserName(String userName);
 
     User getById(Long id);
 
     List<User> findAll();
-
-    User save(User user);
-
 }

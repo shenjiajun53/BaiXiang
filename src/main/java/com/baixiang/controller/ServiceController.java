@@ -2,7 +2,6 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
-import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
 import org.slf4j.Logger;
@@ -83,7 +82,7 @@ public class ServiceController {
                 viewTimes = 0L;
             }
             movie.setViewTimes(++viewTimes);
-            movieService.update(movie);
+            movieService.save(movie);
             modelAndView.addObject("movie", movie);
         } else {
             modelAndView.setViewName("/default/error_page");

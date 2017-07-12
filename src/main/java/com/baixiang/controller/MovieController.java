@@ -1,7 +1,6 @@
 package com.baixiang.controller;
 
 import com.baixiang.model.*;
-import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
@@ -26,8 +25,6 @@ import static com.baixiang.utils.FileUtil.*;
 @RestController
 public class MovieController {
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
-    @Autowired
-    MovieHibernateRepository movieRepository;
     @Autowired
     MovieService movieService;
 
@@ -91,11 +88,7 @@ public class MovieController {
             }
         }
 
-        if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
-            movieService.update(movie);
-        } else {
-            movieService.save(movie);
-        }
+        movie = movieService.save(movie);
         RedirectBean redirectBean;
         if (movie.getId() != 0) {
             redirectBean = new RedirectBean(1, "/manage");
@@ -109,7 +102,7 @@ public class MovieController {
 
     @RequestMapping(value = "/api/search_movie", method = RequestMethod.POST)
     private Response<ArrayList<Movie>> searchMovie(@RequestParam(value = "searchStr") String searchStr) {
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieRepository.getIncludeName(searchStr);
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getIncludeName(searchStr);
         Response<ArrayList<Movie>> response = new Response<>(movieArrayList, null);
         logger.info("movie size=" + movieArrayList.size());
         return response;

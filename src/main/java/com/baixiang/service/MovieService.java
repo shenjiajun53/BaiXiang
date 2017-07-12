@@ -1,7 +1,6 @@
 package com.baixiang.service;
 
 import com.baixiang.model.Movie;
-import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -17,7 +16,6 @@ import java.util.List;
  */
 
 @Service
-@Configurable
 //@ComponentScan(value = "com.baixiang")
 public class MovieService {
     @Autowired
@@ -26,22 +24,22 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
-    public void save(Movie movie) {
-        movieRepository.save(movie);
-        return;
+    public Movie save(Movie movie) {
+        movieRepository.saveAndFlush(movie);
+        return movie;
     }
 
 
-    public void update(Movie movie) {
-        movieRepository.save(movie);
-        return;
-    }
+//    public Movie update(Movie movie) {
+//        movieRepository.save(movie);
+//        return movie;
+//    }
 
-    public List<Movie> getAll(){
+    public List<Movie> getAll() {
         return movieRepository.findAll();
     }
 
-    public List<Movie> getNewest(){
+    public List<Movie> getNewest() {
         return movieRepository.findTop20ByOrderById();
     }
 
@@ -50,17 +48,21 @@ public class MovieService {
     }
 
     public Page<Movie> getByTag(String tag, Pageable pageable) {
-        return movieRepository.getByMovieTagSetIn(tag,pageable);
+        return movieRepository.getByMovieTagSetIn(tag, pageable);
     }
 
-    public List<Movie> getHostest(){
+    public List<Movie> getHostest() {
         return movieRepository.findTop15ByOrderByViewTimes();
     }
 
-    public int getSizeByTag(String tag){
+    public int getSizeByTag(String tag) {
         return movieRepository.getByMovieTagSetIn(tag).size();
     }
 
+
+    public List<Movie> getIncludeName(String nameStr) {
+        return movieRepository.getByMovieNameContaining(nameStr);
+    }
 
 //    public List<Movie> getIncludeName(String movieName) {
 //        return movieRepository.getIncludeName(movieName);

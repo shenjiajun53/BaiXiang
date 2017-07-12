@@ -1,12 +1,13 @@
 package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Movie;
-import com.baixiang.repository.MovieHibernateRepository;
+import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -21,6 +22,7 @@ import static com.baixiang.utils.FileUtil.POSTER_PATH;
  */
 
 @Component
+@ComponentScan()
 public class MoviePipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
     public final static String MOVIE_TITLE = "movie_title";
@@ -30,7 +32,7 @@ public class MoviePipeline implements Pipeline {
     public final static String MOVIE_ACTORS = "movie_actors";
 
     @Autowired
-    private MovieHibernateRepository movieRepository;
+    private MovieService movieService;
 
     @Override
     public void process(ResultItems resultItems, Task task) {
@@ -51,16 +53,16 @@ public class MoviePipeline implements Pipeline {
             movie.setMovieInfo(movieInfo);
             movie.setMovieTagSet(tagSet);
 
-            if (movieRepository.getIncludeName(movieTitle).size() > 0) {
-                Movie existMovie = movieRepository.getIncludeName(movieTitle).get(0);
+            if (movieService.getIncludeName(movieTitle).size() > 0) {
+                Movie existMovie = movieService.getIncludeName(movieTitle).get(0);
                 movie.setId(existMovie.getId());
                 if (TextUtils.isEmpty(existMovie.getPoster())) {
                     setPoster(movie, moviePosterUrl, movieTitle);
                 }
-                movieRepository.update(movie);
+                movieService.save(movie);
             } else {
                 setPoster(movie, moviePosterUrl, movieTitle);
-                movieRepository.save(movie);
+                movieService.save(movie);
             }
         }
     }

@@ -19,13 +19,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-//    @NotNull
+    //    @NotNull
 //    @Column(unique = true)
 //    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userName")
     private String userName;
+
+    @Column(name = "pass")
     private String pass;
+
+    @Column(name = "avatarPath")
     private String avatarPath;
+
+    @Column(name = "userIntro")
     private String userIntro;
+
+    @Column(name = "sex")
     private String sex;
 
     @ElementCollection(fetch = FetchType.EAGER)

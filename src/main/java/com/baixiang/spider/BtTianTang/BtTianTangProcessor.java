@@ -28,7 +28,7 @@ import static com.baixiang.spider.pipeline.TorrentPipeline.*;
  */
 
 @Component
-@ComponentScan(value = "com.baixiang.spider")
+@ComponentScan()
 public class BtTianTangProcessor implements PageProcessor {
     private static final Logger logger = LoggerFactory.getLogger(BtTianTangProcessor.class);
     @Autowired

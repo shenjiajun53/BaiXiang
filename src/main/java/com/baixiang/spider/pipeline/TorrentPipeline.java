@@ -2,8 +2,8 @@ package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.MovieTorrent;
-import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.repository.TorrentRepository;
+import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
@@ -28,8 +28,9 @@ public class TorrentPipeline implements Pipeline {
     public final static String TORRENT_URL = "torrent_url";
     public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
 
+
     @Autowired
-    private MovieHibernateRepository movieRepository;
+    private MovieService movieService;
 
     @Autowired
     private TorrentRepository torrentRepository;
@@ -54,14 +55,14 @@ public class TorrentPipeline implements Pipeline {
                 oldTorrent.setMagnetUrl(magnetUrl);
                 torrentRepository.update(oldTorrent);
             } else if (!TextUtils.isEmpty(movieTitle)) {
-                if (movieRepository.getIncludeName(movieTitle).size() > 0) {
+                if (movieService.getIncludeName(movieTitle).size() > 0) {
                     MovieTorrent movieTorrent = new MovieTorrent();
                     movieTorrent.setTorrentName(torrentName);
                     movieTorrent.setMagnetUrl(magnetUrl);
                     setTorrentFile(torrentUrl, torrentName, movieTorrent);
-                    Movie movie = movieRepository.getIncludeName(movieTitle).get(0);
+                    Movie movie = movieService.getIncludeName(movieTitle).get(0);
                     movie.addTorrent(movieTorrent);
-                    movieRepository.update(movie);
+                    movieService.save(movie);
                 }
             }
         }

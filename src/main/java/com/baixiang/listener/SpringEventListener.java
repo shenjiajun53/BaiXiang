@@ -16,7 +16,7 @@ public class SpringEventListener {
     public void handleContextRefresh(ContextRefreshedEvent event) {
         ApplicationContext context = event.getApplicationContext();
 
-        ((DefaultWebSecurityManager) context.getBean("securityManager")).setRealm(
-                (Realm) context.getBean("hibernateRealm"));
+//        ((DefaultWebSecurityManager) context.getBean("securityManager")).setRealm(
+//                (Realm) context.getBean("hibernateRealm"));
     }
 }

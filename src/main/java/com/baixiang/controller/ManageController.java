@@ -2,7 +2,6 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
-import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
 import org.slf4j.Logger;
@@ -23,8 +22,6 @@ import java.util.ArrayList;
 @RestController(value = "")
 public class ManageController {
     private static final Logger logger = LoggerFactory.getLogger(ManageController.class);
-    @Autowired
-    MovieHibernateRepository movieRepository;
     @Autowired
     UserService userService;
     @Autowired

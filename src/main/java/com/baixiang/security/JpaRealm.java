@@ -20,14 +20,14 @@ import java.util.HashSet;
  */
 
 @Component
-public class HibernateRealm extends AuthorizingRealm {
+public class JpaRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
     @Autowired
     RoleService roleService;
 
-    public HibernateRealm() {
+    public JpaRealm() {
         setName("hibernateRealm"); //This name must match the name in the User class's getPrincipals() method
 //        setCredentialsMatcher(new Sha256CredentialsMatcher());
     }

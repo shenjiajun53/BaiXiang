@@ -17,22 +17,22 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public class FilmRepository {
-    private static final Logger logger = LoggerFactory.getLogger(FilmRepository.class);
-    @Autowired
-    private SessionFactory sessionFactory;
-
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    public void save(Film film) {
-        getSession().save(film);
-        return;
-    }
-
-
-    public void update(Film film) {
-        getSession().update(film);
-        return;
-    }
+//    private static final Logger logger = LoggerFactory.getLogger(FilmRepository.class);
+//    @Autowired
+//    private SessionFactory sessionFactory;
+//
+//    private Session getSession() {
+//        return sessionFactory.getCurrentSession();
+//    }
+//
+//    public void save(Film film) {
+//        getSession().save(film);
+//        return;
+//    }
+//
+//
+//    public void update(Film film) {
+//        getSession().update(film);
+//        return;
+//    }
 }

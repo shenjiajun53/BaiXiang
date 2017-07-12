@@ -36,7 +36,7 @@ public class FilmPipeline implements Pipeline {
             film.setFilmInfo(filmInfo);
             film.setFilmUrl(filmUrl);
             film.setFilmTitle(filmTitle);
-            filmRepository.save(film);
+//            filmRepository.save(film);
         }
     }
 

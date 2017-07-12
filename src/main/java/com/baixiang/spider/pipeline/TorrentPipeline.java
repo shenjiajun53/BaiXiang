@@ -46,26 +46,26 @@ public class TorrentPipeline implements Pipeline {
         String magnetUrl = resultItems.get(MAGNET_URL);
         String torrentUrl = resultItems.get(TORRENT_URL);
 
-        if (!TextUtils.isEmpty(torrentName)) {
-            if (torrentRepository.getIncludeName(torrentName).size() > 0) {
-                MovieTorrent oldTorrent = torrentRepository.getIncludeName(torrentName).get(0);
-                if (TextUtils.isEmpty(oldTorrent.getFilePath())) {
-                    setTorrentFile(torrentUrl, torrentName, oldTorrent);
-                }
-                oldTorrent.setMagnetUrl(magnetUrl);
-                torrentRepository.update(oldTorrent);
-            } else if (!TextUtils.isEmpty(movieTitle)) {
-                if (movieService.getIncludeName(movieTitle).size() > 0) {
-                    MovieTorrent movieTorrent = new MovieTorrent();
-                    movieTorrent.setTorrentName(torrentName);
-                    movieTorrent.setMagnetUrl(magnetUrl);
-                    setTorrentFile(torrentUrl, torrentName, movieTorrent);
-                    Movie movie = movieService.getIncludeName(movieTitle).get(0);
-                    movie.addTorrent(movieTorrent);
-                    movieService.save(movie);
-                }
-            }
-        }
+//        if (!TextUtils.isEmpty(torrentName)) {
+//            if (torrentRepository.getIncludeName(torrentName).size() > 0) {
+//                MovieTorrent oldTorrent = torrentRepository.getIncludeName(torrentName).get(0);
+//                if (TextUtils.isEmpty(oldTorrent.getFilePath())) {
+//                    setTorrentFile(torrentUrl, torrentName, oldTorrent);
+//                }
+//                oldTorrent.setMagnetUrl(magnetUrl);
+//                torrentRepository.update(oldTorrent);
+//            } else if (!TextUtils.isEmpty(movieTitle)) {
+//                if (movieService.getIncludeName(movieTitle).size() > 0) {
+//                    MovieTorrent movieTorrent = new MovieTorrent();
+//                    movieTorrent.setTorrentName(torrentName);
+//                    movieTorrent.setMagnetUrl(magnetUrl);
+//                    setTorrentFile(torrentUrl, torrentName, movieTorrent);
+//                    Movie movie = movieService.getIncludeName(movieTitle).get(0);
+//                    movie.addTorrent(movieTorrent);
+//                    movieService.save(movie);
+//                }
+//            }
+//        }
     }
 
     public void setTorrentFile(String torrentUrl, String torrentName, MovieTorrent movieTorrent) {

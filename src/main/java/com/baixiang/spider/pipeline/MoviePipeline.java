@@ -1,32 +1,20 @@
 package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Movie;
-import com.baixiang.repository.MovieRepository;
-import com.baixiang.service.MovieService;
+import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.utils.FileUtil;
-import okhttp3.*;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
-import us.codecraft.webmagic.pipeline.PageModelPipeline;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
-import static com.baixiang.utils.FileUtil.STATIC_PATH;
 
 /**
  * Created by shenjj on 2017/6/21.
@@ -42,7 +30,7 @@ public class MoviePipeline implements Pipeline {
     public final static String MOVIE_ACTORS = "movie_actors";
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieHibernateRepository movieRepository;
 
     @Override
     public void process(ResultItems resultItems, Task task) {

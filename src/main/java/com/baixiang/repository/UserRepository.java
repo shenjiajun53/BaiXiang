@@ -1,57 +1,24 @@
 package com.baixiang.repository;
 
 import com.baixiang.model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/5/16.
+ * Created by shenjj on 2017/7/12.
  */
 
-@Repository
-@Transactional
-public class UserRepository {
-    @Autowired
-    private SessionFactory sessionFactory;
+@org.springframework.stereotype.Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    private Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    User getByUserName(String userName);
 
-    public void save(User user) {
-        getSession().save(user);
-        return;
-    }
+    User getById(Long id);
 
-    public void delete(User user) {
-        getSession().delete(user);
-        return;
-    }
+    List<User> findAll();
 
-    @SuppressWarnings("unchecked")
-    public List<User> getAll() {
-        return getSession().createQuery("from User").list();
-    }
-
-    public User getById(long id) {
-        return (User) getSession().createQuery("from User where id=:id").setParameter("id", id).uniqueResult();
-    }
-
-    public User getByName(String userName) {
-        return (User) getSession().createQuery(
-                "from User where userName = :userName")
-                .setParameter("userName", userName)
-                .uniqueResult();
-    }
-
-    public void update(User user) {
-        getSession().update(user);
-        return;
-    }
+    User save(User user);
 
 }

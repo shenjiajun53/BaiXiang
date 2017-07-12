@@ -1,11 +1,8 @@
 package com.baixiang.spider;
 
 import com.baixiang.model.Film;
-import com.baixiang.model.Movie;
 import com.baixiang.repository.FilmRepository;
-import com.baixiang.repository.MovieRepository;
 import com.baixiang.spider.pipeline.MoviePipeline;
-import com.baixiang.utils.FileUtil;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +11,6 @@ import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
-
-import static com.baixiang.utils.FileUtil.POSTER_PATH;
 
 /**
  * Created by Administrator on 2017/7/1.

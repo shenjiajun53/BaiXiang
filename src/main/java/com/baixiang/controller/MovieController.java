@@ -1,12 +1,9 @@
 package com.baixiang.controller;
 
 import com.baixiang.model.*;
-import com.baixiang.repository.MovieRepository;
+import com.baixiang.repository.MovieHibernateRepository;
+import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
-import org.apache.shiro.authz.annotation.RequiresAuthentication;
-import org.apache.shiro.authz.annotation.RequiresGuest;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.authz.annotation.RequiresUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +27,9 @@ import static com.baixiang.utils.FileUtil.*;
 public class MovieController {
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
     @Autowired
-    MovieRepository movieRepository;
+    MovieHibernateRepository movieRepository;
+    @Autowired
+    MovieService movieService;
 
 
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)

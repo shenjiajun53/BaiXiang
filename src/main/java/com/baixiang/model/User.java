@@ -29,7 +29,7 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "role_types", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role_type")
-    private Set<Integer> roleTypeSet=new HashSet<>();
+    private Set<Integer> roleTypeSet = new HashSet<>();
 
     public User() {
     }

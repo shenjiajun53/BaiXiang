@@ -1,11 +1,15 @@
 package com.baixiang.service;
 
 import com.baixiang.model.User;
+import com.baixiang.repository.UserHibernateRepository;
 import com.baixiang.repository.UserRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  * Created by shenjj on 2017/5/17.
@@ -15,14 +19,34 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
+    UserHibernateRepository userHibernateRepository;
+
+    @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EntityManager entityManager;
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
     public User getByName(String userName) {
-        return userRepository.getByName(userName);
+        return userRepository.getByUserName(userName);
     }
 
     public User getById(Long userId) {
         return userRepository.getById(userId);
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
+        return;
+    }
+
+    public void delete(User user) {
+        userRepository.delete(user);
+        return;
     }
 
     public User getUserBySession() {

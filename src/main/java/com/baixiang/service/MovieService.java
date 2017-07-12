@@ -1,15 +1,15 @@
 package com.baixiang.service;
 
-import com.baixiang.controller.MovieController;
 import com.baixiang.model.Movie;
+import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.repository.MovieRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 /**
@@ -21,6 +21,9 @@ import java.util.List;
 //@ComponentScan(value = "com.baixiang")
 public class MovieService {
     @Autowired
+    EntityManager entityManager;
+
+    @Autowired
     private MovieRepository movieRepository;
 
     public void save(Movie movie) {
@@ -30,16 +33,28 @@ public class MovieService {
 
 
     public void update(Movie movie) {
-        movieRepository.update(movie);
+        movieRepository.save(movie);
         return;
     }
 
-    public void saveOrUpdate(Movie movie) {
-        movieRepository.saveOrUpdate(movie);
-        return;
+    public Movie getById(long id) {
+        return movieRepository.getById(id);
     }
 
-    public List<Movie> getIncludeName(String movieName) {
-        return movieRepository.getIncludeName(movieName);
+    public Page<Movie> getByTag(String tag, Pageable pageable) {
+        return movieRepository.getByMovieTagSetIn(tag,pageable);
     }
+
+    public List<Movie> getHostest(){
+        return movieRepository.findTop15ByOrderByViewTimes();
+    }
+
+    public int getSizeByTag(String tag){
+        return movieRepository.getByMovieTagSetIn(tag).size();
+    }
+
+
+//    public List<Movie> getIncludeName(String movieName) {
+//        return movieRepository.getIncludeName(movieName);
+//    }
 }

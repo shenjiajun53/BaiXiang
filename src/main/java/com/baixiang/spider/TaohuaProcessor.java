@@ -60,24 +60,6 @@ public class TaohuaProcessor implements PageProcessor {
         page.addTargetRequests(page.getHtml().links().regex("http://thzav.com/thread-\\w+-1-\\w+.*").all());
         page.putField(FILM_TITLE, page.getHtml().xpath("//span[@id='thread_subject']").toString());
         page.putField(FILM_INFO, page.getHtml().xpath("//td[@class='t_f']").toString());
-        if (page.getResultItems().toString().contains("本田岬")) {
-            writeFile(page.getUrl().toString() + " 本田岬 \n");
-        }
-        if (page.getResultItems().toString().contains("今永")) {
-            writeFile(page.getUrl().toString() + " 今永 \n");
-        }
-        if (page.getResultItems().toString().contains("三上悠亜")) {
-            writeFile(page.getUrl().toString() + " 三上悠亜 \n");
-        }
-        if (page.getResultItems().toString().contains("神咲詩織")) {
-            writeFile(page.getUrl().toString() + " 神咲詩織 \n");
-        }
-        if (page.getResultItems().toString().contains("水野朝陽")) {
-            writeFile(page.getUrl().toString() + " 水野朝陽 \n");
-        }
-        if (page.getResultItems().toString().contains("工藤美纱")) {
-            writeFile(page.getUrl().toString() + " 工藤美纱 \n");
-        }
     }
 
     public static void writeFile(String str) {

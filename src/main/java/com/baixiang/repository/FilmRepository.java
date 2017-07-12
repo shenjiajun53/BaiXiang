@@ -1,7 +1,6 @@
 package com.baixiang.repository;
 
 import com.baixiang.model.Film;
-import com.baixiang.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public class FilmRepository {
-    private static final Logger logger = LoggerFactory.getLogger(MovieRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(FilmRepository.class);
     @Autowired
     private SessionFactory sessionFactory;
 

@@ -3,7 +3,6 @@ package com.baixiang.controller;
 import com.baixiang.exception.UserNotFoundException;
 import com.baixiang.model.*;
 import com.baixiang.model.Error;
-import com.baixiang.repository.UserRepository;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.SecurityUtils;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
 
 /**
  * Created by shenjj on 2017/5/16.
@@ -34,7 +32,7 @@ public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
 
     @RequestMapping(value = "/api/sign_in", method = RequestMethod.POST)
@@ -86,7 +84,7 @@ public class UserController {
             }
         }
         user.addRole(Role.BangZhu);
-        userRepository.save(user);
+        userService.save(user);
         RedirectBean redirectBean;
         if (user.getId() != 0) {
             logger.info("保存用户成功");

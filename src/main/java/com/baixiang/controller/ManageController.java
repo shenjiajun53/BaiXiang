@@ -2,26 +2,17 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
-import com.baixiang.repository.MovieRepository;
-import com.baixiang.repository.UserRepository;
+import com.baixiang.repository.MovieHibernateRepository;
 import com.baixiang.service.UserService;
-import com.baixiang.utils.FileUtil;
-import com.sun.istack.internal.Nullable;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -32,9 +23,7 @@ import java.util.ArrayList;
 public class ManageController {
     private static final Logger logger = LoggerFactory.getLogger(ManageController.class);
     @Autowired
-    MovieRepository movieRepository;
-    @Autowired
-    UserRepository userRepository;
+    MovieHibernateRepository movieRepository;
     @Autowired
     UserService userService;
 

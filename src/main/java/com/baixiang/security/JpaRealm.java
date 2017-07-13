@@ -39,7 +39,7 @@ public class JpaRealm extends AuthorizingRealm {
         Long currentLoginId = (Long) principals.getPrimaryPrincipal();
         User user = userService.getById(currentLoginId);
 
-        System.out.printf("user=" + user.toString());
+//        System.out.printf("user=" + user.toString());
         if (user != null) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
             HashSet<Role> roleHashSet= (HashSet<Role>) user.getRoleSet();
@@ -49,7 +49,6 @@ public class JpaRealm extends AuthorizingRealm {
                     info.addStringPermissions(role.getPermissions());
                 }
             }
-
             return info;
         } else {
             return null;

@@ -54,11 +54,11 @@ public class MoviePipeline implements Pipeline {
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
             movie.setMovieTagSet(tagSet);
-            for (String str : actorSet) {
-                Actor actor = new Actor();
-                actor.setActorName(str);
-                movie.addActor(actor);
-            }
+//            for (String str : actorSet) {
+//                Actor actor = new Actor();
+//                actor.setActorName(str);
+//                movie.addActor(actor);
+//            }
 
             if (movieService.getIncludeName(movieTitle).size() > 0) {
                 Movie existMovie = movieService.getIncludeName(movieTitle).get(0);

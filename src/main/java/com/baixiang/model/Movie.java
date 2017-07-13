@@ -216,6 +216,7 @@ public class Movie implements Serializable {
     public void addActor(Actor actor) {
         if (!actorSet.contains(actor)) {
             actorSet.add(actor);
+            movieTagSet.add(actor.getActorName());
         }
     }
 

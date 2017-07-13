@@ -1,7 +1,7 @@
 package com.baixiang.service;
 
 import com.baixiang.model.User;
-import com.baixiang.repository.UserHibernateRepository;
+import com.baixiang.repository.hibernateRepository.UserHibernateRepository;
 import com.baixiang.repository.UserRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

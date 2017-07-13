@@ -1,4 +1,4 @@
-package com.baixiang.repository;
+package com.baixiang.repository.hibernateRepository;
 
 import com.baixiang.model.Film;
 import org.hibernate.Session;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 
 @Repository
 @Transactional
-public class FilmRepository {
+public class FilmHibernateRepository {
 //    private static final Logger logger = LoggerFactory.getLogger(FilmRepository.class);
 //    @Autowired
 //    private SessionFactory sessionFactory;

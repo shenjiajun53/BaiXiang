@@ -25,22 +25,17 @@ public class Movie implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "movieName")
     private String movieName;
 
-    @Column(columnDefinition = "LONGTEXT",name = "movieInfo")
+    @Column(columnDefinition = "LONGTEXT")
     private String movieInfo;
 
-    @Column(name = "poster")
     private String poster;
 
-    @Column(name = "createDate")
     private Date createDate;//创建日期
 
-    @Column(name = "releaseDate")
     private String releaseDate;//上映日期
 
-    @Column(name = "viewTimes")
     private Long viewTimes;
 
     /*

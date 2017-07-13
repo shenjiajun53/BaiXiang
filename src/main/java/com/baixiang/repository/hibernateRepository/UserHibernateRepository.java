@@ -1,4 +1,4 @@
-package com.baixiang.repository;
+package com.baixiang.repository.hibernateRepository;
 
 import com.baixiang.model.User;
 import org.hibernate.Session;

@@ -1,7 +1,7 @@
 package com.baixiang.spider;
 
 import com.baixiang.model.Film;
-import com.baixiang.repository.FilmRepository;
+import com.baixiang.repository.hibernateRepository.FilmHibernateRepository;
 import com.baixiang.spider.pipeline.MoviePipeline;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class FilmPipeline implements Pipeline {
     public final static String FILM_URL = "film_poster";
 
     @Autowired
-    private FilmRepository filmRepository;
+    private FilmHibernateRepository filmRepository;
 
     @Override
     public void process(ResultItems resultItems, Task task) {

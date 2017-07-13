@@ -1,5 +1,6 @@
 package com.baixiang.spider.pipeline;
 
+import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
 import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
@@ -44,6 +45,7 @@ public class MoviePipeline implements Pipeline {
         String movieInfo = resultItems.get(MOVIE_INFO);
         String moviePosterUrl = resultItems.get(MOVIE_POSTER);
         HashSet<String> tagSet = resultItems.get(MOVIE_TAGS);
+        HashSet<String> actorSet = resultItems.get(MOVIE_ACTORS);
         if (null != movieTitle) {
             Movie movie = new Movie();
             if (movieTitle.contains(":")) {
@@ -52,6 +54,11 @@ public class MoviePipeline implements Pipeline {
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);
             movie.setMovieTagSet(tagSet);
+            for (String str : actorSet) {
+                Actor actor = new Actor();
+                actor.setActorName(str);
+                movie.addActor(actor);
+            }
 
             if (movieService.getIncludeName(movieTitle).size() > 0) {
                 Movie existMovie = movieService.getIncludeName(movieTitle).get(0);

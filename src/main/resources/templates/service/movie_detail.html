@@ -28,6 +28,10 @@
 
         <img v-bind:src="poster.url" style="width: 200px;margin-bottom: 1em"/>
 
+        <div th:each="actor : ${movie.actorSet}" style="margin-bottom: 1em">
+            <span th:text="${actor.actorName}"></span>
+        </div>
+
         <div th:utext="${movie.movieInfo}" style="margin-bottom: 1em"></div>
 
         <div style="margin-bottom: 5px" th:hidden="${movie.screenShots.size()==0}">截图</div>

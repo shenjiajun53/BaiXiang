@@ -21,7 +21,6 @@ public class User {
 
     @NotNull
     @Column(unique = true)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userName;
 
     private String pass;

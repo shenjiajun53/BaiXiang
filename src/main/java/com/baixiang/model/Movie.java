@@ -69,6 +69,13 @@ public class Movie implements Serializable {
     @Column(name = "movie_tag")
     private Set<String> movieTagSet = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movies_actors",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
+    @JsonIgnore
+    private Set<Actor> actorSet = new HashSet<>();
+
     public Movie() {
     }
 
@@ -163,6 +170,14 @@ public class Movie implements Serializable {
         this.viewTimes = viewTimes;
     }
 
+    public Set<Actor> getActorSet() {
+        return actorSet;
+    }
+
+    public void setActorSet(Set<Actor> actorSet) {
+        this.actorSet = actorSet;
+    }
+
     public void addScreenShot(MovieImage screenShot) {
         if (!this.screenShots.contains(screenShot)) {
             this.screenShots.add(screenShot);
@@ -196,6 +211,16 @@ public class Movie implements Serializable {
 
     public void removeTag(String tag) {
         movieTagSet.remove(tag);
+    }
+
+    public void addActor(Actor actor) {
+        if (!actorSet.contains(actor)) {
+            actorSet.add(actor);
+        }
+    }
+
+    public void removeActor(Actor actor) {
+        actorSet.remove(actor);
     }
 
     @Override

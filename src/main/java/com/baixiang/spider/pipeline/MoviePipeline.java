@@ -2,6 +2,7 @@ package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
+import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
 import com.baixiang.utils.FileUtil;
 import org.apache.http.util.TextUtils;
@@ -9,12 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
 
@@ -35,6 +38,9 @@ public class MoviePipeline implements Pipeline {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private ActorService actorService;
+
     @Override
     public void process(ResultItems resultItems, Task task) {
 //        logger.info("result=" + resultItems.getRequest().getUrl());
@@ -47,30 +53,48 @@ public class MoviePipeline implements Pipeline {
         HashSet<String> tagSet = resultItems.get(MOVIE_TAGS);
         HashSet<String> actorSet = resultItems.get(MOVIE_ACTORS);
         if (null != movieTitle) {
-            Movie movie = new Movie();
             if (movieTitle.contains(":")) {
                 movieTitle = movieTitle.replace(":", "：");
             }
-            movie.setMovieName(movieTitle);
-            movie.setMovieInfo(movieInfo);
-            movie.setMovieTagSet(tagSet);
-//            for (String str : actorSet) {
-//                Actor actor = new Actor();
-//                actor.setActorName(str);
-//                movie.addActor(actor);
-//            }
-
             if (movieService.getIncludeName(movieTitle).size() > 0) {
-                Movie existMovie = movieService.getIncludeName(movieTitle).get(0);
-                movie.setId(existMovie.getId());
-                if (TextUtils.isEmpty(existMovie.getPoster())) {
-                    setPoster(movie, moviePosterUrl, movieTitle);
-                }
-                movieService.save(movie);
+                Movie movie = movieService.getIncludeName(movieTitle).get(0);
+                setMovie(movie, movieTitle, movieInfo, tagSet, actorSet, moviePosterUrl);
+                saveMovie(movie);
             } else {
-                setPoster(movie, moviePosterUrl, movieTitle);
-                movieService.save(movie);
+                Movie movie = new Movie();
+                setMovie(movie, movieTitle, movieInfo, tagSet, actorSet, moviePosterUrl);
+                saveMovie(movie);
             }
+        }
+    }
+
+    private void setMovie(Movie movie,
+                          String movieTitle,
+                          String movieInfo,
+                          Set<String> tagSet,
+                          HashSet<String> actorSet,
+                          String moviePosterUrl) {
+        movie.setMovieName(movieTitle);
+        movie.setMovieInfo(movieInfo);
+        movie.setMovieTagSet(tagSet);
+        for (String actorName : actorSet) {
+            Actor actor = actorService.getActorByName(actorName);
+            if (actor == null) {
+                actor = new Actor();
+                actor.setActorName(actorName);
+            }
+            movie.addActor(actor);
+        }
+        if (TextUtils.isEmpty(movie.getPoster())) {
+            setPoster(movie, moviePosterUrl, movieTitle);
+        }
+    }
+
+    private void saveMovie(Movie movie) {
+        try {
+            movieService.save(movie);
+        } catch (ObjectOptimisticLockingFailureException e) {
+            logger.error("ObjectOptimisticLockingFailureException save movie");
         }
     }
 

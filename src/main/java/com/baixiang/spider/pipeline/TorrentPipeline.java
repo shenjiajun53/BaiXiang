@@ -9,6 +9,8 @@ import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -46,25 +48,35 @@ public class TorrentPipeline implements Pipeline {
         String magnetUrl = resultItems.get(MAGNET_URL);
         String torrentUrl = resultItems.get(TORRENT_URL);
 
+
         if (!TextUtils.isEmpty(torrentName)) {
             if (torrentService.getIncludeName(torrentName).size() > 0) {
-                MovieTorrent oldTorrent = torrentService.getIncludeName(torrentName).get(0);
-                if (TextUtils.isEmpty(oldTorrent.getFilePath())) {
-                    setTorrentFile(torrentUrl, torrentName, oldTorrent);
-                }
-                oldTorrent.setMagnetUrl(magnetUrl);
-                torrentService.update(oldTorrent);
-            } else if (!TextUtils.isEmpty(movieTitle)) {
-                if (movieService.getIncludeName(movieTitle).size() > 0) {
-                    MovieTorrent movieTorrent = new MovieTorrent();
-                    movieTorrent.setTorrentName(torrentName);
-                    movieTorrent.setMagnetUrl(magnetUrl);
+                MovieTorrent movieTorrent = torrentService.getIncludeName(torrentName).get(0);
+                if (TextUtils.isEmpty(movieTorrent.getFilePath())) {
                     setTorrentFile(torrentUrl, torrentName, movieTorrent);
-                    Movie movie = movieService.getIncludeName(movieTitle).get(0);
-                    movie.addTorrent(movieTorrent);
-                    movieService.save(movie);
                 }
+                movieTorrent.setMagnetUrl(magnetUrl);
+                torrentService.update(movieTorrent);
+            } else if (!TextUtils.isEmpty(movieTitle) &&
+                    movieService.getIncludeName(movieTitle).size() > 0) {
+                MovieTorrent movieTorrent = new MovieTorrent();
+                movieTorrent.setTorrentName(torrentName);
+                movieTorrent.setMagnetUrl(magnetUrl);
+                setTorrentFile(torrentUrl, torrentName, movieTorrent);
+                Movie movie = movieService.getIncludeName(movieTitle).get(0);
+                movie.addTorrent(movieTorrent);
+                saveMovie(movie);
             }
+        }
+    }
+
+    private void saveMovie(Movie movie) {
+        try {
+            movieService.save(movie);
+        } catch (InvalidDataAccessApiUsageException e) {
+            logger.error("InvalidDataAccessApiUsageException save movie");
+        } catch (ObjectOptimisticLockingFailureException e) {
+            logger.error("ObjectOptimisticLockingFailureException save movie");
         }
     }
 

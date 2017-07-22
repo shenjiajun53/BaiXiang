@@ -21,9 +21,11 @@ import java.util.Set;
 public class Movie implements Serializable {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
+    @Version
+    private int version;
 
     private String movieName;
 
@@ -69,7 +71,7 @@ public class Movie implements Serializable {
     @Column(name = "movie_tag")
     private Set<String> movieTagSet = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
@@ -92,8 +94,12 @@ public class Movie implements Serializable {
         this.id = id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public String getMovieName() {
@@ -214,10 +220,13 @@ public class Movie implements Serializable {
     }
 
     public void addActor(Actor actor) {
-        if (!actorSet.contains(actor)) {
-            actorSet.add(actor);
-            movieTagSet.add(actor.getActorName());
+        for (Actor existActor : actorSet) {
+            if (existActor.getActorName().equals(actor.getActorName())) {
+                return;
+            }
         }
+        actorSet.add(actor);
+        movieTagSet.add(actor.getActorName());
     }
 
     public void removeActor(Actor actor) {

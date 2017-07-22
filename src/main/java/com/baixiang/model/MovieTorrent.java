@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Table(name = "movie_torrents")
 public class MovieTorrent implements Serializable {
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String filePath;

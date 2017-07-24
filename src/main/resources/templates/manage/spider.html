@@ -31,15 +31,17 @@
     </el-switch>
 </div>
 </body>
-<script>
+<script th:inline="javascript">
+    let isRunning = [[${btSpiderRunning}]];
+    console.info("isrunning=" + isRunning);
     new Vue({
         el: "#container",
         data: {
-            toggleBt: false,
-            toggleTaohua:false
+            toggleBt: isRunning,
+            toggleTaohua: false
         },
         methods: {
-            btOnChange(value){
+            btOnChange(value) {
                 console.log("" + value);
                 if (value) {
                     let url = "/api/start_spider_bt";
@@ -49,7 +51,7 @@
                     this.post(url);
                 }
             },
-            taohuaOnChange(value){
+            taohuaOnChange(value) {
                 console.log("" + value);
                 if (value) {
                     let url = "/api/start_spider_taohua";
@@ -59,7 +61,7 @@
                     this.post(url);
                 }
             },
-            post(url){
+            post(url) {
                 fetch(url, {method: "post"});
             }
         }

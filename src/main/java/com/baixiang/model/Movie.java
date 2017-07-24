@@ -12,6 +12,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import static javax.persistence.CascadeType.*;
+
 /**
  * Created by shenjj on 2017/5/12.
  */
@@ -34,6 +36,8 @@ public class Movie implements Serializable {
 
     private String poster;
 
+    //@Temporal注释用来指定java.util.Date 或java.util.Calendar 属性与数据库类型date,time 或timestamp 中的那一种类型进行映射
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date createDate;//创建日期
 
     private String releaseDate;//上映日期
@@ -71,7 +75,7 @@ public class Movie implements Serializable {
     @Column(name = "movie_tag")
     private Set<String> movieTagSet = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
@@ -158,8 +162,6 @@ public class Movie implements Serializable {
         this.movieTagSet = movieTagSet;
     }
 
-    //@Temporal注释用来指定java.util.Date 或java.util.Calendar 属性与数据库类型date,time 或timestamp 中的那一种类型进行映射
-    @Temporal(value = TemporalType.TIMESTAMP)
     public Date getCreateDate() {
         return createDate;
     }
@@ -220,13 +222,13 @@ public class Movie implements Serializable {
     }
 
     public void addActor(Actor actor) {
+        movieTagSet.add(actor.getActorName());
         for (Actor existActor : actorSet) {
             if (existActor.getActorName().equals(actor.getActorName())) {
                 return;
             }
         }
         actorSet.add(actor);
-        movieTagSet.add(actor.getActorName());
     }
 
     public void removeActor(Actor actor) {

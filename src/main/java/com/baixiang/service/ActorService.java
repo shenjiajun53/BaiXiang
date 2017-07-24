@@ -14,4 +14,8 @@ public class ActorService {
     public Actor getActorByName(String actorName) {
         return actorRepository.findActorByActorName(actorName);
     }
+
+    public Actor save(Actor actor){
+        return actorRepository.saveAndFlush(actor);
+    }
 }

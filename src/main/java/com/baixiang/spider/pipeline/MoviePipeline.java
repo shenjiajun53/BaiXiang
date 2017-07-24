@@ -82,6 +82,7 @@ public class MoviePipeline implements Pipeline {
             if (actor == null) {
                 actor = new Actor();
                 actor.setActorName(actorName);
+                actor = actorService.save(actor);
             }
             movie.addActor(actor);
         }

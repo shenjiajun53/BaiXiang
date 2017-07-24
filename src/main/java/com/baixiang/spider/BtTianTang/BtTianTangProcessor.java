@@ -40,11 +40,14 @@ public class BtTianTangProcessor implements PageProcessor {
     private Site site = Site.me().setRetryTimes(3).setSleepTime(1500).setTimeOut(10000);
     private Spider spider;
 
+    private boolean isRunning = false;
+
     public BtTianTangProcessor() {
     }
 
 
     public void start() {
+        isRunning = true;
         spider = Spider.create(this)
                 .addPipeline(moviePipeline)
 //                .addPipeline(new ConsolePipeline())
@@ -54,7 +57,16 @@ public class BtTianTangProcessor implements PageProcessor {
     }
 
     public void stop() {
+        isRunning = false;
         spider.stop();
+    }
+
+    public boolean isRunning() {
+        return isRunning;
+    }
+
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 
     @Override
@@ -83,7 +95,7 @@ public class BtTianTangProcessor implements PageProcessor {
             List<Selectable> actorNodes = page.getHtml().xpath("//div[@id='post_content']/p[2]/a").nodes();
             Set<String> actorSet = new HashSet<>();
             for (int i = 0; i < actorNodes.size(); i++) {
-                if(actorNodes.get(i).css("a","href").get().contains("/zhuyan/")){
+                if (actorNodes.get(i).css("a", "href").get().contains("/zhuyan/")) {
                     actorSet.add(actorNodes.get(i).xpath("/a/text()").get());
                 }
             }

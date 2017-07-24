@@ -4,6 +4,7 @@ import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
+import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class ManageController {
     UserService userService;
     @Autowired
     MovieService movieService;
+    @Autowired
+    BtTianTangProcessor btTianTangProcessor;
 
 
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
@@ -76,6 +79,8 @@ public class ManageController {
         ModelAndView modelAndView = new ModelAndView("/manage/spider");
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
+        modelAndView.addObject("btSpiderRunning", btTianTangProcessor.isRunning());
+        logger.info("btSpiderRunning="+btTianTangProcessor.isRunning());
         return modelAndView;
     }
 }

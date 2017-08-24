@@ -1,7 +1,7 @@
 <template>
     <div style="display: flex;flex-direction: row">
         <div v-for="(breadcrumbItem , index) in breadcrumbList" style="display: flex;flex-direction: row">
-            <a :href="breadcrumbItem.url" style="">{{breadcrumbItem.tagName}}</a>
+            <a :href="breadcrumbItem.url" style="">{{breadcrumbItem.itemName}}</a>
             <div v-if="index<breadcrumbList.length-1" style="color: #757575">\</div>
         </div>
     </div>

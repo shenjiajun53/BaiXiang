@@ -1,6 +1,8 @@
 package com.baixiang.service;
 
+import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
+import com.baixiang.repository.ActorRepository;
 import com.baixiang.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
@@ -23,6 +25,8 @@ public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+    @Autowired
+    private ActorRepository actorRepository;
 
     public Movie save(Movie movie) {
         movieRepository.saveAndFlush(movie);
@@ -51,12 +55,28 @@ public class MovieService {
         return movieRepository.getByMovieTagSetIn(tag, pageable);
     }
 
+    public Page<Movie> getByActor(String actorName, Pageable pageable) {
+        Actor actor = actorRepository.findActorByActorName(actorName);
+        if (null == actor) {
+            return null;
+        }
+        return movieRepository.getByActorSetIn(actor, pageable);
+    }
+
     public List<Movie> getHostest() {
         return movieRepository.findTop15ByOrderByViewTimes();
     }
 
     public int getSizeByTag(String tag) {
         return movieRepository.getByMovieTagSetIn(tag).size();
+    }
+
+    public int getSizeByActor(String actorName) {
+        Actor actor = actorRepository.findActorByActorName(actorName);
+        if (null == actor) {
+            return 0;
+        }
+        return movieRepository.getByActorSetIn(actor).size();
     }
 
 

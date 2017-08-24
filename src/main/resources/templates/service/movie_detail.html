@@ -28,10 +28,12 @@
 
         <img v-bind:src="poster.url" style="width: 200px;margin-bottom: 1em"/>
 
+        <h2 style="margin-bottom: 10px" th:hidden="${movie.actorSet.size()==0}">演员表</h2>
         <div th:each="actor : ${movie.actorSet}" style="margin-bottom: 1em">
-            <a th:text="${actor.actorName}" th:href=${'/movie_list?tag='+actor.actorName}></a>
+            <a th:text="${actor.actorName}" th:href=${'/movie_list?actor='+actor.actorName}></a>
         </div>
 
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.movieInfo==null}">介绍</h2>
         <div th:utext="${movie.movieInfo}" style="margin-bottom: 1em"></div>
 
         <div style="margin-bottom: 5px" th:hidden="${movie.screenShots.size()==0}">截图</div>
@@ -62,12 +64,12 @@
                 poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
                 screenShotList: [],
                 torrentList: [],
-                breadcrumbList: [{url: "/", tagName: "首页"},
-                    {url: "/movie_list?tag=" + tagName, tagName: tagName}]
+                breadcrumbList: [{url: "/", itemName: "首页"},
+                    {url: "/movie_list?tag=" + tagName, itemName: tagName}]
             };
         },
         methods: {
-            downLoad(){
+            downLoad() {
 
             }
         }

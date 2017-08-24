@@ -4,6 +4,7 @@ import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
+import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ServiceController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
-        Pageable pageable=new PageRequest(0,20);
+        Pageable pageable = new PageRequest(0, 20);
         Page<Movie> movieArrayList = movieService.getByTag("推荐", pageable);
         logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
@@ -48,19 +49,26 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/movie_list", method = RequestMethod.GET)
-    public ModelAndView movieList(@RequestParam(value = "tag", required = true) String tag,
+    public ModelAndView movieList(@RequestParam(value = "tag", required = false) String tag,
+                                  @RequestParam(value = "actor", required = false) String actor,
                                   @RequestParam(value = "page", required = false) Integer page) {
         ModelAndView modelAndView = new ModelAndView("/service/movie_list");
         if (null == page) {
             page = 1;
         }
-        Pageable pageable=new PageRequest(page-1,PAGE_SIZE);
-
-        Page<Movie> movieArrayList = movieService.getByTag(tag, pageable);
-        logger.info(movieArrayList.toString());
+        Pageable pageable = new PageRequest(page - 1, PAGE_SIZE);
+        Page<Movie> movieArrayList = null;
+        int maxPage = 0;
+        if (!TextUtils.isEmpty(tag)) {
+            movieArrayList = movieService.getByTag(tag, pageable);
+            logger.info(movieArrayList.toString());
+            maxPage = (int) Math.ceil(((double) movieService.getSizeByTag(tag)) / PAGE_SIZE);  //进一
+        } else if (!TextUtils.isEmpty(actor)) {
+            movieArrayList = movieService.getByActor(actor, pageable);
+            logger.info(movieArrayList.toString());
+            maxPage = (int) Math.ceil(((double) movieService.getSizeByActor(actor)) / PAGE_SIZE);  //进一
+        }
         modelAndView.addObject("movieList", movieArrayList);
-        int maxPage = (int) Math.ceil(((double) movieService.getSizeByTag(tag)) / PAGE_SIZE);  //进一
-        logger.info("tag=" + tag + " maxPage=" + maxPage);
         modelAndView.addObject("maxPage", maxPage);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);

@@ -222,7 +222,6 @@ public class Movie implements Serializable {
     }
 
     public void addActor(Actor actor) {
-        movieTagSet.add(actor.getActorName());
         for (Actor existActor : actorSet) {
             if (existActor.getActorName().equals(actor.getActorName())) {
                 return;

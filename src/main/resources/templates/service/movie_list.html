@@ -35,7 +35,7 @@
         <pagination :max-page="maxPage"/>
     </div>
 
-    <div th:replace="layout/side_bar::side_bar" style="flex: 1"></div>
+    <div th:replace="layout/side_bar::side_bar" style="width: 200px"></div>
 </div>
 </body>
 
@@ -47,13 +47,20 @@
         if (r != null) return decodeURI(r[2]);
         return null;
     }
-    let tagName = getQueryString("tag");
+
+    let itemType = "tag";
+    let itemName = getQueryString(itemType);
+    if (itemName === null) {
+        itemType = "actor";
+        itemName = getQueryString(itemType);
+    }
+    console.info("itemName=" + itemName);
     new Vue({
         el: '#list',
         data: {
             maxPage: [[${maxPage}]],
-            breadcrumbList: [{url: "/", tagName: "首页"},
-                {url: "/movie_list?tag=" + tagName, tagName: tagName}]
+            breadcrumbList: [{url: "/", itemName: "首页"},
+                {url: "/movie_list?" + itemType + "=" + itemName, itemName: itemName}]
         },
         methods: {}
     })

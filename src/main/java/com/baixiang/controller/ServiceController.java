@@ -79,7 +79,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
     public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
-        ModelAndView modelAndView = new ModelAndView("/service/movie_detail");
+        ModelAndView modelAndView = new ModelAndView("/service/movie_detail_m");
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         if (null != movieId) {

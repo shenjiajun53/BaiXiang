@@ -11,10 +11,11 @@ import FlatButton from "material-ui/FlatButton";
 import MyMenu from "./MyMenu";
 
 const ON_TITLE_CLICKED = 111;
-const ON_CARE_CLICKED = 112;
+const ON_USER_CLICKED = 112;
 const ON_MINE_CLICKED = 113;
-const ON_WRITE_CLICKED = 114;
+const ON_SPIDER_CLICKED = 115;
 let myMenu;
+
 class TopBar extends React.Component {
     constructor(props) {
         super(props);
@@ -37,20 +38,16 @@ class TopBar extends React.Component {
                     " href=" + window.location.href +
                     " host=" + window.location.host +
                     " pathname=" + window.location.pathname);
-                location.pathname = '/';
+                location.pathname = '/manage';
                 break;
-            case ON_CARE_CLICKED:
-                location.pathname = '/MyFollow';
+            case ON_USER_CLICKED:
+                location.pathname = '/manage';
+                break;
+            case ON_SPIDER_CLICKED:
+                location.pathname = '/manage/spider';
                 break;
             case ON_MINE_CLICKED:
                 location.pathname = '/UserCenter';
-                break;
-            case ON_WRITE_CLICKED:
-                if (this.props.hasLogin) {
-                    location.pathname = '/WriteBlog';
-                } else {
-                    location.pathname = '/SignUp';
-                }
                 break;
             default:
                 break;
@@ -71,7 +68,7 @@ class TopBar extends React.Component {
         }
 
         return (
-            <Card >
+            <Card>
                 <div style={{
                     display: "flex",
                     flex: 1,
@@ -86,12 +83,17 @@ class TopBar extends React.Component {
                     <FlatButton
                         style={{color: "#ffffff", marginRight: "10px"}}
                         onTouchTap={() => this.onTitleClick(ON_TITLE_CLICKED)}>
-                        HiBlog
+                        电影
                     </FlatButton>
                     <FlatButton
                         style={{color: "#ffffff", marginRight: "10px"}}
-                        onTouchTap={() => this.onTitleClick(ON_CARE_CLICKED)}>
-                        关注
+                        onTouchTap={() => this.onTitleClick(ON_USER_CLICKED)}>
+                        用户管理
+                    </FlatButton>
+                    <FlatButton
+                        style={{color: "#ffffff", marginRight: "10px"}}
+                        onTouchTap={() => this.onTitleClick(ON_SPIDER_CLICKED)}>
+                        爬虫
                     </FlatButton>
 
 
@@ -102,11 +104,6 @@ class TopBar extends React.Component {
                         justifyContent: "right",
                     }}>
                     </div>
-                    <FlatButton
-                        style={{color: "#ffffff", marginRight: "10px"}}
-                        onTouchTap={() => this.onTitleClick(ON_WRITE_CLICKED)}>
-                        写文章
-                    </FlatButton>
                     <Avatar src={avatarPath}
                             style={{
                                 display: showAvatar
@@ -121,4 +118,5 @@ class TopBar extends React.Component {
         );
     }
 }
+
 export default TopBar;

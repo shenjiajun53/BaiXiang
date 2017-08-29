@@ -1,4 +1,4 @@
-package com.baixiang.controller;
+package com.baixiang.clientController;
 
 import com.baixiang.model.*;
 import com.baixiang.service.MovieService;
@@ -6,6 +6,9 @@ import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,6 +108,15 @@ public class MovieController {
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getIncludeName(searchStr);
         Response<ArrayList<Movie>> response = new Response<>(movieArrayList, null);
         logger.info("movie size=" + movieArrayList.size());
+        return response;
+    }
+
+    @RequestMapping(value = "/api/getRecommendMovies", method = RequestMethod.GET)
+    private Response<Page<Movie>> getRecommendMovie() {
+        Pageable pageable = new PageRequest(0, 20);
+        Page<Movie> moviePage = movieService.getByTag("动画", pageable);
+        Response<Page<Movie>> response = new Response<>(moviePage, null);
+        logger.info("movie size=" + moviePage.getTotalElements());
         return response;
     }
 

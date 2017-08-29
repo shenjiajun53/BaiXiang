@@ -57,7 +57,7 @@ class SignIn extends Component {
         formData.append('pass', passStr);
         // formData.append('remember-me', true);
 
-        let url = "/api/SignIn";
+        let url = "/api/signIn";
         fetch(url, {
             method: "post",
             // body: data,

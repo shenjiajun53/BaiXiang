@@ -14,12 +14,12 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            blogList: null,
+            movieList: null,
         }
     }
 
     componentDidMount() {
-        let url = "/api/getAllBlogs";
+        let url = "/api/getRecommendMovies";
         console.log("url=" + url);
 
         fetch(url, {
@@ -33,7 +33,7 @@ class Home extends Component {
             (json) => {
                 console.log("response=" + JSON.stringify(json));
                 this.setState({
-                    blogList: json.result
+                    movieList: json.result.content
                 })
             }
         ).catch(
@@ -42,13 +42,16 @@ class Home extends Component {
             });
     }
 
-    onCardClick(blog) {
+    onCardClick(movie) {
         // console.log("blogId=" + blog._id);
-        window.location = "/BlogDetail/" + blog.id;
+        window.location = "/BlogDetail/" + movie.id;
     }
 
     render() {
-        let blogListView;
+        let movieListView =
+            <div
+                style={{display: "flex",flexDirection:"row", flexWrap: "wrap", marginTop: "10px", marginBottom: "10px"}}>
+            </div>;
 
         // if(null != this.state.blogList){
         //     for (let i = 0; i < this.state.blogList.length; i++) {
@@ -59,62 +62,32 @@ class Home extends Component {
         //     }
         // }
 
-        if (null != this.state.blogList) {
-            blogListView = this.state.blogList.map(
-                (blogInfo) => {
-                    let avatarPath;
-                    let showAvatarImg = "none";
-                    let showAvatarName = "flex";
-                    if (blogInfo.user) {
-                        if (blogInfo.user.avatarPath) {
-                            avatarPath = blogInfo.user.avatarPath;
-                            showAvatarImg = "flex";
-                            showAvatarName = "none";
-                            console.log("avatarPath=" + avatarPath);
-                        }
-                    }
-                    // console.log("blog=" + blog.blogTitle);
-                    let time = blogInfo.blog.time;
-                    let date = new Date(time);
-                    let dateStr = moment(date).format("YYYY-MM-DD HH:mm:ss");
+        if (null !== this.state.movieList) {
+            movieListView = this.state.movieList.map(
+                (movieInfo) => {
                     return (
-
-                        <Card key={blogInfo.blog.id}
-                              style={{
-                                  marginTop: "10px",
-                                  marginBottom: "10px",
-                                  padding: "10px"
-                              }}
-                              onTouchTap={() => this.onCardClick(blogInfo.blog)}>
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "column",
-                            }}>
-                                <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                    <Avatar src={avatarPath} style={{display: showAvatarImg}}
-                                            backgroundColor={colors.accent}/>
-                                    <Avatar style={{display: showAvatarName}}
-                                            backgroundColor={colors.accent}>
-                                        {blogInfo.user.userName[0]}
-                                    </Avatar>
-                                    <div>
-                                        <div style={{marginLeft: "10px"}}>{blogInfo.user.userName}</div>
-                                        <div style={{marginLeft: "10px"}}>{dateStr}</div>
-                                    </div>
-                                </div>
-                                <h1 >{blogInfo.blog.blogTitle}</h1>
-                                <div>{blogInfo.blog.blogContent}</div>
-                            </div>
-                        </Card>
+                        <div style={{marginBottom: "10px", marginRight: "10px"}}
+                             key={movieInfo.id}>
+                            <a href={'/manage/edit_movie?movieId=' + movieInfo.id}>
+                                <Card
+                                    style={{
+                                        width: "150px"
+                                    }}>
+                                    <img src={movieInfo.poster} style={{height: "150px",width:"150px"}}/>
+                                    <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
+                                </Card>
+                            </a>
+                        </div>
                     );
                 }
             );
         }
         return (
             <div>
-                {blogListView}
+                {movieListView}
             </div>
         );
     }
 }
+
 export default Home;

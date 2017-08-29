@@ -78,15 +78,9 @@ render(
         <Route path="/" component={App}>
             <IndexRoute component={Home}/>
             <Route path="manage" component={Home}/>
-            <Route path="SignUp" component={SignUp}/>
-            <Route path="SignIn" component={SignIn}/>
-            <Route path="UserCenter" component={UserCenter}/>
-            <Route path="MyFollow" component={MyFollow}/>
-            <Route path="WriteBlog" component={WriteBlog}/>
-            <Route path="BlogDetail/:blogId" component={BlogDetail}/>
-            <Route path="Settings" component={Settings}/>
-            <Route path="Favorites" component={Favorites}/>
-            <Route path="MyBlogs" component={MyBlogs}/>
+            <Route path="manage/sign_up" component={SignUp}/>
+            <Route path="manage/sign_in" component={SignIn}/>
+            <Route path="manage/Settings" component={Settings}/>
         </Route>
     </Router>
     ,

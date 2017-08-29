@@ -106,7 +106,7 @@ class SignUp extends React.Component {
             "userIntro": userIntroStr
         };
 
-        document.cookie = "cookie1=5006";
+        // document.cookie = "cookie1=5006";
 
         let formData = new FormData();
         formData.append('avatar', file);
@@ -114,8 +114,9 @@ class SignUp extends React.Component {
         formData.append('pass', passStr);
         formData.append('passConfirm', passConfirmStr);
         formData.append('userIntro', userIntroStr);
+        formData.append('sex', this.state.selectedGender);
 
-        let url = "/api/SignUp";
+        let url = "/api/signUp";
         fetch(url, {
             method: "post",
             // body: data,
@@ -133,14 +134,18 @@ class SignUp extends React.Component {
             (json) => {
                 console.log(JSON.stringify(json));
                 if (json.result) {
-                    let result=json.result;
+                    let result = json.result;
                     if (result.status==1) {
-                        this.onSignIn();
+                        window.location.pathname = result.redirect;
+                    }else {
+                        this.setState({
+                            nameError: json.error.errorMsg
+                        });
                     }
-                }else if(json.error){
+                } else if (json.error) {
                     this.setState({
                         nameError: json.error.errorMsg
-                    })
+                    });
                 }
             }
         ).catch(

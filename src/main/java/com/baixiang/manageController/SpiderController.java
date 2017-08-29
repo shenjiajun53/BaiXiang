@@ -1,4 +1,4 @@
-package com.baixiang.controller;
+package com.baixiang.manageController;
 
 import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
 import com.baixiang.spider.TaohuaProcessor;

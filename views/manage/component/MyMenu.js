@@ -39,23 +39,23 @@ export default class MyMenu extends React.Component {
     onItemClick(value) {
         switch (value) {
             case "SignUp":
-                window.location.pathname = '/SignUp';
+                window.location.pathname = '/manage/sign_up';
                 // location.hash="/SignUp";
                 break;
             case "SignIn":
-                window.location.pathname = '/SignIn';
+                window.location.pathname = '/manage/sign_in';
                 break;
-            case "MyBlogs":
-                window.location.pathname = '/MyBlogs';
+            case "HomePage":
+                window.location.pathname = '/';
                 break;
-            case "MyFollow":
-                window.location.pathname = '/MyFollow';
-                break;
-            case "Favorites":
-                window.location.pathname = '/Favorites';
+            case "AddMovie":
+                window.location.pathname = '/edit_movie';
                 break;
             case "Settings":
                 window.location.pathname = '/Settings';
+                break;
+            case "SignOut":
+                window.location.pathname = '/manage/sign_out';
                 break;
             default:
                 break;
@@ -92,14 +92,14 @@ export default class MyMenu extends React.Component {
                     ref="icon_menu"
                     open={this.state.openMenu}
                     onRequestChange={(value) => this.handleOnRequestChange(value)}
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="我的主页" onTouchTap={() => this.onItemClick("MyBlogs")}/>
-                    <MenuItem primaryText="收藏" onTouchTap={() => this.onItemClick("Favorites")}/>
+                    <MenuItem primaryText="我的主页" onTouchTap={() => this.onItemClick("HomePage")}/>
+                    <MenuItem primaryText="添加影片" onTouchTap={() => this.onItemClick("AddMovie")}/>
                     <MenuItem primaryText="设置" onTouchTap={() => this.onItemClick("Settings")}/>
-                    <MenuItem primaryText="退出" onTouchTap={() => this.SignOut()}/>
+                    <MenuItem primaryText="退出" onTouchTap={() => this.onItemClick("SignOut")}/>
                 </IconMenu>
             );
         } else {
@@ -108,10 +108,11 @@ export default class MyMenu extends React.Component {
                     ref="icon_menu"
                     open={this.state.openMenu}
                     onRequestChange={(value) => this.handleOnRequestChange(value)}
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+                    <MenuItem primaryText="主页" onTouchTap={() => this.onItemClick("HomePage")}/>
                     <MenuItem primaryText="登录" onTouchTap={() => this.onItemClick("SignIn")}/>
                     <MenuItem primaryText="注册" onTouchTap={() => this.onItemClick("SignUp")}/>
                 </IconMenu>

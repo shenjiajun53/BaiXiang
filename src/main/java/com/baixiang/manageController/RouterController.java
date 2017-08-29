@@ -14,38 +14,25 @@ public class RouterController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/SignIn")
+    @RequestMapping(value = "/manage/sign_in")
     public ModelAndView signIn() {
         ModelAndView modelAndView = new ModelAndView("/manage/index2");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/SignUp")
+    @RequestMapping(value = "/manage/sign_up")
     public ModelAndView signUp() {
         ModelAndView modelAndView = new ModelAndView("/manage/index2");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/MyFollow")
-    public ModelAndView myFollow() {
-        ModelAndView modelAndView = new ModelAndView("/test");
+    @RequestMapping(value = "/manage/spider")
+    public ModelAndView spider() {
+        ModelAndView modelAndView = new ModelAndView("/manage/index2");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/WriteBlog")
-    public ModelAndView writeBlog() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index");
-
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/BlogDetail/*")
-    public ModelAndView blogDetail() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index");
-
-        return modelAndView;
-    }
 }

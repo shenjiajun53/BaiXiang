@@ -1,4 +1,4 @@
-package com.baixiang.controller;
+package com.baixiang.manageController;
 
 import com.baixiang.exception.UserNotFoundException;
 import com.baixiang.model.*;
@@ -35,7 +35,7 @@ public class UserController {
     UserService userService;
 
 
-    @RequestMapping(value = "/api/sign_in", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/signIn", method = RequestMethod.POST)
     public Response<RedirectBean> signIn(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass) {
         UsernamePasswordToken token = new UsernamePasswordToken(userName, pass, true);
@@ -60,7 +60,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/api/sign_up", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/signUp", method = RequestMethod.POST)
     public Response<RedirectBean> signUp(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass,
                                          @RequestParam(value = "userIntro") String userIntro,
@@ -102,6 +102,13 @@ public class UserController {
         SecurityUtils.getSubject().logout();
         ModelAndView modelAndView = new ModelAndView("redirect:/manage");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST)
+    public Response<User> getUserInfo() {
+        User user = userService.getUserBySession();
+        Response<User> response = new Response<>(user, null);
+        return response;
     }
 
 

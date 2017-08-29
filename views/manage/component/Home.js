@@ -2,12 +2,13 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import Card from "material-ui/Card"
-import Avatar from "material-ui/Avatar";
-import TouchRipple from "material-ui/internal/TouchRipple";
-
-import moment from "moment";
-import colors from "../../utils/colors"
+// import Card from "material-ui/Card";
+import {Card} from 'antd';
+// import Avatar from "material-ui/Avatar";
+// import TouchRipple from "material-ui/internal/TouchRipple";
+//
+// import moment from "moment";
+// import colors from "../../utils/colors"
 
 // injectTapEventPlugin();
 class Home extends Component {
@@ -31,7 +32,7 @@ class Home extends Component {
             }
         ).then(
             (json) => {
-                console.log("response=" + JSON.stringify(json));
+                // console.log("response=" + JSON.stringify(json));
                 this.setState({
                     movieList: json.result.content
                 })
@@ -42,16 +43,13 @@ class Home extends Component {
             });
     }
 
-    onCardClick(movie) {
-        // console.log("blogId=" + blog._id);
-        window.location = "/BlogDetail/" + movie.id;
-    }
+    // onCardClick(movie) {
+    //     // console.log("blogId=" + blog._id);
+    //     window.location = "/BlogDetail/" + movie.id;
+    // }
 
     render() {
-        let movieListView =
-            <div
-                style={{display: "flex",flexDirection:"row", flexWrap: "wrap", marginTop: "10px", marginBottom: "10px"}}>
-            </div>;
+        let movieListView;
 
         // if(null != this.state.blogList){
         //     for (let i = 0; i < this.state.blogList.length; i++) {
@@ -71,9 +69,9 @@ class Home extends Component {
                             <a href={'/manage/edit_movie?movieId=' + movieInfo.id}>
                                 <Card
                                     style={{
-                                        width: "150px"
-                                    }}>
-                                    <img src={movieInfo.poster} style={{height: "150px",width:"150px"}}/>
+                                        width: 200
+                                    }} bodyStyle={{padding: 0}}>
+                                    <img src={movieInfo.poster} width="100%"/>
                                     <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
                                 </Card>
                             </a>
@@ -83,7 +81,13 @@ class Home extends Component {
             );
         }
         return (
-            <div>
+            <div style={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                marginTop: "10px",
+                marginBottom: "10px"
+            }}>
                 {movieListView}
             </div>
         );

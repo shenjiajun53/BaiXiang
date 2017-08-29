@@ -96,7 +96,7 @@ export default class MyMenu extends React.Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="我的主页" onTouchTap={() => this.onItemClick("HomePage")}/>
+                    <MenuItem primaryText="主页" onTouchTap={() => this.onItemClick("HomePage")}/>
                     <MenuItem primaryText="添加影片" onTouchTap={() => this.onItemClick("AddMovie")}/>
                     <MenuItem primaryText="设置" onTouchTap={() => this.onItemClick("Settings")}/>
                     <MenuItem primaryText="退出" onTouchTap={() => this.onItemClick("SignOut")}/>

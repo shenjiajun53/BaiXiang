@@ -2,9 +2,7 @@
  * Created by shenjiajun on 2017/1/31.
  */
 import React, {Component} from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from 'material-ui/AppBar';
+
 import Avatar from 'material-ui/Avatar';
 import Card from "material-ui/Card";
 import FlatButton from "material-ui/FlatButton";

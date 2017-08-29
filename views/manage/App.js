@@ -7,14 +7,9 @@ import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory}
 import Home from "./component/Home";
 import SignIn from "./component/SignIn";
 import SignUp from "./component/SignUp";
-import UserCenter from "./component/UserCenter";
-import MyFollow from "./component/MyFollow";
-import WriteBlog from "./component/WriteBlog";
 import TopBar from "./component/TopBar";
-import BlogDetail from "./component/BlogDetail";
 import Settings from "./component/Settings";
-import Favorites from "./component/Favorites";
-import MyBlogs from "./component/MyBlogs";
+
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

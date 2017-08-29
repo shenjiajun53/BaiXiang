@@ -10,13 +10,14 @@ const minimize = process.argv.indexOf('--minimize') !== -1;
 module.exports = {
     // 页面入口文件配置
     entry: {
-        index: path.resolve(__dirname + '/views/js/index.js'),
-        signin: path.resolve(__dirname + '/views/js/signin.js'),
-        header: path.resolve(__dirname + '/views/js/header.js'),
-        movie_list: path.resolve(__dirname + '/views/js/movie_list.js'),
-        side_bar: path.resolve(__dirname + '/views/js/side_bar.js'),
-        VueComponents: path.resolve(__dirname + '/views/component/VueComponents.js'),
+        index: path.resolve(__dirname + '/views/service/js/index.js'),
+        signin: path.resolve(__dirname + '/views/service/js/signin.js'),
+        header: path.resolve(__dirname + '/views/service/js/header.js'),
+        movie_list: path.resolve(__dirname + '/views/service/js/movie_list.js'),
+        side_bar: path.resolve(__dirname + '/views/service/js/side_bar.js'),
+        VueComponents: path.resolve(__dirname + '/views/service/component/VueComponents.js'),
         UrlUtil: path.resolve(__dirname + '/views/utils/UrlUtil.js'),
+        ManageApp: path.resolve(__dirname + '/views/manage/App.js'),
     },
     // 入口文件输出配置
     output: {
@@ -28,6 +29,14 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader',
+            },
+            {
+                test: /.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['es2015', 'react']
+                }
             },
             {
                 test: /\.js$/,

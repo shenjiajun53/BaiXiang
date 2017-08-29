@@ -11,7 +11,7 @@
 </template>
 
 <script>
-    import UrlUtil from "../../utils/UrlUtil";
+    import UrlUtil from "../../../utils/UrlUtil";
     let currentPage = Number(new UrlUtil().getQueryString("page"));
     if (currentPage === 0) {
         currentPage = 1;

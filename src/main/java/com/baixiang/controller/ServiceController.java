@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,7 @@ import java.util.ArrayList;
  * Created by shenjj on 2017/5/4.
  */
 
+//@Controller
 @RestController
 public class ServiceController {
     private static final Logger logger = LoggerFactory.getLogger(ServiceController.class);
@@ -79,7 +82,7 @@ public class ServiceController {
 
     @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
     public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
-        ModelAndView modelAndView = new ModelAndView("/service/movie_detail_m");
+        ModelAndView modelAndView = new ModelAndView("/service/movie_detail");
         User user = userService.getUserBySession();
         modelAndView.addObject("user", user);
         if (null != movieId) {
@@ -97,4 +100,25 @@ public class ServiceController {
         }
         return modelAndView;
     }
+
+
+//    @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
+//    public String movieDetail(Model model,@RequestParam(value = "movieId", required = false) Integer movieId) {
+//        User user = userService.getUserBySession();
+//        model.addAttribute("user", user);
+//        if (null != movieId) {
+//            Movie movie = movieService.getById(movieId);
+////            System.out.printf("movie=" + movie.toString());
+//            Long viewTimes = movie.getViewTimes();
+//            if (null == viewTimes) {
+//                viewTimes = 0L;
+//            }
+//            movie.setViewTimes(++viewTimes);
+//            movieService.save(movie);
+//            model.addAttribute("movie", movie);
+//        } else {
+//            return "/default/error_page";
+//        }
+//        return "/service/movie_detal_f";
+//    }
 }

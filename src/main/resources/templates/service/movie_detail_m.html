@@ -10,10 +10,17 @@ Time: {{movie.movieName}}
 Message: {{movie.movieName}}
 </body>
 <script>
-    console.info("info="+"{{movie.movieName}}");
-    let movie="{{movie}}";
+    let movie={{movie}};
+    console.info("movie="+movie)
+    console.info("movieName="+movie.movieName);
     let tagSet="{{movie.movieTagSet}}";
-    console.info("tagnamen="+JSON.stringify(movie))
+    let set=new Set(tagSet);
+    let size=set.size;
+    console.info("size="+size)
+    set.forEach(function(value) {
+        console.log(value);
+    });
+
 </script>
 
 </html>

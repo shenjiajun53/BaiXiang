@@ -7,7 +7,11 @@ public class RedirectBean {
     String redirect;
     int status;
 
-    public RedirectBean(int status,String redirect) {
+    public RedirectBean(String redirect) {
+        this.redirect = redirect;
+    }
+
+    public RedirectBean(int status, String redirect) {
         this.status=status;
         this.redirect = redirect;
     }

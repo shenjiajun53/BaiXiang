@@ -10,6 +10,7 @@ Time: ${movie.movieName}
 Message: ${movie.movieName}
 </body>
 <script>
-    console.info("info=" + "{{movie.movieName}}")
+    <#--let movie="${movie.tagSet[0]}";-->
+    console.info("info222=" + "123")
 </script>
 </html>

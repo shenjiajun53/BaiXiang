@@ -1,4 +1,4 @@
-package com.baixiang.controller;
+package com.baixiang.manageController;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
@@ -31,17 +31,17 @@ public class ManageController {
     BtTianTangProcessor btTianTangProcessor;
 
 
-    @RequestMapping(value = "/manage", method = RequestMethod.GET)
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index");
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getNewest();
-        modelAndView.addObject("movieList", movieArrayList);
-        ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
-        modelAndView.addObject("hotList", hotList);
-        User user = userService.getUserBySession();
-        modelAndView.addObject("user", user);
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/manage", method = RequestMethod.GET)
+//    public ModelAndView index() {
+//        ModelAndView modelAndView = new ModelAndView("/manage/index");
+//        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getNewest();
+//        modelAndView.addObject("movieList", movieArrayList);
+//        ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
+//        modelAndView.addObject("hotList", hotList);
+//        User user = userService.getUserBySession();
+//        modelAndView.addObject("user", user);
+//        return modelAndView;
+//    }
 
 
     @RequestMapping(value = "/manage/edit_movie", method = RequestMethod.GET)

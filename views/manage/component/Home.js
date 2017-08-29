@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 // import Card from "material-ui/Card";
 import {Card} from 'antd';
+import 'antd/lib/card/style/css';
 // import Avatar from "material-ui/Avatar";
 // import TouchRipple from "material-ui/internal/TouchRipple";
 //

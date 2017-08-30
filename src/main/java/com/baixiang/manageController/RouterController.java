@@ -28,6 +28,13 @@ public class RouterController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/manage/edit_movie/*")
+    public ModelAndView editMovie() {
+        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/manage/spider")
     public ModelAndView spider() {
         ModelAndView modelAndView = new ModelAndView("/manage/index2");

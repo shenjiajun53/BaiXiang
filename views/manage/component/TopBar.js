@@ -3,10 +3,15 @@
  */
 import React, {Component} from 'react';
 
-import Avatar from 'material-ui/Avatar';
-import Card from "material-ui/Card";
-import FlatButton from "material-ui/FlatButton";
+// import Avatar from 'material-ui/Avatar';
+import Avatar from 'antd/lib/avatar';
+// import Card from "material-ui/Card";
+// import FlatButton from "material-ui/FlatButton";
 import MyMenu from "./MyMenu";
+import Card from 'antd/lib/card';
+import 'antd/lib/avatar/style/css';
+import 'antd/lib/card/style/css';
+
 
 const ON_TITLE_CLICKED = 111;
 const ON_USER_CLICKED = 112;
@@ -66,53 +71,50 @@ class TopBar extends React.Component {
         }
 
         return (
-            <Card>
+            <div style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "left",
+                alignItems: "center",
+                flexDirection: "row",
+            }}>
+                <div
+                    style={{
+                        color: "#ffffff", marginRight: "10px",
+                        cursor: "pointer"
+                    }}
+                    onTouchTap={() => this.onTitleClick(ON_TITLE_CLICKED)}>
+                    电影
+                </div>
+                <div
+                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    onTouchTap={() => this.onTitleClick(ON_USER_CLICKED)}>
+                    用户管理
+                </div>
+                <div
+                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    onTouchTap={() => this.onTitleClick(ON_SPIDER_CLICKED)}>
+                    爬虫
+                </div>
+
+
                 <div style={{
                     display: "flex",
                     flex: 1,
-                    height: "48px",
-                    backgroundColor: "#E91E63",
-                    justifyContent: "left",
-                    alignItems: "center",
                     flexDirection: "row",
-                    paddingLeft: "1em",
-                    paddingRight: "1em",
+                    justifyContent: "right",
                 }}>
-                    <FlatButton
-                        style={{color: "#ffffff", marginRight: "10px"}}
-                        onTouchTap={() => this.onTitleClick(ON_TITLE_CLICKED)}>
-                        电影
-                    </FlatButton>
-                    <FlatButton
-                        style={{color: "#ffffff", marginRight: "10px"}}
-                        onTouchTap={() => this.onTitleClick(ON_USER_CLICKED)}>
-                        用户管理
-                    </FlatButton>
-                    <FlatButton
-                        style={{color: "#ffffff", marginRight: "10px"}}
-                        onTouchTap={() => this.onTitleClick(ON_SPIDER_CLICKED)}>
-                        爬虫
-                    </FlatButton>
-
-
-                    <div style={{
-                        display: "flex",
-                        flex: 1,
-                        flexDirection: "row",
-                        justifyContent: "right",
-                    }}>
-                    </div>
-                    <Avatar src={avatarPath}
-                            style={{
-                                display: showAvatar
-                            }}/>
-                    <MyMenu
-                        user={this.props.user}
-                        hasLogin={this.props.hasLogin}
-                        style={{}}
-                        ref="my_menu"/>
                 </div>
-            </Card>
+                <Avatar src={avatarPath}
+                        style={{
+                            display: showAvatar
+                        }}/>
+                <MyMenu
+                    user={this.props.user}
+                    hasLogin={this.props.hasLogin}
+                    style={{}}
+                    ref="my_menu"/>
+            </div>
         );
     }
 }

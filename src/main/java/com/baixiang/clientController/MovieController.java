@@ -32,6 +32,12 @@ public class MovieController {
     MovieService movieService;
 
 
+    @RequestMapping(value = "/api/movieDetail", method = RequestMethod.POST)
+    public Response<Movie> getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
+        Movie movie = movieService.getById(movieId);
+        return new Response<>(movie, null);
+    }
+
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                                             @RequestParam(value = "movieTitle") String movieTitle,
@@ -43,7 +49,7 @@ public class MovieController {
                                             @RequestParam(value = "tagList", required = false) String[] tagList) {
 
         Movie movie;
-        if (movieId != null && !movieId.isEmpty() && !movieId.equals("null")) {
+        if (movieId != null && !movieId.isEmpty() && !movieId.equals("undefined")) {
             movie = movieService.getById(Long.parseLong(movieId));
             movie.setMovieName(movieTitle);
             movie.setMovieInfo(movieInfo);

@@ -4,19 +4,23 @@ import {render} from 'react-dom'
 import './css/App.css';
 import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
 
-import Home from "./component/Home";
-import SignIn from "./component/SignIn";
-import SignUp from "./component/SignUp";
+import Home from "./page/Home";
+import SignIn from "./page/SignIn";
+import SignUp from "./page/SignUp";
 import TopBar from "./component/TopBar";
 import Settings from "./component/Settings";
+import Layout from "antd/lib/layout";
+import 'antd/lib/layout/style/css';
 
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import EditMovie from "./page/EditMovie";
 // import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 // import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 injectTapEventPlugin();
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -58,11 +62,14 @@ class App extends React.Component {
         // console.log('chileren=' + this.props.children.name);
         return (
             <MuiThemeProvider>
-                <div>
-
-                    <TopBar hasLogin={this.state.hasLogin} user={this.state.user}/>
-                    {React.cloneElement(this.props.children, {user: this.state.user})}
-                </div>
+                <Layout>
+                    <Layout.Header>
+                        <TopBar hasLogin={this.state.hasLogin} user={this.state.user}/>
+                    </Layout.Header>
+                    <Layout.Content>
+                        {React.cloneElement(this.props.children, {user: this.state.user})}
+                    </Layout.Content>
+                </Layout>
             </MuiThemeProvider>
         );
     }
@@ -76,6 +83,7 @@ render(
             <Route path="manage/sign_up" component={SignUp}/>
             <Route path="manage/sign_in" component={SignIn}/>
             <Route path="manage/Settings" component={Settings}/>
+            <Route path="manage/edit_movie/:movieId" component={EditMovie}/>
         </Route>
     </Router>
     ,

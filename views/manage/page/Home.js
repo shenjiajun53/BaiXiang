@@ -3,7 +3,8 @@
  */
 import React, {Component} from 'react';
 // import Card from "material-ui/Card";
-import {Card} from 'antd';
+// import {Card} from 'antd';
+import Card from 'antd/lib/card';
 import 'antd/lib/card/style/css';
 // import Avatar from "material-ui/Avatar";
 // import TouchRipple from "material-ui/internal/TouchRipple";
@@ -67,7 +68,7 @@ class Home extends Component {
                     return (
                         <div style={{marginBottom: "10px", marginRight: "10px"}}
                              key={movieInfo.id}>
-                            <a href={'/manage/edit_movie?movieId=' + movieInfo.id}>
+                            <a href={'/manage/edit_movie/' + movieInfo.id}>
                                 <Card
                                     style={{
                                         width: 200

@@ -2,12 +2,15 @@
  * Created by shenjiajun on 2017/1/31.
  */
 import React, {Component} from 'react';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import Menu from 'material-ui/Menu';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
+// import IconMenu from 'material-ui/IconMenu';
+// import MenuItem from 'material-ui/MenuItem';
+import Menu from 'antd/lib/menu';
+import 'antd/lib/menu/style/css';
+import DropDown from 'antd/lib/dropdown';
+import 'antd/lib/dropdown/style/css';
+// import IconButton from 'material-ui/IconButton';
+// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+// import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
 
 let iconMenu;
 export default class MyMenu extends React.Component {
@@ -32,12 +35,10 @@ export default class MyMenu extends React.Component {
         });
     }
 
-    componentDidMount() {
-        iconMenu = this.refs.icon_menu;
-    }
 
-    onItemClick(value) {
-        switch (value) {
+    onItemClick(item) {
+        console.log("onclick " + item.key);
+        switch (item.key) {
             case "SignUp":
                 window.location.pathname = '/manage/sign_up';
                 // location.hash="/SignUp";
@@ -85,39 +86,40 @@ export default class MyMenu extends React.Component {
             });
     }
 
+
     render() {
         if (this.props.hasLogin) {
             return (
-                <IconMenu
-                    ref="icon_menu"
-                    open={this.state.openMenu}
-                    onRequestChange={(value) => this.handleOnRequestChange(value)}
-                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                    <MenuItem primaryText="主页" onTouchTap={() => this.onItemClick("HomePage")}/>
-                    <MenuItem primaryText="添加影片" onTouchTap={() => this.onItemClick("AddMovie")}/>
-                    <MenuItem primaryText="设置" onTouchTap={() => this.onItemClick("Settings")}/>
-                    <MenuItem primaryText="退出" onTouchTap={() => this.onItemClick("SignOut")}/>
-                </IconMenu>
+                <DropDown
+                    placement="bottomLeft"
+                    overlay=
+                        {<Menu onSelect={(item) => this.onItemClick(item)}>
+                            <Menu.Item key="HomePage">主页</Menu.Item>
+                            <Menu.Item key="AddMovie">添加影片</Menu.Item>
+                            <Menu.Item key="Settings">设置</Menu.Item>
+                            <Menu.Item key="SignOut">退出</Menu.Item>
+                        </Menu>}>
+                    <div style={{color: "#ffffff", hover: "pointer"}}>
+                        菜单
+                    </div>
+                </DropDown>
+
             );
         } else {
             return (
-                <IconMenu
-                    ref="icon_menu"
-                    open={this.state.openMenu}
-                    onRequestChange={(value) => this.handleOnRequestChange(value)}
-                    iconButtonElement={<IconButton><MoreVertIcon/></IconButton>}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                    <MenuItem primaryText="主页" onTouchTap={() => this.onItemClick("HomePage")}/>
-                    <MenuItem primaryText="登录" onTouchTap={() => this.onItemClick("SignIn")}/>
-                    <MenuItem primaryText="注册" onTouchTap={() => this.onItemClick("SignUp")}/>
-                </IconMenu>
+                <DropDown
+                    placement="bottomLeft"
+                    overlay=
+                        {<Menu onSelect={(item) => this.onItemClick(item)}>
+                            <Menu.Item key="HomePage">主页</Menu.Item>
+                            <Menu.Item key="SignIn">登录</Menu.Item>
+                            <Menu.Item key="SignUp">注册</Menu.Item>
+                        </Menu>}>
+                    <div style={{color: "#ffffff", hover: "pointer"}}>
+                        菜单
+                    </div>
+                </DropDown>
             );
         }
-
     }
 }

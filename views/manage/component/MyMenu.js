@@ -2,15 +2,10 @@
  * Created by shenjiajun on 2017/1/31.
  */
 import React, {Component} from 'react';
-// import IconMenu from 'material-ui/IconMenu';
-// import MenuItem from 'material-ui/MenuItem';
 import Menu from 'antd/lib/menu';
 import 'antd/lib/menu/style/css';
 import DropDown from 'antd/lib/dropdown';
 import 'antd/lib/dropdown/style/css';
-// import IconButton from 'material-ui/IconButton';
-// import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-// import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
 
 let iconMenu;
 export default class MyMenu extends React.Component {

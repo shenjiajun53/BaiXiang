@@ -3,16 +3,21 @@ import Input from 'antd/lib/input';
 import "antd/lib/input/style/css"
 import Button from 'antd/lib/button';
 import "antd/lib/button/style/css"
-import CheckBox from "antd/lib/checkbox";
+import Checkbox from "antd/lib/checkbox";
 import "antd/lib/checkbox/style/css"
+import DatePicker from "antd/lib/date-picker";
+import "antd/lib/date-picker/style/css"
+// import {Input,Button,Checkbox,DatePicker} from "antd"
 
-const movieTypeOptions = [
-    {label: '动画', key: "动画"},
-    {label: '动作', key: "动作"},
-    {label: '科幻', key: "科幻"},
-    {label: '美剧', key: "美剧"},
-    {label: '日剧', key: "日剧"},
-    {label: '推荐', key: "推荐"}];
+// const movieTypeOptions = [
+//     {key: '动画',label: '动画', value: "动画"},
+//     {key: '动作',label: '动作', value: "动作"},
+//     {key: '科幻',label: '科幻', value: "科幻"},
+//     {key: '美剧',label: '美剧', value: "美剧"},
+//     {key: '日剧', label: '日剧', value: "日剧"},
+//     {key: '推荐', label: '推荐', value: "推荐"}];
+
+const movieTypeOptions = ["动画", "动作", "科幻", "美剧", "日剧", "推荐"];
 export default class EditMovie extends React.Component {
     constructor(props) {
         super(props);
@@ -23,11 +28,10 @@ export default class EditMovie extends React.Component {
             poster: {file: null, url: null},
             screenShotList: [],
             torrentList: [],
-            checkAll: true,
             checkedTags: [],
-            movieTypeOptions: movieTypeOptions,
-            isIndeterminate: true,
-            dateValue: '',
+            checkAll: false,
+            isIndeterminate: false,
+            dateValue: null,
         }
     }
 
@@ -105,6 +109,16 @@ export default class EditMovie extends React.Component {
     }
 
     render() {
+        console.log("edit movie render");
+        let screenShotListView = this.state.screenShotList.map((screenShot) => {
+            return <img src={screenShot.url} style={{width: 200}}/>
+        });
+
+        let torrentListView = this.state.torrentList.map((torrent) => {
+            return (<div style={{width: 500}}>
+                {torrent.file.name}
+            </div>)
+        });
 
         return (
             <div>
@@ -114,37 +128,124 @@ export default class EditMovie extends React.Component {
                                movieTitle: e.target.value
                            })
                        }}/>
-                <Button style={{marginBottom: 16}}>上传海报</Button>
+                <Button style={{marginBottom: 16}}
+                        onClick={() => {
+                            this.refs.posterInput.click();
+                        }}>上传海报</Button>
                 <input type="file"
                        multiple="multiple"
                        accept="image/*"
                        ref="posterInput"
                        name="posterInput"
                        style={{marginBottom: 16, display: "none"}}
+                       onChange={(e) => {
+                           let file = this.refs.posterInput.files[0];
+                           console.info("file=" + file.name);
+                           if (file) {
+                               // 获取 window 的 URL 工具
+                               let URL = window.URL || window.webkitURL;
+                               // 通过 file 生成目标 url
+                               let url = URL.createObjectURL(file);
+                               this.setState({
+                                   poster: {file: file, url: url}
+                               })
+                           }
+                       }}
                 />
 
                 <img src={this.state.poster.url} style={{width: 200}}/>
 
                 <div>
-                    <CheckBox checked={this.state.checkAll}
-                              indeterminate={this.state.indeterminate}
+                    <Checkbox checked={this.state.checkAll}
+                              indeterminate={this.state.isIndeterminate}
                               onChange={(e) => {
+                                  console.log("checked=" + e.target.checked);
                                   this.setState({
                                       checkedTags: e.target.checked ? movieTypeOptions : [],
                                       isIndeterminate: false,
                                       checkAll: e.target.checked
                                   })
-                              }}>全部</CheckBox>
-                    <CheckBox.Group options={movieTypeOptions}
+                              }}>全部</Checkbox>
+                    <Checkbox.Group options={movieTypeOptions}
+                                    value={this.state.checkedTags}
                                     onChange={(checkedValue) => {
                                         let checkedCount = checkedValue.length;
                                         console.log(checkedValue);
                                         this.setState({
-                                            checkAll: checkedCount === this.movieTypeOptions.length,
-                                            isIndeterminate: checkedCount > 0 && checkedCount < this.movieTypeOptions.length
+                                            checkedTags: checkedValue,
+                                            checkAll: checkedCount === movieTypeOptions.length,
+                                            isIndeterminate: checkedCount !== 0 && checkedCount < movieTypeOptions.length
                                         })
                                     }}/>
                 </div>
+
+
+                <DatePicker
+                    value={this.state.dateValue}
+                    placeholder="选择上映日期"
+                    onChange={(data, dataString) => {
+                        this.setState({
+                            dateValue: data
+                        })
+                    }}/>
+
+                <Button style={{marginBottom: 16}}
+                        onClick={() => {
+                            this.refs.screenShotInput.click();
+                        }}>上传截图</Button>
+                <input type="file"
+                       multiple="multiple"
+                       accept="image/*"
+                       ref="screenShotInput"
+                       name="screenShotInput"
+                       style={{marginBottom: 16, display: "none"}}
+                       onChange={(e) => {
+                           let files = this.refs.screenShotInput.files;
+                           let oldScreenShotList = this.state.screenShotList;
+                           if (files) {
+                               for (let i = 0; i < files.length; i++) {
+                                   console.info("file=" + files[i].name);
+                                   let URL = window.URL || window.webkitURL;
+                                   let screenShotUrl = URL.createObjectURL(files[i]);
+                                   oldScreenShotList.push({file: files[i], url: screenShotUrl});
+                               }
+                               this.setState({
+                                   screenShotList: oldScreenShotList
+                               })
+                           }
+                       }}
+                />
+                <div>{screenShotListView}</div>
+
+
+                <Button style={{marginBottom: 16}}
+                        onClick={() => {
+                            this.refs.torrentInput.click();
+                        }}>上传种子</Button>
+                <input type="file"
+                       multiple="multiple"
+                       accept=".torrent"
+                       ref="torrentInput"
+                       name="torrentInput"
+                       style={{marginBottom: 16, display: "none"}}
+                       onChange={(e) => {
+                           let files = this.refs.torrentInput.files;
+                           let oldTorrentList = this.state.torrentList;
+                           if (files) {
+                               for (let i = 0; i < files.length; i++) {
+                                   // 获取 window 的 URL 工具
+                                   let URL = window.URL || window.webkitURL;
+                                   // 通过 file 生成目标 url
+                                   let torrentUrl = URL.createObjectURL(files[i]);
+                                   oldTorrentList.push({file: files[i], url: torrentUrl});
+                               }
+                               this.setState({
+                                   torrentList: oldTorrentList
+                               })
+                           }
+                       }}
+                />
+                {torrentListView}
 
                 <Input placeholder="请输入电影介绍" value={this.state.movieInfo}
                        onChange={(e) => {

@@ -9,8 +9,16 @@ import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem';
 
 
+// import Input from 'antd/lib/input';
+// import "antd/lib/input/style/css"
+// import Card from 'antd/lib/card';
+// import 'antd/lib/card/style/css';
+// import Button from 'antd/lib/button';
+// import "antd/lib/button/style/css"
+
 let userNameTF;
 let passTF;
+
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -105,7 +113,7 @@ class SignIn extends Component {
                             display: "flex",
                             flexDirection: "column",
                         }}>
-                            <div >
+                            <div>
                                 用户名*
                             </div>
                             <TextField style={{marginBottom: "1em", flex: 1}}
@@ -151,4 +159,5 @@ class SignIn extends Component {
         );
     }
 }
+
 export default SignIn;

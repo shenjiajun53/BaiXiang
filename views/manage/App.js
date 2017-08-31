@@ -4,20 +4,21 @@ import {render} from 'react-dom'
 import './css/App.css';
 import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
 
+import Layout from "antd/lib/layout";
+import 'antd/lib/layout/style/css';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import Home from "./page/Home";
 import SignIn from "./page/SignIn";
 import SignUp from "./page/SignUp";
 import TopBar from "./component/TopBar";
-import Settings from "./component/Settings";
-import Layout from "antd/lib/layout";
-import 'antd/lib/layout/style/css';
-
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Settings from "./page/Settings";
 import EditMovie from "./page/EditMovie";
-// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-// import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+
+
+
 
 injectTapEventPlugin();
 
@@ -61,7 +62,6 @@ class App extends React.Component {
         console.log('app render');
         // console.log('chileren=' + this.props.children.name);
         return (
-            <MuiThemeProvider>
                 <Layout>
                     <Layout.Header>
                         <TopBar hasLogin={this.state.hasLogin} user={this.state.user}/>
@@ -70,7 +70,6 @@ class App extends React.Component {
                         {React.cloneElement(this.props.children, {user: this.state.user})}
                     </Layout.Content>
                 </Layout>
-            </MuiThemeProvider>
         );
     }
 }

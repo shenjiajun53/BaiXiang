@@ -3,14 +3,16 @@ import Input from 'antd/lib/input';
 import "antd/lib/input/style/css"
 import Button from 'antd/lib/button';
 import "antd/lib/button/style/css"
+import CheckBox from "antd/lib/checkbox";
+import "antd/lib/checkbox/style/css"
 
 const movieTypeOptions = [
-    {value: '动画', key: "动画"},
-    {value: '动作', key: "动作"},
-    {value: '科幻', key: "科幻"},
-    {value: '美剧', key: "美剧"},
-    {value: '日剧', key: "日剧"},
-    {value: '推荐', key: "推荐"}];
+    {label: '动画', key: "动画"},
+    {label: '动作', key: "动作"},
+    {label: '科幻', key: "科幻"},
+    {label: '美剧', key: "美剧"},
+    {label: '日剧', key: "日剧"},
+    {label: '推荐', key: "推荐"}];
 export default class EditMovie extends React.Component {
     constructor(props) {
         super(props);
@@ -66,18 +68,18 @@ export default class EditMovie extends React.Component {
         console.log("movieid=" + this.state.movie.id);
         formData.append('movieInfo', this.state.movieInfo);
         formData.append('movieTitle', this.state.movieTitle);
-        // formData.append('poster', this.poster.file);
-        // for (let i = 0; i < this.screenShotList.length; i++) {
-        //     formData.append('screenShotList', this.screenShotList[i].file);
-        // }
-        // for (let i = 0; i < this.torrentList.length; i++) {
-        //     formData.append('torrentList', this.torrentList[i].file);
-        // }
-        // for (let i = 0; i < this.checkedTags.length; i++) {
-        //     console.log("tag=" + this.checkedTags[i].key);
-        //     formData.append("tagList", this.checkedTags[i].key);
-        // }
-        // formData.append("movieDate", this.dateValue);
+        formData.append('poster', this.state.poster.file);
+        for (let i = 0; i < this.state.screenShotList.length; i++) {
+            formData.append('screenShotList', this.state.screenShotList[i].file);
+        }
+        for (let i = 0; i < this.state.torrentList.length; i++) {
+            formData.append('torrentList', this.state.torrentList[i].file);
+        }
+        for (let i = 0; i < this.state.checkedTags.length; i++) {
+            console.log("tag=" + this.state.checkedTags[i].key);
+            formData.append("tagList", this.state.checkedTags[i].key);
+        }
+        formData.append("movieDate", this.state.dateValue);
 
         let url = "/api/edit_movie";
         fetch(url, {
@@ -112,6 +114,38 @@ export default class EditMovie extends React.Component {
                                movieTitle: e.target.value
                            })
                        }}/>
+                <Button style={{marginBottom: 16}}>上传海报</Button>
+                <input type="file"
+                       multiple="multiple"
+                       accept="image/*"
+                       ref="posterInput"
+                       name="posterInput"
+                       style={{marginBottom: 16, display: "none"}}
+                />
+
+                <img src={this.state.poster.url} style={{width: 200}}/>
+
+                <div>
+                    <CheckBox checked={this.state.checkAll}
+                              indeterminate={this.state.indeterminate}
+                              onChange={(e) => {
+                                  this.setState({
+                                      checkedTags: e.target.checked ? movieTypeOptions : [],
+                                      isIndeterminate: false,
+                                      checkAll: e.target.checked
+                                  })
+                              }}>全部</CheckBox>
+                    <CheckBox.Group options={movieTypeOptions}
+                                    onChange={(checkedValue) => {
+                                        let checkedCount = checkedValue.length;
+                                        console.log(checkedValue);
+                                        this.setState({
+                                            checkAll: checkedCount === this.movieTypeOptions.length,
+                                            isIndeterminate: checkedCount > 0 && checkedCount < this.movieTypeOptions.length
+                                        })
+                                    }}/>
+                </div>
+
                 <Input placeholder="请输入电影介绍" value={this.state.movieInfo}
                        onChange={(e) => {
                            this.setState({

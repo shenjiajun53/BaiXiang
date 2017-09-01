@@ -1,13 +1,14 @@
 import React from 'react';
-import Input from 'antd/lib/input';
-import "antd/lib/input/style/css"
-import Button from 'antd/lib/button';
-import "antd/lib/button/style/css"
-import Checkbox from "antd/lib/checkbox";
-import "antd/lib/checkbox/style/css"
-import DatePicker from "antd/lib/date-picker";
-import "antd/lib/date-picker/style/css"
-// import {Input,Button,Checkbox,DatePicker} from "antd"
+
+// import Input from 'antd/lib/input';
+// import "antd/lib/input/style/css"
+// import Button from 'antd/lib/button';
+// import "antd/lib/button/style/css"
+// import Checkbox from "antd/lib/checkbox";
+// import "antd/lib/checkbox/style/css"
+// import DatePicker from "antd/lib/date-picker";
+// import "antd/lib/date-picker/style/css"
+import {Input,Button,Checkbox,DatePicker} from "antd"
 
 // const movieTypeOptions = [
 //     {key: '动画',label: '动画', value: "动画"},

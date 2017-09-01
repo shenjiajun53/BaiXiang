@@ -1,5 +1,7 @@
 package com.baixiang.manageController;
 
+import com.baixiang.model.Response;
+import com.baixiang.model.SpiderStatusBean;
 import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
 import com.baixiang.spider.TaohuaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +42,13 @@ public class SpiderController {
     @RequestMapping(value = "/api/stop_spider_taohua", method = RequestMethod.POST)
     public void stopTaohua() {
         taohuaProcessor.stop();
+    }
+
+    @RequestMapping(value = "/api/manage/getSpiderStatus", method = RequestMethod.POST)
+    public Response<SpiderStatusBean> getSpiderStatus() {
+        SpiderStatusBean spiderStatusBean = new SpiderStatusBean();
+        spiderStatusBean.setBtRunning(btTianTangProcessor.isRunning());
+        Response<SpiderStatusBean> response = new Response<>(spiderStatusBean, null);
+        return response;
     }
 }

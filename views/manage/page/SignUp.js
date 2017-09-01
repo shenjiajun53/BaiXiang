@@ -2,91 +2,50 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import TextField from "material-ui/TextField"
-import Card from "material-ui/Card"
-import SelectField from 'material-ui/SelectField';
-import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
 
+import {Input, Card, Button, Select} from "antd"
 
-let uploadInput;
-let userNameTF;
-let passTF;
-let passConfirmTF;
-let userIntroTF;
-let file;
-class SignUp extends React.Component {
+export default class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedGender: 1,
             avatarUrl: "",
-            selectedFileName: "",
+            selectedFile: "",
             nameError: "",
             passError: "",
             passConfirmError: "",
-            userIntroError: ""
+            userIntroError: "",
+            nameStr: "",
+            passStr: "",
+            passConfirmStr: "",
+            userIntroStr: ""
         }
     }
 
-    componentDidMount() {
-        uploadInput = this.refs.uploadInput;
-        userNameTF = this.refs.userNameTF;
-        passTF = this.refs.passTF;
-        passConfirmTF = this.refs.passConfirmTF;
-        userIntroTF = this.refs.userIntroTF;
-    }
-
-    genderSelected(event, index, value) {
-        // console.log("genderSelected="+value);
-        this.setState({
-            selectedGender: value
-        })
-    }
-
-    onUpLoadClick() {
-        // console.info("onUpLoadClick=");
-        uploadInput.click();
-    }
-
-    avatarSelected(event) {
-        // console.info("event=" + uploadInput.files.length);
-        file = uploadInput.files[0];
-        console.info("file=" + file.name);
-        this.setState({
-            selectedFileName: file.name
-        });
-        // let objectURL = window.URL.createObjectURL(file);
-        // console.info("event=" + objectURL);
-        // window.URL.revokeObjectURL(objectURL);
-    }
-
     onSignUp() {
-        let userNameStr = userNameTF.getValue();
-        let passStr = passTF.getValue();
-        let passConfirmStr = passConfirmTF.getValue();
-        let userIntroStr = userIntroTF.getValue();
+        console.info("upload =" + this.state.nameStr + this.state.passStr + this.state.passConfirmStr + this.state.userIntroStr);
 
         let infoFinished = true;
-        if ("" === userNameStr) {
+        if ("" === this.state.nameStr) {
             this.setState({
                 nameError: "不能为空"
             });
             infoFinished = false;
         }
-        if ("" === passStr) {
+        if ("" === this.state.passStr) {
             this.setState({
                 passError: "不能为空"
             });
             infoFinished = false;
         }
-        if ("" === passConfirmStr) {
+        if ("" === this.state.passConfirmStr) {
             this.setState({
                 passConfirmError: "不能为空"
             });
             infoFinished = false;
         }
-        if (passConfirmStr !== passStr) {
+        if (this.state.passConfirmStr !== this.state.passStr) {
             this.setState({
                 passError: "密码不一致",
                 passConfirmError: "密码不一致"
@@ -96,24 +55,21 @@ class SignUp extends React.Component {
         if (!infoFinished) {
             return;
         }
-
-        console.info("upload =" + userNameStr + passStr + passConfirmStr + userIntroStr);
-
         let body = {
-            "userName": userNameStr,
-            "pass": passStr,
-            "passConfirm": passConfirmStr,
-            "userIntro": userIntroStr
+            "userName": this.state.nameStr,
+            "pass": this.state.passStr,
+            "passConfirm": this.state.passConfirmStr,
+            "userIntro": this.state.userIntroStr
         };
 
         // document.cookie = "cookie1=5006";
 
         let formData = new FormData();
-        formData.append('avatar', file);
-        formData.append('userName', userNameStr);
-        formData.append('pass', passStr);
-        formData.append('passConfirm', passConfirmStr);
-        formData.append('userIntro', userIntroStr);
+        formData.append('avatar', this.state.selectedFile);
+        formData.append('userName', this.state.nameStr);
+        formData.append('pass', this.state.passStr);
+        formData.append('passConfirm', this.state.passConfirmStr);
+        formData.append('userIntro', this.state.userIntroStr);
         formData.append('sex', this.state.selectedGender);
 
         let url = "/api/signUp";
@@ -135,9 +91,9 @@ class SignUp extends React.Component {
                 console.log(JSON.stringify(json));
                 if (json.result) {
                     let result = json.result;
-                    if (result.status==1) {
+                    if (result.status == 1) {
                         window.location.pathname = result.redirect;
-                    }else {
+                    } else {
                         this.setState({
                             nameError: json.error.errorMsg
                         });
@@ -146,51 +102,6 @@ class SignUp extends React.Component {
                     this.setState({
                         nameError: json.error.errorMsg
                     });
-                }
-            }
-        ).catch(
-            (ex) => {
-                console.error('parsing failed', ex);
-            });
-    }
-
-    onSignIn() {
-        let userNameStr = userNameTF.getValue();
-        let passStr = passTF.getValue();
-
-
-        let formData = new FormData();
-        formData.append('userName', userNameStr);
-        formData.append('pass', passStr);
-        // formData.append('remember-me', true);
-
-        let url = "/api/SignIn";
-        fetch(url, {
-            method: "post",
-            // body: data,
-            body: formData,
-            headers: {
-                // 'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            credentials: 'include'     //很重要，设置session,cookie可用
-        }).then(
-            (response) => {
-                console.log(response);
-                return response.json();
-            }
-        ).then(
-            (json) => {
-                console.log(JSON.stringify(json));
-                if (json.result) {
-                    if (json.result.redirect) {
-                        window.location = json.result.redirect;
-                    }
-                } else if (json.error) {
-                    this.setState({
-                        nameError: json.error.errorMsg,
-                        passError: json.error.errorMsg
-                    })
                 }
             }
         ).catch(
@@ -213,75 +124,65 @@ class SignUp extends React.Component {
                             display: "flex",
                             flexDirection: "column",
                         }}>
-                            <div >
+                            <div>
                                 用户名*
                             </div>
-                            <TextField style={{marginBottom: "1em", flex: 1}}
-                                       errorText={this.state.nameError}
-                                       onChange={
-                                           (event, str) => {
-                                               if (this.state.nameError !== "") {
-                                                   this.setState({
-                                                       nameError: ""
-                                                   })
-                                               }
-                                           }}
-                                       ref="userNameTF"
-                                       id="userNameTF"
-                                       name="userNameTF"/>
+                            <Input style={{marginBottom: "1em", flex: 1}}
+                                   value={this.state.nameStr}
+                                   onChange={
+                                       (event) => {
+                                           this.setState({
+                                               nameStr: event.target.value
+                                           })
+                                       }}
+                            />
                             <div>
                                 密码*
                             </div>
-                            <TextField style={{marginBottom: "1em"}}
-                                       errorText={this.state.passError}
-                                       onChange={(event, str) => {
-                                           if (this.state.passError !== "") {
-                                               this.setState({
-                                                   passError: ""
-                                               })
-                                           }
-                                       }}
-                                       type="password"
-                                       ref="passTF"
-                                       id="passTF"
-                                       name="passTF"/>
+                            <Input style={{marginBottom: "1em"}}
+                                   value={this.state.passStr}
+                                   onChange={(event, str) => {
+                                       this.setState({
+                                           passStr: event.target.value
+                                       })
+                                   }}
+                            />
                             <div>
                                 重复密码*
                             </div>
-                            <TextField style={{marginBottom: "1em"}}
-                                       errorText={this.state.passConfirmError}
-                                       onChange={(event, str) => {
-                                           if (this.state.passConfirmError !== "") {
-                                               this.setState({
-                                                   passConfirmError: ""
-                                               })
-                                           }
-                                       }}
-                                       type="password"
-                                       ref="passConfirmTF"
-                                       id="passConfirmTF"
-                                       name="passConfirmTF"/>
+                            <Input style={{marginBottom: "1em"}}
+                                   value={this.state.passConfirmStr}
+                                   onChange={(event, str) => {
+                                       this.setState({
+                                           passConfirmStr: event.target.value
+                                       })
+                                   }}
+                            />
 
-                            <SelectField
-                                floatingLabelText="性别*"
-                                value={this.state.selectedGender}
-                                style={{marginBottom: "1em"}}
-                                onChange={(event, index, value) => this.genderSelected(event, index, value)}
-                            >
-                                <MenuItem value={1} primaryText="男"/>
-                                <MenuItem value={2} primaryText="女"/>
-                                <MenuItem value={3} primaryText="保密"/>
-                            </SelectField>
+                            <div style={{color: "#333333", hover: "pointer"}}>
+                                性别*
+                            </div>
+                            <Select defaultValue="1" style={{width: 120}}
+                                    onChange={(value) => {
+                                        this.setState({
+                                            selectedGender: value
+                                        })
+                                    }}>
+                                <Select.Option value="1">男</Select.Option>
+                                <Select.Option value="2">女</Select.Option>
+                                <Select.Option value="3">保密</Select.Option>
+                            </Select>
+
                             <div style={{marginBottom: "1em"}}>
                                 <span>头像*</span>
-                                <RaisedButton onTouchTap={() => this.onUpLoadClick()}
-                                              label={"选择文件"}
-                                              secondary={true}
-                                              style={{marginLeft: "0.5em"}}
-                                />
+                                <Button onClick={() => {
+                                    this.refs.uploadInput.click();
+                                }}
+                                        style={{marginLeft: "0.5em"}}
+                                >选择文件</Button>
                             </div>
                             <div style={{marginBottom: "1em",}}>
-                                {this.state.selectedFileName}
+                                {this.state.selectedFile.name}
                             </div>
                             <input type="file"
                                    multiple="multiple"
@@ -289,24 +190,30 @@ class SignUp extends React.Component {
                                    ref="uploadInput"
                                    name="uploadInput"
                                    style={{display: "none"}}
-                                   onChange={(event) => this.avatarSelected(event)}
+                                   onChange={(event) => {
+                                       let file = this.refs.uploadInput.files[0];
+                                       console.info("file=" + file.name);
+                                       this.setState({
+                                           selectedFile: file
+                                       });
+                                   }}
                             />
                             <div>
                                 个人简介*
                             </div>
-                            <TextField style={{marginBottom: "1em"}}
-                                       multiLine={true}
-                                       rows={5}
-                                       errorText={this.state.userIntroError}
-                                       ref="userIntroTF"
-                                       id="userIntroTF"
-                                       name="userIntroTF"/>
+                            <Input style={{marginBottom: "1em"}}
+                                   rows={5}
+                                   value={this.state.userIntroStr}
+                                   onChange={(event, str) => {
+                                       this.setState({
+                                           userIntroStr: event.target.value
+                                       })
+                                   }}/>
 
-                            <RaisedButton onTouchTap={() => this.onSignUp()}
-                                          primary={true}
-                                          label={"注册"}
-                                          style={{width: "10em", alignSelf: "center"}}
-                            />
+                            <Button onClick={() => this.onSignUp()}
+                                    label={"注册"}
+                                    style={{width: "10em", alignSelf: "center"}}
+                            >注册</Button>
                         </div>
                     </Card>
                 </div>
@@ -314,4 +221,3 @@ class SignUp extends React.Component {
         );
     }
 }
-export default SignUp;

@@ -5,6 +5,20 @@
   "plugins": [
     [
       "transform-react-jsx"
+    ],
+    [
+      "import",
+      [
+        {
+          "libraryName": "antd",
+          "style": "css"
+        },
+        {
+          "libraryName": "material-ui",
+          "libraryDirectory": "components",
+          "camel2DashComponentName": false
+        }
+      ]
     ]
   ]
 }

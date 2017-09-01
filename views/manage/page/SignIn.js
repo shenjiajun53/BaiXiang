@@ -2,41 +2,29 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import TextField from "material-ui/TextField"
-import Card from "material-ui/Card"
-import SelectField from 'material-ui/SelectField';
-import RaisedButton from 'material-ui/RaisedButton';
-import MenuItem from 'material-ui/MenuItem';
 
+import Input from 'antd/lib/input';
+import "antd/lib/input/style/css"
+import Card from 'antd/lib/card';
+import 'antd/lib/card/style/css';
+import Button from 'antd/lib/button';
+import "antd/lib/button/style/css"
 
-// import Input from 'antd/lib/input';
-// import "antd/lib/input/style/css"
-// import Card from 'antd/lib/card';
-// import 'antd/lib/card/style/css';
-// import Button from 'antd/lib/button';
-// import "antd/lib/button/style/css"
-
-let userNameTF;
-let passTF;
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedFileName: "",
+            nameStr: "",
+            passStr: "",
             nameError: "",
             passError: "",
         }
     }
 
-    componentDidMount() {
-        userNameTF = this.refs.userNameTF;
-        passTF = this.refs.passTF;
-    }
-
     onSignIn() {
-        let userNameStr = userNameTF.getValue();
-        let passStr = passTF.getValue();
+        let userNameStr = this.state.nameStr;
+        let passStr = this.state.passStr;
 
         let infoFinished = true;
         if ("" === userNameStr) {
@@ -116,42 +104,34 @@ class SignIn extends Component {
                             <div>
                                 用户名*
                             </div>
-                            <TextField style={{marginBottom: "1em", flex: 1}}
-                                       errorText={this.state.nameError}
-                                       onChange={
-                                           (event, str) => {
-                                               if (this.state.nameError !== "") {
-                                                   this.setState({
-                                                       nameError: "",
-                                                       passError: ""
-                                                   })
-                                               }
-                                           }}
-                                       ref="userNameTF"
-                                       id="userNameTF"
-                                       name="userNameTF"/>
+                            <Input style={{marginBottom: "1em", flex: 1}}
+                                   value={this.state.nameStr}
+                                   onChange={
+                                       (event) => {
+                                           this.setState({
+                                               nameStr: event.target.value
+                                           })
+                                       }}
+                                   ref="userNameTF"
+                                   id="userNameTF"
+                                   name="userNameTF"/>
                             <div>
                                 密码*
                             </div>
-                            <TextField style={{marginBottom: "1em"}}
-                                       errorText={this.state.passError}
-                                       onChange={(event, str) => {
-                                           if (this.state.passError !== "") {
-                                               this.setState({
-                                                   nameError: "",
-                                                   passError: ""
-                                               })
-                                           }
-                                       }}
-                                       type="password"
-                                       ref="passTF"
-                                       id="passTF"
-                                       name="passTF"/>
-                            <RaisedButton onTouchTap={() => this.onSignIn()}
-                                          primary={true}
-                                          label={"登录"}
-                                          style={{width: "10em", alignSelf: "center"}}
-                            />
+                            <Input style={{marginBottom: "1em"}}
+                                   value={this.state.passStr}
+                                   onChange={(event) => {
+                                       this.setState({
+                                           passStr: event.target.value
+                                       })
+                                   }}
+                                   type="password"
+                                   ref="passTF"
+                                   id="passTF"
+                                   name="passTF"/>
+                            <Button onClick={() => this.onSignIn()}
+                                    style={{width: "10em", alignSelf: "center"}}
+                            >登录</Button>
                         </div>
                     </Card>
                 </div>

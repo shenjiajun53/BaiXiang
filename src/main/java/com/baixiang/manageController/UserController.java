@@ -96,11 +96,11 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/manage/sign_out", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/sign_out", method = RequestMethod.GET)
     public ModelAndView signOut() {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();
-        ModelAndView modelAndView = new ModelAndView("redirect:/manage");
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
         return modelAndView;
     }
 

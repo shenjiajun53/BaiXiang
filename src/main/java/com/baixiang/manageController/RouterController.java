@@ -9,35 +9,35 @@ import org.springframework.web.servlet.ModelAndView;
 public class RouterController {
     @RequestMapping(value = "/manage", method = RequestMethod.GET)
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+        ModelAndView modelAndView = new ModelAndView("/manage/manage_index");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/manage/sign_in")
+    @RequestMapping(value = "/user/sign_in")
     public ModelAndView signIn() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+        ModelAndView modelAndView = new ModelAndView("/manage/user_index");
 
         return modelAndView;
     }
 
-    @RequestMapping(value = "/manage/sign_up")
+    @RequestMapping(value = "/user/sign_up")
     public ModelAndView signUp() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+        ModelAndView modelAndView = new ModelAndView("/manage/user_index");
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/manage/edit_movie/*")
     public ModelAndView editMovie() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+        ModelAndView modelAndView = new ModelAndView("/manage/manage_index");
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/manage/spider")
     public ModelAndView spider() {
-        ModelAndView modelAndView = new ModelAndView("/manage/index2");
+        ModelAndView modelAndView = new ModelAndView("/manage/manage_index");
 
         return modelAndView;
     }

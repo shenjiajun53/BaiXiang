@@ -18,6 +18,7 @@ module.exports = {
         VueComponents: path.resolve(__dirname + '/views/service/component/VueComponents.js'),
         UrlUtil: path.resolve(__dirname + '/views/utils/UrlUtil.js'),
         ManageApp: path.resolve(__dirname + '/views/manage/App.js'),
+        UserApp: path.resolve(__dirname + '/views/user/App.js'),
     },
     // 入口文件输出配置
     output: {

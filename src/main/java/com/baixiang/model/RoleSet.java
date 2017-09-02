@@ -1,7 +1,7 @@
 package com.baixiang.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+//import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
@@ -9,7 +9,7 @@ import java.util.Set;
  * Created by shenjj on 2017/5/17.
  */
 
-@Document(collection = "RoleSets")
+//@Document(collection = "RoleSets")
 public class RoleSet {
 
 //    Set<Role> roleSet;

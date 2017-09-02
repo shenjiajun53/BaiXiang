@@ -24,8 +24,8 @@ public class JpaRealm extends AuthorizingRealm {
     @Autowired
     UserService userService;
 
-    @Autowired
-    RoleService roleService;
+//    @Autowired
+//    RoleService roleService;
 
     public JpaRealm() {
         setName("hibernateRealm"); //This name must match the name in the User class's getPrincipals() method

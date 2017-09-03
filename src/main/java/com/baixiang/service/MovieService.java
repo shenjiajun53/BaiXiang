@@ -44,7 +44,7 @@ public class MovieService {
     }
 
     public List<Movie> getNewest() {
-        return movieRepository.findTop20ByOrderById();
+        return movieRepository.findTop20ByOrderByIdDesc();
     }
 
     public Movie getById(long id) {

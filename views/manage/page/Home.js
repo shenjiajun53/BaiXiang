@@ -36,7 +36,7 @@ class Home extends Component {
             (json) => {
                 // console.log("response=" + JSON.stringify(json));
                 this.setState({
-                    movieList: json.result.content
+                    movieList: json.result
                 })
             }
         ).catch(

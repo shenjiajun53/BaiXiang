@@ -42,9 +42,9 @@ public class ShiroConfig {
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shiroFilter() {
         ShiroFilterFactoryBean shiroFilter = new ShiroFilterFactoryBean();
-        shiroFilter.setLoginUrl("/manage/sign_in");
-        shiroFilter.setSuccessUrl("/manage");
-        shiroFilter.setUnauthorizedUrl("/manage/sign_in");
+        shiroFilter.setLoginUrl("/user/sign_in");
+        shiroFilter.setSuccessUrl("/");
+        shiroFilter.setUnauthorizedUrl("/user/sign_in");
         Map<String, String> filterChainDefinitionMapping = new HashMap<String, String>();
 
 
@@ -53,8 +53,8 @@ public class ShiroConfig {
         filterChainDefinitionMapping.put("/manage", "authc,roles[BangZhu]");
         filterChainDefinitionMapping.put("/manage/edit_movie", "authc,roles[BangZhu]");
         filterChainDefinitionMapping.put("/api/edit_movie", "authc,roles[BangZhu]");
-        filterChainDefinitionMapping.put("/manage/sign_in", "anon");
-        filterChainDefinitionMapping.put("/manage/sign_up", "anon");
+        filterChainDefinitionMapping.put("/user/sign_in", "anon");
+        filterChainDefinitionMapping.put("/user/sign_up", "anon");
         filterChainDefinitionMapping.put("/**", "anon");
         shiroFilter.setFilterChainDefinitionMap(filterChainDefinitionMapping);
         shiroFilter.setSecurityManager(securityManager());

@@ -17,6 +17,7 @@ const ON_TITLE_CLICKED = 111;
 const ON_USER_CLICKED = 112;
 const ON_MINE_CLICKED = 113;
 const ON_SPIDER_CLICKED = 115;
+const ON_ADD_CLICKED = 116;
 let myMenu;
 
 class TopBar extends React.Component {
@@ -50,7 +51,10 @@ class TopBar extends React.Component {
                 location.pathname = '/manage/spider';
                 break;
             case ON_MINE_CLICKED:
-                location.pathname = '/UserCenter';
+                location.pathname = '/user/UserCenter';
+                break;
+            case ON_ADD_CLICKED:
+                location.pathname = '/manage/edit_movie';
                 break;
             default:
                 break;
@@ -58,8 +62,6 @@ class TopBar extends React.Component {
     }
 
     render() {
-        console.log('topbar render');
-
         let avatarPath;
         let showAvatar = "none";
         if (this.props.user) {
@@ -85,6 +87,11 @@ class TopBar extends React.Component {
                     }}
                     onTouchTap={() => this.onTitleClick(ON_TITLE_CLICKED)}>
                     电影
+                </div>
+                <div
+                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    onTouchTap={() => this.onTitleClick(ON_ADD_CLICKED)}>
+                    添加影片
                 </div>
                 <div
                     style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}

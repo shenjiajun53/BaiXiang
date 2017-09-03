@@ -38,6 +38,9 @@ export default class EditMovie extends React.Component {
 
     componentDidMount() {
         let url = "/api/movieDetail";
+        if (!this.props.params.movieId) {
+            return;
+        }
 
         let formData = new FormData();
         formData.append('movieId', this.props.params.movieId);
@@ -69,8 +72,10 @@ export default class EditMovie extends React.Component {
     submit() {
         console.log("onSubmit");
         let formData = new FormData();
-        formData.append('movieId', this.state.movie.id);
-        console.log("movieid=" + this.state.movie.id);
+        if (this.state.movie !== null) {
+            formData.append('movieId', this.state.movie.id);
+            console.log("movieid=" + this.state.movie.id);
+        }
         formData.append('movieInfo', this.state.movieInfo);
         formData.append('movieTitle', this.state.movieTitle);
         formData.append('poster', this.state.poster.file);
@@ -112,11 +117,11 @@ export default class EditMovie extends React.Component {
     render() {
         console.log("edit movie render");
         let screenShotListView = this.state.screenShotList.map((screenShot) => {
-            return <img src={screenShot.url} style={{width: 200}}/>
+            return <img src={screenShot.url} style={{width: 200}} key={screenShot.url}/>
         });
 
         let torrentListView = this.state.torrentList.map((torrent) => {
-            return (<div style={{width: 500}}>
+            return (<div style={{width: 500}} key={torrent.url}>
                 {torrent.file.name}
             </div>)
         });

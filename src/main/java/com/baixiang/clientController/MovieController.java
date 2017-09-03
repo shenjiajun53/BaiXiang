@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.baixiang.utils.FileUtil.*;
 
@@ -103,7 +104,6 @@ public class MovieController {
             redirectBean = new RedirectBean(1, "/manage");
         } else {
             redirectBean = new RedirectBean(2, "");
-
         }
         Response<RedirectBean> response = new Response<>(redirectBean, null);
         return response;
@@ -118,11 +118,10 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/api/getRecommendMovies", method = RequestMethod.GET)
-    private Response<Page<Movie>> getRecommendMovie() {
+    private Response<List<Movie>> getRecommendMovie() {
         Pageable pageable = new PageRequest(0, 20);
-        Page<Movie> moviePage = movieService.getByTag("动画", pageable);
-        Response<Page<Movie>> response = new Response<>(moviePage, null);
-        logger.info("movie size=" + moviePage.getTotalElements());
+        List<Movie> moviePage = movieService.getNewest();
+        Response<List<Movie>> response = new Response<>(moviePage, null);
         return response;
     }
 

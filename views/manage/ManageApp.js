@@ -9,9 +9,11 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Layout from "antd/lib/layout";
 import 'antd/lib/layout/style/css';
 
-import SignIn from "./page/SignIn";
-import SignUp from "./page/SignUp";
+import Home from "./page/Home";
 import TopBar from "./component/TopBar";
+import Settings from "./page/Settings";
+import EditMovie from "./page/EditMovie";
+import Spider from "./page/Spider";
 
 injectTapEventPlugin();
 
@@ -70,8 +72,12 @@ class App extends React.Component {
 render(
     <Router history={browserHistory}>
         <Route path="/" component={App}>
-            <Route path="user/sign_up" component={SignUp}/>
-            <Route path="user/sign_in" component={SignIn}/>
+            <IndexRoute component={Home}/>
+            <Route path="manage" component={Home}/>
+            <Route path="manage/Settings" component={Settings}/>
+            <Route path="manage/edit_movie" component={EditMovie}/>
+            <Route path="manage/edit_movie/:movieId" component={EditMovie}/>
+            <Route path="manage/spider" component={Spider}/>
         </Route>
     </Router>
     ,

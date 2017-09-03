@@ -1,13 +1,13 @@
 .dark-primary-color {
-    background: #5D4037;
+    background: #00796B;
 }
 
 .default-primary-color {
-    background: #795548;
+    background: #009688;
 }
 
 .light-primary-color {
-    background: #D7CCC8;
+    background: #B2DFDB;
 }
 
 .text-primary-color {
@@ -15,7 +15,7 @@
 }
 
 .accent-color {
-    background: #009688;
+    background: #FF4081;
 }
 
 .primary-text-color {

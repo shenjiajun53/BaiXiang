@@ -17,8 +17,8 @@ module.exports = {
         side_bar: path.resolve(__dirname + '/views/service/js/side_bar.js'),
         VueComponents: path.resolve(__dirname + '/views/service/component/VueComponents.js'),
         UrlUtil: path.resolve(__dirname + '/views/utils/UrlUtil.js'),
-        ManageApp: path.resolve(__dirname + '/views/manage/App.js'),
-        UserApp: path.resolve(__dirname + '/views/user/App.js'),
+        ManageApp: path.resolve(__dirname + '/views/manage/ManageApp.js'),
+        UserApp: path.resolve(__dirname + '/views/user/UserApp.js'),
     },
     // 入口文件输出配置
     output: {

@@ -112,112 +112,107 @@ export default class SignUp extends React.Component {
 
     render() {
         return (
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                <h1 style={{display: "none"}}>注册</h1>
-                <div>
-                    <Card style={{
-                        marginTop: "1em",
-                        width: "20em",
-                        marginBottom: "1em"
-                    }}>
-                        <div style={{
-                            padding: "1em",
-                            display: "flex",
-                            flexDirection: "column",
-                        }}>
-                            <div>
-                                用户名*
-                            </div>
-                            <Input style={{marginBottom: "1em", flex: 1}}
-                                   value={this.state.nameStr}
-                                   onChange={
-                                       (event) => {
-                                           this.setState({
-                                               nameStr: event.target.value
-                                           })
-                                       }}
-                            />
-                            <div>
-                                密码*
-                            </div>
-                            <Input style={{marginBottom: "1em"}}
-                                   value={this.state.passStr}
-                                   onChange={(event, str) => {
-                                       this.setState({
-                                           passStr: event.target.value
-                                       })
-                                   }}
-                            />
-                            <div>
-                                重复密码*
-                            </div>
-                            <Input style={{marginBottom: "1em"}}
-                                   value={this.state.passConfirmStr}
-                                   onChange={(event, str) => {
-                                       this.setState({
-                                           passConfirmStr: event.target.value
-                                       })
-                                   }}
-                            />
-
-                            <div style={{color: "#333333", hover: "pointer"}}>
-                                性别*
-                            </div>
-                            <Select defaultValue="1" style={{width: 120, marginBottom: "1em"}}
-                                    onChange={(value) => {
-                                        this.setState({
-                                            selectedGender: value
-                                        })
-                                    }}>
-                                <Select.Option value="1">男</Select.Option>
-                                <Select.Option value="2">女</Select.Option>
-                                <Select.Option value="3">保密</Select.Option>
-                            </Select>
-
-                            <div style={{marginBottom: "1em"}}>
-                                <span>头像*</span>
-                                <Button onClick={() => {
-                                    this.refs.uploadInput.click();
-                                }}
-                                        style={{marginLeft: "0.5em"}}
-                                >选择文件</Button>
-                            </div>
-                            <div style={{marginBottom: "1em"}}>
-                                {this.state.selectedFile.name}
-                            </div>
-                            <input type="file"
-                                   multiple="multiple"
-                                   accept="image/*"
-                                   ref="uploadInput"
-                                   name="uploadInput"
-                                   style={{display: "none"}}
-                                   onChange={(event) => {
-                                       let file = this.refs.uploadInput.files[0];
-                                       console.info("file=" + file.name);
-                                       this.setState({
-                                           selectedFile: file
-                                       });
-                                   }}
-                            />
-                            <div>
-                                个人简介*
-                            </div>
-                            <Input style={{marginBottom: "1em"}}
-                                   rows={5}
-                                   value={this.state.userIntroStr}
-                                   onChange={(event, str) => {
-                                       this.setState({
-                                           userIntroStr: event.target.value
-                                       })
-                                   }}/>
-
-                            <Button onClick={() => this.onSignUp()}
-                                    label={"注册"}
-                                    style={{width: "10em", alignSelf: "center"}}
-                            >注册</Button>
-                        </div>
-                    </Card>
+            <div style={{
+                padding: "1em",
+                display: "flex",
+                flexDirection: "column",
+            }}>
+                <div style={{alignSelf: "center", marginBottom: 16}}>
+                    <a href={"/user/sign_in"} style={{fontSize: 20, color: "#757575"}}>登录</a>
+                    <span style={{fontSize: 20, color: "#757575"}}> · </span>
+                    <a href={"/user/sign_up"} style={{fontSize: 20, color: "#FF4081"}}>注册</a>
                 </div>
+
+                <div>
+                    用户名*
+                </div>
+                <Input style={{marginBottom: "1em", flex: 1}}
+                       value={this.state.nameStr}
+                       onChange={
+                           (event) => {
+                               this.setState({
+                                   nameStr: event.target.value
+                               })
+                           }}
+                />
+                <div>
+                    密码*
+                </div>
+                <Input style={{marginBottom: "1em"}}
+                       value={this.state.passStr}
+                       onChange={(event, str) => {
+                           this.setState({
+                               passStr: event.target.value
+                           })
+                       }}
+                />
+                <div>
+                    重复密码*
+                </div>
+                <Input style={{marginBottom: "1em"}}
+                       value={this.state.passConfirmStr}
+                       onChange={(event, str) => {
+                           this.setState({
+                               passConfirmStr: event.target.value
+                           })
+                       }}
+                />
+
+                <div style={{color: "#333333", hover: "pointer"}}>
+                    性别*
+                </div>
+                <Select defaultValue="1" style={{width: 120, marginBottom: "1em"}}
+                        onChange={(value) => {
+                            this.setState({
+                                selectedGender: value
+                            })
+                        }}>
+                    <Select.Option value="1">男</Select.Option>
+                    <Select.Option value="2">女</Select.Option>
+                    <Select.Option value="3">保密</Select.Option>
+                </Select>
+
+                <div style={{marginBottom: "1em"}}>
+                    <span>头像*</span>
+                    <Button onClick={() => {
+                        this.refs.uploadInput.click();
+                    }}
+                            style={{marginLeft: "0.5em"}}
+                    >选择文件</Button>
+                </div>
+                <div style={{marginBottom: "1em"}}>
+                    {this.state.selectedFile.name}
+                </div>
+                <input type="file"
+                       multiple="multiple"
+                       accept="image/*"
+                       ref="uploadInput"
+                       name="uploadInput"
+                       style={{display: "none"}}
+                       onChange={(event) => {
+                           let file = this.refs.uploadInput.files[0];
+                           console.info("file=" + file.name);
+                           this.setState({
+                               selectedFile: file
+                           });
+                       }}
+                />
+                <div>
+                    个人简介*
+                </div>
+                <Input style={{marginBottom: "1em"}}
+                       rows={5}
+                       value={this.state.userIntroStr}
+                       onChange={(event, str) => {
+                           this.setState({
+                               userIntroStr: event.target.value
+                           })
+                       }}/>
+
+                <Button onClick={() => this.onSignUp()}
+                        label={"注册"}
+                        style={{width: "10em", alignSelf: "center"}}
+                >注册</Button>
             </div>
         );
     }

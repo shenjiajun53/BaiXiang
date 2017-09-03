@@ -9,6 +9,7 @@ import React from 'react';
 // import DatePicker from "antd/lib/date-picker";
 // import "antd/lib/date-picker/style/css"
 import {Input, Button, Checkbox, DatePicker} from "antd"
+import ImageItem from "../component/ImageItem";
 
 // const movieTypeOptions = [
 //     {key: '动画',label: '动画', value: "动画"},
@@ -55,11 +56,14 @@ export default class EditMovie extends React.Component {
             }
         ).then(
             (json) => {
-                // console.log("response=" + JSON.stringify(json));
+                console.log("response=" + JSON.stringify(json));
                 this.setState({
                     movie: json.result,
                     movieTitle: json.result.movieName,
                     movieInfo: json.result.movieInfo,
+                    checkedTags: json.result.movieTagSet,
+                    checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
+                    isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
                     poster: {file: null, url: json.result.poster}
                 })
             }
@@ -86,8 +90,8 @@ export default class EditMovie extends React.Component {
             formData.append('torrentList', this.state.torrentList[i].file);
         }
         for (let i = 0; i < this.state.checkedTags.length; i++) {
-            console.log("tag=" + this.state.checkedTags[i].key);
-            formData.append("tagList", this.state.checkedTags[i].key);
+            console.log("tag=" + this.state.checkedTags[i]);
+            formData.append("tagList", this.state.checkedTags[i]);
         }
         formData.append("movieDate", this.state.dateValue);
 
@@ -115,9 +119,8 @@ export default class EditMovie extends React.Component {
     }
 
     render() {
-        console.log("edit movie render");
         let screenShotListView = this.state.screenShotList.map((screenShot) => {
-            return <img src={screenShot.url} style={{width: 200}} key={screenShot.url}/>
+            return <ImageItem src={screenShot.url} style={{width: 400}} key={screenShot.url}/>
         });
 
         let torrentListView = this.state.torrentList.map((torrent) => {
@@ -139,8 +142,13 @@ export default class EditMovie extends React.Component {
 
 
                 <div>
-                    <img src={this.state.poster.url} style={{marginBottom: 16, width: 200}}/>
-                    <br/>
+                    <ImageItem src={this.state.poster.url} style={{marginBottom: 16, width: 400}}
+                         onCloseClick={() => {
+                             this.setState({
+                                 poster: {file: null, url: null}
+                             })
+                         }}/>
+                    <div/>
                     <Button style={{marginBottom: 16}}
                             onClick={() => {
                                 this.refs.posterInput.click();

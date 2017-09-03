@@ -14,6 +14,15 @@
     margin-top: 10px
 }
 
+a {
+    text-decoration: none;
+    color: #03A9F4;
+}
+
+a:visited {
+    color: #757575;
+}
+
 .topBar {
     height: 48px;
     align-items: center;
@@ -29,16 +38,21 @@
 
 }
 
+.topItem {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.topItem:visited {
+    color: #ffffff;
+    cursor: pointer;
+}
+
 .topItem:hover {
     color: #BDBDBD;
     cursor: pointer;
 }
 
-a {
-    text-decoration: none;
-    color: #03A9F4;
-}
-
-a:visited {
-    color: #757575;
+#side_bar {
+    width: 300px;
 }

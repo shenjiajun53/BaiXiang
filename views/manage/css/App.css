@@ -1,3 +1,17 @@
+.image-icon {
+    font-size: 20px;
+    color: #ffffff
+}
+
+.image-icon:hover {
+    font-size: 20px;
+    color: #757575;
+}
+
+.image-icon:active {
+    color: #757575;
+}
+
 .dark-primary-color {
     background: #5D4037;
 }

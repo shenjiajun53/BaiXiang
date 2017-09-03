@@ -87,8 +87,10 @@ class Home extends Component {
                 display: "flex",
                 flexDirection: "row",
                 flexWrap: "wrap",
-                marginTop: "10px",
-                marginBottom: "10px"
+                marginTop: 16,
+                marginLeft: 32,
+                marginBottom: 16,
+                marginRight: 32
             }}>
                 {movieListView}
             </div>

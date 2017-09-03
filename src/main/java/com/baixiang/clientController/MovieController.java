@@ -93,6 +93,9 @@ public class MovieController {
             }
         }
         if (null != tagList && tagList.length > 0) {
+            if (movie.getMovieTagSet().size() > 0) {
+                movie.getMovieTagSet().clear();
+            }
             for (int i = 0; i < tagList.length; i++) {
                 movie.addTag(tagList[i]);
             }

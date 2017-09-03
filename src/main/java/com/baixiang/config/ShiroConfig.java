@@ -51,7 +51,7 @@ public class ShiroConfig {
         filterChainDefinitionMapping.put("/index", "authc,roles[guest]");
         filterChainDefinitionMapping.put("/admin", "authc,roles[BangZhu]");
         filterChainDefinitionMapping.put("/manage", "authc,roles[BangZhu]");
-        filterChainDefinitionMapping.put("/manage/edit_movie", "authc,roles[BangZhu]");
+        filterChainDefinitionMapping.put("/manage/*", "authc,roles[BangZhu]");
         filterChainDefinitionMapping.put("/api/edit_movie", "authc,roles[BangZhu]");
         filterChainDefinitionMapping.put("/user/sign_in", "anon");
         filterChainDefinitionMapping.put("/user/sign_up", "anon");

@@ -82,24 +82,34 @@ class TopBar extends React.Component {
             }}>
                 <div
                     style={{
-                        color: "#ffffff", marginRight: "10px",
-                        cursor: "pointer"
+                        color: "#ffffff", marginRight: 10,
+                        cursor: "pointer",
+                        fontSize: 16
                     }}
                     onTouchTap={() => this.onTitleClick(ON_TITLE_CLICKED)}>
                     电影
                 </div>
                 <div
-                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    style={{
+                        color: "#ffffff", marginRight: "10px", cursor: "pointer",
+                        fontSize: 16
+                    }}
                     onTouchTap={() => this.onTitleClick(ON_ADD_CLICKED)}>
                     添加影片
                 </div>
                 <div
-                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    style={{
+                        color: "#ffffff", marginRight: "10px", cursor: "pointer",
+                        fontSize: 16
+                    }}
                     onTouchTap={() => this.onTitleClick(ON_USER_CLICKED)}>
                     用户管理
                 </div>
                 <div
-                    style={{color: "#ffffff", marginRight: "10px", cursor: "pointer"}}
+                    style={{
+                        color: "#ffffff", marginRight: "10px", cursor: "pointer",
+                        fontSize: 16
+                    }}
                     onTouchTap={() => this.onTitleClick(ON_SPIDER_CLICKED)}>
                     爬虫
                 </div>

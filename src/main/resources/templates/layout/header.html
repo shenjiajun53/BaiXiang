@@ -11,33 +11,41 @@
     <el-card :body-style="{ padding: '0px' }">
         <div class="topBar">
             <div style="display:flex;flex:1;flex-direction: row;">
-                <div class="topItem" style=";font-size: large;margin-right: 10px" @click="reLocation('/')">
+                <a class="topItem" style=";font-size: large;margin-right: 10px;"
+                   href="/"
+                   @click="reLocation('/')">
                     首页
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=最新')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=最新"
+                >
                     最新
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=动画')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=动画"
+                >
                     动画
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=动作')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=动作"
+                >
                     动作
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=科幻')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=科幻"
+                >
                     科幻
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=美剧')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=美剧"
+                >
                     美剧
-                </div>
-                <div class="topItem" style=";font-size: large;margin-right: 10px"
-                     @click="reLocation('/movie_list?tag=日剧')">
+                </a>
+                <a class="topItem" style=";font-size: large;margin-right: 10px"
+                   href="/movie_list?tag=日剧"
+                >
                     日剧
-                </div>
+                </a>
             </div>
 
             <div style="">

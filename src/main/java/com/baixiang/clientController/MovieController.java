@@ -39,6 +39,12 @@ public class MovieController {
         return new Response<>(movie, null);
     }
 
+    @RequestMapping(value = "/api/delete_movie", method = RequestMethod.POST)
+    public Response<BaseBean> deleteMovie(@RequestParam(value = "movieId") Long movieId) {
+        movieService.delete(movieId);
+        return new Response<>(new BaseBean(1), null);
+    }
+
     @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                                             @RequestParam(value = "movieTitle") String movieTitle,

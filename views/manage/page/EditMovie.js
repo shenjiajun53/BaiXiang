@@ -8,7 +8,7 @@ import React from 'react';
 // import "antd/lib/checkbox/style/css"
 // import DatePicker from "antd/lib/date-picker";
 // import "antd/lib/date-picker/style/css"
-import {Input, Button, Checkbox, DatePicker} from "antd"
+import {Input, Button, Checkbox, DatePicker, Icon} from "antd"
 import ImageItem from "../component/ImageItem";
 
 // const movieTypeOptions = [
@@ -57,6 +57,7 @@ export default class EditMovie extends React.Component {
         ).then(
             (json) => {
                 console.log("response=" + JSON.stringify(json));
+                console.log("" + JSON.stringify(json.result.movieTorrents));
                 this.setState({
                     movie: json.result,
                     movieTitle: json.result.movieName,
@@ -64,13 +65,41 @@ export default class EditMovie extends React.Component {
                     checkedTags: json.result.movieTagSet,
                     checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
                     isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
-                    poster: {file: null, url: json.result.poster}
+                    poster: {file: null, url: json.result.poster},
                 })
             }
         ).catch(
             (ex) => {
                 console.error('parsing failed', ex);
             });
+    }
+
+    deleteMovie() {
+        let formData = new FormData();
+        if (this.state.movie !== null) {
+            formData.append('movieId', this.state.movie.id);
+            console.log("movieid=" + this.state.movie.id);
+        } else {
+            return;
+        }
+        let url = "/api/delete_movie";
+        fetch(url, {
+            method: "post",
+            body: formData,
+            credentials: 'include'     //很重要，设置session,cookie可用
+        }).then(
+            (response) => {
+                return response.json();
+            }
+        ).then(
+            (json) => {
+                console.log(JSON.stringify(json));
+                let result = json.result;
+                if (result.status === 1) {
+                    window.location.href = "/manage";
+                }
+            }
+        );
     }
 
     submit() {
@@ -119,8 +148,15 @@ export default class EditMovie extends React.Component {
     }
 
     render() {
-        let screenShotListView = this.state.screenShotList.map((screenShot) => {
-            return <ImageItem src={screenShot.url} style={{width: 400}} key={screenShot.url}/>
+        let screenShotListView = this.state.screenShotList.map((screenShot, index) => {
+            return <ImageItem src={screenShot.url} style={{width: 400}} key={screenShot.url}
+                              onCloseClick={() => {
+                                  let oldScreenShotList = this.state.screenShotList;
+                                  oldScreenShotList.splice(index, 1);
+                                  this.setState({
+                                      screenShotList: oldScreenShotList
+                                  })
+                              }}/>
         });
 
         let torrentListView = this.state.torrentList.map((torrent) => {
@@ -130,9 +166,28 @@ export default class EditMovie extends React.Component {
         });
 
         return (
-            <div style={{marginLeft: 100, marginRight: 100, marginTop: 16, marginBottom: 30}}>
+            <div style={{
+                marginLeft: 100,
+                marginRight: 100,
+                marginTop: 16,
+                marginBottom: 30,
+            }}>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end"
+                }}>
+                    <Icon type="delete"
+                          className="delete-icon"
+                          style={{
+                              display: this.state.movie ? "inline" : "none"
+                          }}
+                          onClick={() => {
+                              this.deleteMovie();
+                          }}
+                    /></div>
                 <Input placeholder="请输入影片标题"
-                       style={{marginBottom: 16}}
+                       style={{marginBottom: 16, width: 800}}
                        value={this.state.movieTitle}
                        onChange={(e) => {
                            this.setState({
@@ -140,14 +195,13 @@ export default class EditMovie extends React.Component {
                            })
                        }}/>
 
-
                 <div>
                     <ImageItem src={this.state.poster.url} style={{marginBottom: 16, width: 400}}
-                         onCloseClick={() => {
-                             this.setState({
-                                 poster: {file: null, url: null}
-                             })
-                         }}/>
+                               onCloseClick={() => {
+                                   this.setState({
+                                       poster: {file: null, url: null}
+                                   })
+                               }}/>
                     <div/>
                     <Button style={{marginBottom: 16}}
                             onClick={() => {

@@ -6,7 +6,7 @@
     <groupId>com.example</groupId>
     <artifactId>baixiang</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>baixiang</name>
     <description>Demo project for Spring Boot</description>

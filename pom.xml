@@ -132,30 +132,46 @@
         </dependency>
 
 
-        <!-- Spring AspectJ support -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!--&lt;!&ndash; Spring AspectJ support &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-aspects</artifactId>-->
+            <!--<version>${spring.version}</version>-->
+        <!--</dependency>-->
 
-        <!-- Spring AspectJ has these as dependencies but fails to declare them -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
+        <!--&lt;!&ndash; Spring AspectJ has these as dependencies but fails to declare them &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-tx</artifactId>-->
+        <!--</dependency>-->
 
-        <!-- AspectJ runtime -->
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-        </dependency>
+        <!--&lt;!&ndash; AspectJ runtime &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.aspectj</groupId>-->
+            <!--<artifactId>aspectjrt</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.8.1</version>
         </dependency>
+
+
+        <!-- marked the embedded servlet container as provided -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+            <!--<version>4.0.0</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -165,31 +181,31 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>aspectj-maven-plugin</artifactId>
-                <version>1.10</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>compile</goal>       <!-- use this goal to weave all your main classes -->
-                            <goal>test-compile</goal>  <!-- use this goal to weave all your test classes -->
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <complianceLevel>${java.version}</complianceLevel>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                    <aspectLibraries>
-                        <aspectLibrary>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-aspects</artifactId>
-                        </aspectLibrary>
-                    </aspectLibraries>
-                    <Xlint>ignore</Xlint>
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>aspectj-maven-plugin</artifactId>-->
+                <!--<version>1.10</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>compile</goal>       &lt;!&ndash; use this goal to weave all your main classes &ndash;&gt;-->
+                            <!--<goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--<complianceLevel>${java.version}</complianceLevel>-->
+                    <!--<source>${java.version}</source>-->
+                    <!--<target>${java.version}</target>-->
+                    <!--<aspectLibraries>-->
+                        <!--<aspectLibrary>-->
+                            <!--<groupId>org.springframework</groupId>-->
+                            <!--<artifactId>spring-aspects</artifactId>-->
+                        <!--</aspectLibrary>-->
+                    <!--</aspectLibraries>-->
+                    <!--<Xlint>ignore</Xlint>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

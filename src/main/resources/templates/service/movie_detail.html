@@ -26,11 +26,11 @@
 
         <h1 th:text="${movie.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
 
-        <img v-bind:src="poster.url" style="width: 200px;margin-bottom: 1em"/>
+        <img th:src="@{${movie.poster}}" style="width: 200px;margin-bottom: 1em"/>
 
         <h2 style="margin-bottom: 10px" th:hidden="${movie.actorSet.size()==0}">演员表</h2>
         <div th:each="actor : ${movie.actorSet}" style="margin-bottom: 1em">
-            <a th:text="${actor.actorName}" th:href=${'/movie_list?actor='+actor.actorName}></a>
+            <a th:text="${actor.actorName}" th:href="@{${'/movie_list?actor='+actor.actorName}}"></a>
         </div>
 
         <h2 style="margin-bottom: 5px" th:hidden="${movie.movieInfo==null}">介绍</h2>
@@ -38,18 +38,18 @@
 
         <div style="margin-bottom: 5px" th:hidden="${movie.screenShots.size()==0}">截图</div>
         <div th:each="screenShot :${movie.screenShots}" style="margin-bottom: 1em">
-            <img th:src="${screenShot.url}" style="width: 200px"/>
+            <img th:src="@{${screenShot.url}}" style="width: 200px"/>
         </div>
 
         <h2 style="margin-bottom: 5px" th:hidden="${movie.movieTorrents.size()==0}">种子下载</h2>
         <div th:each="torrent :${movie.movieTorrents}"
              style="margin-bottom: 5px;display: flex;flex-direction:row;align-items: center">
             <a th:hidden="${torrent.magnetUrl==null}" th:text="${torrent.torrentName}"
-               th:href="${torrent.magnetUrl}"></a>
+               th:href="@{${torrent.magnetUrl}}"></a>
             <a th:hidden="${torrent.magnetUrl!=null||torrent.filePath==null}" th:text="${torrent.torrentName}"
-               th:href="${torrent.filePath}"></a>
-            <a th:hidden="${torrent.filePath==null}" th:href="${torrent.filePath}">
-                <img src="../res/ic_file_download_pink_500_24dp.png"></a>
+               th:href="@{${torrent.filePath}}"></a>
+            <a th:hidden="${torrent.filePath==null}" th:href="@{${torrent.filePath}}">
+                <img th:src="@{'/res/ic_file_download_pink_500_24dp.png'}" alt="下载"></a>
         </div>
     </div>
 </div>
@@ -60,30 +60,25 @@
     if ([[${movie!=null}]] && [[${movie.movieTagSet!=null}]]) {
         tagName = [[${movie.movieTagSet.size()>0?movie.movieTagSet[0]:""}]];
     }
-//    //test
-//    let tagSet=[[${movie.movieTagSet}]];
-//    console.info("tagnamen="+JSON.stringify(tagSet));
-//    let set=new Set(tagSet);
-//    let size=set.size;
-//    console.info("size="+size)
-//    set.forEach(function(value) {
-//        console.log(value);
-//    });
-//
-//    let movie=[[${movie.movieName}]];
-//    console.info("movie="+movie)
-//    console.info("movieName="+movie.movieName);
-//    let user=[[${user}]];
-//    console.log("user=" + JSON.stringify(user));
+    //    //test
+    //    let tagSet=[[${movie.movieTagSet}]];
+    //    console.info("tagnamen="+JSON.stringify(tagSet));
+    //    let set=new Set(tagSet);
+    //    let size=set.size;
+    //    console.info("size="+size)
+    //    set.forEach(function(value) {
+    //        console.log(value);
+    //    });
+    //
+    //    let movie=[[${movie.movieName}]];
+    //    console.info("movie="+movie)
+    //    console.info("movieName="+movie.movieName);
+    //    let user=[[${user}]];
+    //    console.log("user=" + JSON.stringify(user));
     new Vue({
         el: "#vertical-container",
         data() {
             return {
-                movieInfo: [[${movie!=null?movie.movieInfo:""}]],
-                movieTitle: [[${movie!=null?movie.movieName:""}]],
-                poster: {file: null, url: [[${movie!=null?movie.poster:""}]]},
-                screenShotList: [],
-                torrentList: [],
                 breadcrumbList: [{url: "/", itemName: "首页"},
                     {url: "/movie_list?tag=" + tagName, itemName: tagName}]
             };

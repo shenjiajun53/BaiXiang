@@ -12,6 +12,7 @@ import {Tabs} from "antd";
 
 import SignIn from "./page/SignIn";
 import SignUp from "./page/SignUp";
+import Urls from "../utils/Urls";
 
 injectTapEventPlugin();
 
@@ -25,7 +26,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        let url = "/api/getUserInfo";
+        let url = Urls.getUserInfo;
         fetch(url, {
             method: "post",
             credentials: 'include'     //很重要，设置session,cookie可用
@@ -52,7 +53,8 @@ class App extends React.Component {
     }
 
     render() {
-        console.log('app render');
+        // console.log('app render');
+        console.log('base url='+Urls.baseUrl);
         // console.log('chileren=' + this.props.children.name);
         return (
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -70,7 +72,7 @@ class App extends React.Component {
 
 render(
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
+        <Route path={"/"} component={App}>
             <Route path="user/sign_up" component={SignUp}/>
             <Route path="user/sign_in" component={SignIn}/>
         </Route>

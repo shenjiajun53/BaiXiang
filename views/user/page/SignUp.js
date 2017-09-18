@@ -93,7 +93,7 @@ export default class SignUp extends React.Component {
                 if (json.result) {
                     let result = json.result;
                     if (result.status == 1) {
-                        window.location.pathname = result.redirect;
+                        window.location.pathname = Urls.CONTEXT_PATH +result.redirect;
                     } else {
                         this.setState({
                             nameError: json.error.errorMsg

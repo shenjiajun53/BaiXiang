@@ -73,7 +73,7 @@ class SignIn extends React.Component {
                 console.log(JSON.stringify(json));
                 if (json.result) {
                     if (json.result.redirect) {
-                        window.location = json.result.redirect;
+                        window.location = Urls.CONTEXT_PATH + json.result.redirect;
                     }
                 } else if (json.error) {
                     this.setState({

@@ -134,15 +134,13 @@ public class MovieController {
         return response;
     }
 
-    private String saveFile(MultipartFile multipartFile, String filePath) {
+    private String saveFile(MultipartFile multipartFile, String dirPath) {
         if (null != multipartFile && !multipartFile.isEmpty()) {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
-                String staticPath = System.getProperty("user.dir") + STATIC_PATH;
-                FileUtil.createOrExistsDir(staticPath + filePath);
-
                 String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-                File file = new File(staticPath + filePath + fileName);
+                String filePath = FileUtil.getFilePath(dirPath, fileName);
+                File file = new File(filePath);
                 multipartFile.transferTo(file);
                 return fileName;
             } catch (IOException e) {

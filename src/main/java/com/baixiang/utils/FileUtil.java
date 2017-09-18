@@ -1,6 +1,7 @@
 package com.baixiang.utils;
 
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.security.DigestInputStream;
@@ -14,7 +15,9 @@ import java.util.List;
  * Created by shenjj on 2017/4/17.
  */
 public final class FileUtil {
-    public static final String STATIC_PATH = "/src/main/webapp";
+    public static final String ROOT_PATH = "D:/data";
+    public static final String PROJECT_PATH = System.getProperty("user.dir");
+    public static final String STATIC_PATH = PROJECT_PATH + "/src/main/webapp";
     public static final String POSTER_PATH = "/files/movie/posters/";
     public static final String SCREEN_SHOT_PATH = "/files/movie/screenShots/";
     public static final String TORRENT_PATH = "/files/movie/torrents/";
@@ -1369,9 +1372,9 @@ public final class FileUtil {
 
 
     public static String getFilePath(String dirPath, String fileName) {
-        String staticPath = System.getProperty("user.dir") + STATIC_PATH;
-        FileUtil.createOrExistsDir(staticPath + dirPath);
-        String filePath = staticPath + dirPath + fileName;
+        String rootPath = ROOT_PATH;
+        FileUtil.createOrExistsDir(rootPath + dirPath);
+        String filePath = rootPath + dirPath + fileName;
         return filePath;
     }
 

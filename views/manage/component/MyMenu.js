@@ -6,6 +6,7 @@ import Menu from 'antd/lib/menu';
 import 'antd/lib/menu/style/css';
 import DropDown from 'antd/lib/dropdown';
 import 'antd/lib/dropdown/style/css';
+import Urls from "../../utils/Urls";
 
 let iconMenu;
 export default class MyMenu extends React.Component {
@@ -35,23 +36,23 @@ export default class MyMenu extends React.Component {
         console.log("onclick " + item.key);
         switch (item.key) {
             case "SignUp":
-                window.location.pathname = '/user/sign_up';
+                window.location.pathname = Urls.SIGN_UP;
                 // location.hash="/SignUp";
                 break;
             case "SignIn":
-                window.location.pathname = '/user/sign_in';
+                window.location.pathname = Urls.SIGN_IN;
                 break;
             case "HomePage":
-                window.location.pathname = '/';
+                window.location.pathname = Urls.BASE_URL;
                 break;
             case "AddMovie":
-                window.location.pathname = '/edit_movie';
+                window.location.pathname = Urls.MANAGE_EDIT_MOVIE;
                 break;
             case "Settings":
-                window.location.pathname = '/Settings';
+                window.location.pathname = Urls.MANAGE_SETTINGS;
                 break;
             case "SignOut":
-                window.location.pathname = '/user/sign_out';
+                window.location.pathname = Urls.SIGN_OUT;
                 break;
             default:
                 break;
@@ -59,9 +60,7 @@ export default class MyMenu extends React.Component {
     }
 
     SignOut() {
-        console.log("SIgnOut");
-        let url = "/api/SignOut";
-        fetch(url, {
+        fetch(Urls.API_USER_SIGN_OUT, {
             method: "post",
             credentials: 'include'     //很重要，设置session,cookie可用
         }).then(

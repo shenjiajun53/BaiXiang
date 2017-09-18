@@ -5,6 +5,8 @@ import React, {Component} from 'react';
 
 import {Input, Card, Button, Select} from "antd"
 
+import Urls from "../../utils/Urls";
+
 export default class SignUp extends React.Component {
     constructor(props) {
         super(props);
@@ -72,8 +74,7 @@ export default class SignUp extends React.Component {
         formData.append('userIntro', this.state.userIntroStr);
         formData.append('sex', this.state.selectedGender);
 
-        let url = "/api/signUp";
-        fetch(url, {
+        fetch(Urls.API_USER_SIGN_UP, {
             method: "post",
             // body: data,
             body: formData,
@@ -118,9 +119,9 @@ export default class SignUp extends React.Component {
                 flexDirection: "column",
             }}>
                 <div style={{alignSelf: "center", marginBottom: 16}}>
-                    <a href={"/user/sign_in"} style={{fontSize: 20, color: "#757575"}}>登录</a>
+                    <a href={Urls.SIGN_IN} style={{fontSize: 20, color: "#757575"}}>登录</a>
                     <span style={{fontSize: 20, color: "#757575"}}> · </span>
-                    <a href={"/user/sign_up"} style={{fontSize: 20, color: "#FF4081"}}>注册</a>
+                    <a href={Urls.SIGN_UP} style={{fontSize: 20, color: "#FF4081"}}>注册</a>
                 </div>
 
                 <div>

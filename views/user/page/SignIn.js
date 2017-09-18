@@ -10,6 +10,7 @@ import 'antd/lib/card/style/css';
 import Button from 'antd/lib/button';
 import "antd/lib/button/style/css"
 
+import Urls from "../../utils/Urls";
 
 class SignIn extends React.Component {
     constructor(props) {
@@ -53,8 +54,7 @@ class SignIn extends React.Component {
         formData.append('pass', passStr);
         // formData.append('remember-me', true);
 
-        let url = "/api/signIn";
-        fetch(url, {
+        fetch(Urls.API_USER_SIGN_IN, {
             method: "post",
             // body: data,
             body: formData,
@@ -96,9 +96,9 @@ class SignIn extends React.Component {
                 flexDirection: "column",
             }}>
                 <div style={{alignSelf: "center", marginBottom: 16}}>
-                    <a href={"/user/sign_in"} style={{fontSize: 20, color: "#FF4081"}}>登录</a>
+                    <a href={Urls.SIGN_IN} style={{fontSize: 20, color: "#FF4081"}}>登录</a>
                     <span style={{fontSize: 20, color: "#757575"}}> · </span>
-                    <a href={"/user/sign_up"} style={{fontSize: 20, color: "#757575"}}>注册</a>
+                    <a href={Urls.SIGN_UP} style={{fontSize: 20, color: "#757575"}}>注册</a>
                 </div>
                 <div>
                     用户名*

@@ -10,6 +10,7 @@ import React from 'react';
 // import "antd/lib/date-picker/style/css"
 import {Input, Button, Checkbox, DatePicker, Icon} from "antd"
 import ImageItem from "../component/ImageItem";
+import Urls from "../../utils/Urls";
 
 // const movieTypeOptions = [
 //     {key: '动画',label: '动画', value: "动画"},
@@ -38,7 +39,6 @@ export default class EditMovie extends React.Component {
     }
 
     componentDidMount() {
-        let url = "/api/movieDetail";
         if (!this.props.params.movieId) {
             return;
         }
@@ -46,7 +46,7 @@ export default class EditMovie extends React.Component {
         let formData = new FormData();
         formData.append('movieId', this.props.params.movieId);
         console.log("movieId=" + this.props.params.movieId);
-        fetch(url, {
+        fetch(Urls.API_MOVIE_DETAIL, {
             method: "post",
             body: formData,
             credentials: 'include'     //很重要，设置session,cookie可用
@@ -82,8 +82,7 @@ export default class EditMovie extends React.Component {
         } else {
             return;
         }
-        let url = "/api/delete_movie";
-        fetch(url, {
+        fetch(Urls.API_DELETE_MOVIE, {
             method: "post",
             body: formData,
             credentials: 'include'     //很重要，设置session,cookie可用
@@ -96,7 +95,7 @@ export default class EditMovie extends React.Component {
                 console.log(JSON.stringify(json));
                 let result = json.result;
                 if (result.status === 1) {
-                    window.location.href = "/manage";
+                    window.location.href = Urls.MANAGE;
                 }
             }
         );
@@ -124,8 +123,7 @@ export default class EditMovie extends React.Component {
         }
         formData.append("movieDate", this.state.dateValue);
 
-        let url = "/api/edit_movie";
-        fetch(url, {
+        fetch(Urls.API_EDIT_MOVIE, {
             method: "post",
             body: formData,
             credentials: 'include'     //很重要，设置session,cookie可用

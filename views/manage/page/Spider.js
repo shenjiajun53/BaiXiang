@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Switch} from "antd";
+import Urls from "../../utils/Urls"
 
 export default class Spider extends React.Component {
 
@@ -17,8 +18,7 @@ export default class Spider extends React.Component {
     }
 
     componentWillMount() {
-        let url = "/api/manage/getSpiderStatus";
-        fetch(url, {method: "post"})
+        fetch(Urls.API_GET_SPIDER_STATUS, {method: "post"})
             .then(
                 (res) => res.json()
             )
@@ -40,11 +40,9 @@ export default class Spider extends React.Component {
                         onChange={(value) => {
                             console.log("" + value);
                             if (value) {
-                                let url = "/api/start_spider_bt";
-                                this.post(url);
+                                this.post(Urls.API_START_SPIDER_BT);
                             } else {
-                                let url = "/api/stop_spider_bt";
-                                this.post(url);
+                                this.post(Urls.API_STOP_SPIDER_BT);
                             }
                             this.setState({
                                 isBtRunning: value
@@ -58,11 +56,9 @@ export default class Spider extends React.Component {
                         style={{display: "none"}}
                         onChange={(value) => {
                             if (value) {
-                                let url = "/api/start_spider_taohua";
-                                this.post(url);
+                                this.post(Urls.API_START_SPIDER_HUA);
                             } else {
-                                let url = "/api/stop_spider_taohua";
-                                this.post(url);
+                                this.post(Urls.API_STOP_SPIDER_HUA);
                             }
                             this.setState({
                                 isHuaRunning: value

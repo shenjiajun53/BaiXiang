@@ -11,6 +11,7 @@ import MyMenu from "./MyMenu";
 import Card from 'antd/lib/card';
 import 'antd/lib/avatar/style/css';
 import 'antd/lib/card/style/css';
+import Urls from "../../utils/Urls";
 
 
 const ON_TITLE_CLICKED = 111;
@@ -42,19 +43,19 @@ class TopBar extends React.Component {
                     " href=" + window.location.href +
                     " host=" + window.location.host +
                     " pathname=" + window.location.pathname);
-                location.pathname = '/manage';
+                location.pathname = Urls.MANAGE;
                 break;
             case ON_USER_CLICKED:
-                location.pathname = '/manage';
+                location.pathname = Urls.MANAGE;
                 break;
             case ON_SPIDER_CLICKED:
-                location.pathname = '/manage/spider';
+                location.pathname = Urls.MANAGE_SPIDER;
                 break;
             case ON_MINE_CLICKED:
                 location.pathname = '/user/UserCenter';
                 break;
             case ON_ADD_CLICKED:
-                location.pathname = '/manage/edit_movie';
+                location.pathname = Urls.MANAGE_EDIT_MOVIE;
                 break;
             default:
                 break;
@@ -66,7 +67,7 @@ class TopBar extends React.Component {
         let showAvatar = "none";
         if (this.props.user) {
             if (this.props.user.fileName) {
-                avatarPath = "/uploadFiles/avatars/" + this.props.user.fileName;
+                avatarPath = Urls.BASE_URL + "/uploadFiles/avatars/" + this.props.user.fileName;
                 showAvatar = "inline";
                 // console.log("avatarPath=" + avatarPath);
             }

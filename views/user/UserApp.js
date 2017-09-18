@@ -26,7 +26,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        let url = Urls.getUserInfo;
+        let url = Urls.API_GET_USER_INFO;
         fetch(url, {
             method: "post",
             credentials: 'include'     //很重要，设置session,cookie可用
@@ -54,7 +54,6 @@ class App extends React.Component {
 
     render() {
         // console.log('app render');
-        console.log('base url='+Urls.baseUrl);
         // console.log('chileren=' + this.props.children.name);
         return (
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -72,9 +71,9 @@ class App extends React.Component {
 
 render(
     <Router history={browserHistory}>
-        <Route path={"/"} component={App}>
-            <Route path="user/sign_up" component={SignUp}/>
-            <Route path="user/sign_in" component={SignIn}/>
+        <Route path={Urls.BASE_URL} component={App}>
+            <Route path={Urls.SIGN_UP} component={SignUp}/>
+            <Route path={Urls.SIGN_IN} component={SignIn}/>
         </Route>
     </Router>
     ,

@@ -10,7 +10,7 @@ import 'antd/lib/card/style/css';
 // import TouchRipple from "material-ui/internal/TouchRipple";
 //
 // import moment from "moment";
-// import colors from "../../utils/colors"
+import Urls from "../../utils/Urls"
 
 // injectTapEventPlugin();
 class Home extends Component {
@@ -22,10 +22,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        let url = "/api/getRecommendMovies";
-        console.log("url=" + url);
-
-        fetch(url, {
+        fetch(Urls.API_GET_RECOMMEND_MOVIES, {
             method: "get",
             credentials: 'include'     //很重要，设置session,cookie可用
         }).then(
@@ -68,12 +65,12 @@ class Home extends Component {
                     return (
                         <div style={{marginBottom: "10px", marginRight: "10px"}}
                              key={movieInfo.id}>
-                            <a href={'/manage/edit_movie/' + movieInfo.id}>
+                            <a href={Urls.MANAGE_EDIT_MOVIE + movieInfo.id}>
                                 <Card
                                     style={{
                                         width: 200
                                     }} bodyStyle={{padding: 0}}>
-                                    <img src={movieInfo.poster} width="100%"/>
+                                    <img src={Urls.BASE_URL + movieInfo.poster} alt={movieInfo.movieName} width="100%"/>
                                     <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
                                 </Card>
                             </a>

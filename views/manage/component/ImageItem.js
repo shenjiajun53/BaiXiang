@@ -1,6 +1,7 @@
 import React from "react";
 
 import {Icon} from "antd"
+import Urls from "../../utils/Urls"
 
 export default class ImageItem extends React.Component {
     constructor() {
@@ -11,7 +12,7 @@ export default class ImageItem extends React.Component {
         this.props.style["position"] = "relative";
         if (this.props.src) {
             return (<div style={this.props.style}>
-                <img src={this.props.src} style={{width: "100%", height: "auto"}}/>
+                <img src={Urls.BASE_URL + this.props.src} style={{width: "100%", height: "auto"}}/>
                 <div style={{
                     display: "flex",
                     position: "absolute",

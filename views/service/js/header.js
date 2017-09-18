@@ -6,10 +6,10 @@ import Urls from "../../utils/Urls";
 let header = new Vue({
     el: "#header",
     data: {
-        signInUrl:Urls.signIn,
-        signUpUrl:Urls.signUp,
-        signOutUrl:Urls.signOut,
-        manageUrl:Urls.manage
+        signInUrl:Urls.SIGN_IN,
+        signUpUrl:Urls.SIGN_UP,
+        signOutUrl:Urls.SIGN_OUT,
+        manageUrl:Urls.MANAGE
     },
     methods: {
         reLocation(herf) {

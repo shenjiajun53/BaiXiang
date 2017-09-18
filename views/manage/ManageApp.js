@@ -14,6 +14,7 @@ import TopBar from "./component/TopBar";
 import Settings from "./page/Settings";
 import EditMovie from "./page/EditMovie";
 import Spider from "./page/Spider";
+import Urls from "../utils/Urls"
 
 injectTapEventPlugin();
 
@@ -27,8 +28,7 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        let url = "/api/getUserInfo";
-        fetch(url, {
+        fetch(Urls.API_GET_USER_INFO, {
             method: "post",
             credentials: 'include'     //很重要，设置session,cookie可用
         }).then(
@@ -71,13 +71,13 @@ class App extends React.Component {
 
 render(
     <Router history={browserHistory}>
-        <Route path="/" component={App}>
+        <Route path={Urls.BASE_URL} component={App}>
             <IndexRoute component={Home}/>
-            <Route path="manage" component={Home}/>
-            <Route path="manage/Settings" component={Settings}/>
-            <Route path="manage/edit_movie" component={EditMovie}/>
-            <Route path="manage/edit_movie/:movieId" component={EditMovie}/>
-            <Route path="manage/spider" component={Spider}/>
+            <Route path={Urls.MANAGE} component={Home}/>
+            <Route path={Urls.MANAGE_SETTINGS} component={Settings}/>
+            <Route path={Urls.MANAGE_EDIT_MOVIE} component={EditMovie}/>
+            <Route path={Urls.MANAGE_EDIT_MOVIE_WITH_ID} component={EditMovie}/>
+            <Route path={Urls.MANAGE_SPIDER} component={Spider}/>
         </Route>
     </Router>
     ,

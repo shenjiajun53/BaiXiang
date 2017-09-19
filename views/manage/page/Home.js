@@ -70,7 +70,7 @@ class Home extends Component {
                                     style={{
                                         width: 200
                                     }} bodyStyle={{padding: 0}}>
-                                    <img src={Urls.FILE_ROOT_PATH + movieInfo.poster} alt={movieInfo.movieName} width="100%"/>
+                                    <img src={Urls.CONTEXT_PATH + movieInfo.poster} alt={movieInfo.movieName} width="100%"/>
                                     <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
                                 </Card>
                             </a>

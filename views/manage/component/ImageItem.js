@@ -12,7 +12,7 @@ export default class ImageItem extends React.Component {
         this.props.style["position"] = "relative";
         if (this.props.src) {
             return (<div style={this.props.style}>
-                <img src={Urls.BASE_URL + this.props.src} style={{width: "100%", height: "auto"}}/>
+                <img src={Urls.CONTEXT_PATH + this.props.src} style={{width: "100%", height: "auto"}}/>
                 <div style={{
                     display: "flex",
                     position: "absolute",

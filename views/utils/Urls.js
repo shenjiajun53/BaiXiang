@@ -1,7 +1,10 @@
 import UrlUtil from "./UrlUtil";
 
-exports.FILE_ROOT_PATH = "file://" + "D://data";
-let CONTEXT_PATH = exports.CONTEXT_PATH = new UrlUtil().getContextPath();
+// let CONTEXT_PATH = exports.CONTEXT_PATH = new UrlUtil().getContextPath();
+//release
+// let CONTEXT_PATH = exports.CONTEXT_PATH = "/baixiang";
+//debug
+let CONTEXT_PATH = exports.CONTEXT_PATH = "";
 //url
 exports.BASE_URL = CONTEXT_PATH + "/";
 exports.SIGN_IN = CONTEXT_PATH + "/user/sign_in";

@@ -81,7 +81,7 @@ export default class MyMenu extends React.Component {
     render() {
         if (this.props.hasLogin) {
             return (
-                <DropDown
+                <Dropdown
                     placement="bottomLeft"
                     overlay=
                         {<Menu onSelect={(item) => this.onItemClick(item)}>
@@ -93,12 +93,12 @@ export default class MyMenu extends React.Component {
                     <div style={{color: "#ffffff", hover: "pointer"}}>
                         菜单
                     </div>
-                </DropDown>
+                </Dropdown>
 
             );
         } else {
             return (
-                <DropDown
+                <Dropdown
                     placement="bottomLeft"
                     overlay=
                         {<Menu onSelect={(item) => this.onItemClick(item)}>
@@ -109,7 +109,7 @@ export default class MyMenu extends React.Component {
                     <div style={{color: "#ffffff", hover: "pointer"}}>
                         菜单
                     </div>
-                </DropDown>
+                </Dropdown>
             );
         }
     }

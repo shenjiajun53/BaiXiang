@@ -2,8 +2,7 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import {Card} from 'antd/lib/card';
-import 'antd/lib/card/style/css';
+import {Card} from 'antd';
 
 // import moment from "moment";
 import Urls from "../../utils/Urls"
@@ -66,7 +65,8 @@ class Home extends Component {
                                     style={{
                                         width: 200
                                     }} bodyStyle={{padding: 0}}>
-                                    <img src={Urls.CONTEXT_PATH + movieInfo.poster} alt={movieInfo.movieName} width="100%"/>
+                                    <img src={Urls.CONTEXT_PATH + movieInfo.poster} alt={movieInfo.movieName}
+                                         width="100%"/>
                                     <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
                                 </Card>
                             </a>

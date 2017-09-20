@@ -1,20 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {Component} from 'react';
 import {render} from 'react-dom'
-import './css/App.css';
 import {Router, Route, IndexRoute, Link, IndexLink, browserHistory, hashHistory} from 'react-router';
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import {Layout} from "antd";
-
-import Home from "./page/Home";
-import TopBar from "./component/TopBar";
-import Settings from "./page/Settings";
-import EditMovie from "./page/EditMovie";
-import Spider from "./page/Spider";
 import Urls from "../utils/Urls"
+import {Layout, Button, Switch, Card, Calendar, Checkbox, Icon, Dropdown, Menu, DatePicker, Input} from "antd";
 
-injectTapEventPlugin();
 
 class App extends React.Component {
     constructor(props) {
@@ -55,14 +45,17 @@ class App extends React.Component {
         console.log('app render');
         // console.log('chileren=' + this.props.children.name);
         return (
-            <Layout>
-                <Layout.Header>
-                    <TopBar hasLogin={this.state.hasLogin} user={this.state.user}/>
-                </Layout.Header>
-                <Layout.Content>
-                    {React.cloneElement(this.props.children, {user: this.state.user})}
-                </Layout.Content>
-            </Layout>
+            <div>
+                {/*<Button>fdadfafds</Button>*/}
+                {/*<Switch/>*/}
+                {/*<Card/>*/}
+                {/*<DatePicker/>*/}
+                {/*<Icon/>*/}
+                {/*<Checkbox/>*/}
+                {/*<Layout/>*/}
+                {/*<Menu/>*/}
+                advdgfa
+            </div>
         );
     }
 }
@@ -70,12 +63,6 @@ class App extends React.Component {
 render(
     <Router history={browserHistory}>
         <Route path={Urls.BASE_URL} component={App}>
-            <IndexRoute component={Home}/>
-            <Route path={Urls.MANAGE} component={Home}/>
-            <Route path={Urls.MANAGE_SETTINGS} component={Settings}/>
-            <Route path={Urls.MANAGE_EDIT_MOVIE} component={EditMovie}/>
-            <Route path={Urls.MANAGE_EDIT_MOVIE_WITH_ID} component={EditMovie}/>
-            <Route path={Urls.MANAGE_SPIDER} component={Spider}/>
         </Route>
     </Router>
     ,

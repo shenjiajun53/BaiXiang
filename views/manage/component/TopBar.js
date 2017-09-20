@@ -1,16 +1,10 @@
 /**
  * Created by shenjiajun on 2017/1/31.
  */
-import React, {Component} from 'react';
+import React from 'react';
 
-// import Avatar from 'material-ui/Avatar';
-import Avatar from 'antd/lib/avatar';
-// import Card from "material-ui/Card";
-// import FlatButton from "material-ui/FlatButton";
+import {Avatar,Card} from 'antd';
 import MyMenu from "./MyMenu";
-import Card from 'antd/lib/card';
-import 'antd/lib/avatar/style/css';
-import 'antd/lib/card/style/css';
 import Urls from "../../utils/Urls";
 
 

@@ -1,12 +1,9 @@
 /**
  * Created by shenjiajun on 2017/1/31.
  */
-import React, {Component} from 'react';
-import Menu from 'antd/lib/menu';
-import 'antd/lib/menu/style/css';
-import DropDown from 'antd/lib/dropdown';
-import 'antd/lib/dropdown/style/css';
+import React from 'react';
 import Urls from "../../utils/Urls";
+import {Menu,Dropdown} from "antd";
 
 let iconMenu;
 export default class MyMenu extends React.Component {

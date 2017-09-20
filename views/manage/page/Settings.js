@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017/2/18.
  */
-import React, {Component} from 'react';
+import React from 'react';
 
 class Settings extends React.Component {
     render() {

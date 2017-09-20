@@ -2,13 +2,9 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-// import Card from "material-ui/Card";
-// import {Card} from 'antd';
-import Card from 'antd/lib/card';
+import {Card} from 'antd/lib/card';
 import 'antd/lib/card/style/css';
-// import Avatar from "material-ui/Avatar";
-// import TouchRipple from "material-ui/internal/TouchRipple";
-//
+
 // import moment from "moment";
 import Urls from "../../utils/Urls"
 

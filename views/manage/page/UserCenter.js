@@ -1,9 +1,10 @@
 /**
  * Created by shenjiajun on 2017/1/29.
  */
-import React, {Component} from 'react';
+import React from 'react';
 
-export default class UserCenter extends Component {
+export default class UserCenter extends React.Component {
+
     render() {
         return (
             <div>

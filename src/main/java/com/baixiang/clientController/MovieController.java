@@ -36,6 +36,7 @@ public class MovieController {
     @RequestMapping(value = "/api/movieDetail", method = RequestMethod.POST)
     public Response<Movie> getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
         Movie movie = movieService.getById(movieId);
+        logger.info("movie=" + movie.toString());
         return new Response<>(movie, null);
     }
 

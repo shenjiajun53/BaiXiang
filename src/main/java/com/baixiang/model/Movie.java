@@ -90,6 +90,55 @@ public class Movie implements Serializable {
         this.movieInfo = movieInfo;
     }
 
+    public void addScreenShot(MovieImage screenShot) {
+        if (!this.screenShots.contains(screenShot)) {
+            this.screenShots.add(screenShot);
+            screenShot.setMovie(this);
+        }
+    }
+
+    public void removeScreenShot(MovieImage screenShot) {
+        screenShot.setMovie(null);
+        this.screenShots.remove(screenShot);
+    }
+
+    public void addTorrent(MovieTorrent movieTorrent) {
+        if (!this.movieTorrents.contains(movieTorrent)) {
+            this.movieTorrents.add(movieTorrent);
+            movieTorrent.setMovie(this);
+        }
+    }
+
+    public void removTorrent(MovieTorrent movieTorrent) {
+        movieTorrent.setMovie(null);
+        this.movieTorrents.remove(movieTorrent);
+    }
+
+
+    public void addTag(String tag) {
+        if (!movieTagSet.contains(tag)) {
+            movieTagSet.add(tag);
+        }
+    }
+
+    public void removeTag(String tag) {
+        movieTagSet.remove(tag);
+    }
+
+    public void addActor(Actor actor) {
+        for (Actor existActor : actorSet) {
+            if (existActor.getActorName().equals(actor.getActorName())) {
+                return;
+            }
+        }
+        actorSet.add(actor);
+
+    }
+
+    public void removeActor(Actor actor) {
+        actorSet.remove(actor);
+    }
+
     public long getId() {
         return id;
     }
@@ -186,63 +235,21 @@ public class Movie implements Serializable {
         this.actorSet = actorSet;
     }
 
-    public void addScreenShot(MovieImage screenShot) {
-        if (!this.screenShots.contains(screenShot)) {
-            this.screenShots.add(screenShot);
-            screenShot.setMovie(this);
-        }
-    }
-
-    public void removeScreenShot(MovieImage screenShot) {
-        screenShot.setMovie(null);
-        this.screenShots.remove(screenShot);
-    }
-
-    public void addTorrent(MovieTorrent movieTorrent) {
-        if (!this.movieTorrents.contains(movieTorrent)) {
-            this.movieTorrents.add(movieTorrent);
-            movieTorrent.setMovie(this);
-        }
-    }
-
-    public void removTorrent(MovieTorrent movieTorrent) {
-        movieTorrent.setMovie(null);
-        this.movieTorrents.remove(movieTorrent);
-    }
-
-
-    public void addTag(String tag) {
-        if (!movieTagSet.contains(tag)) {
-            movieTagSet.add(tag);
-        }
-    }
-
-    public void removeTag(String tag) {
-        movieTagSet.remove(tag);
-    }
-
-    public void addActor(Actor actor) {
-        for (Actor existActor : actorSet) {
-            if (existActor.getActorName().equals(actor.getActorName())) {
-                return;
-            }
-        }
-        actorSet.add(actor);
-    }
-
-    public void removeActor(Actor actor) {
-        actorSet.remove(actor);
-    }
-
     @Override
     public String toString() {
         return "Movie{" +
                 "id=" + id +
+                ", version=" + version +
                 ", movieName='" + movieName + '\'' +
                 ", movieInfo='" + movieInfo + '\'' +
                 ", poster='" + poster + '\'' +
                 ", createDate=" + createDate +
-
+                ", releaseDate='" + releaseDate + '\'' +
+                ", viewTimes=" + viewTimes +
+                ", screenShots=" + screenShots +
+                ", movieTorrents=" + movieTorrents +
+                ", movieTagSet=" + movieTagSet +
+                ", actorSet=" + actorSet +
                 '}';
     }
 }

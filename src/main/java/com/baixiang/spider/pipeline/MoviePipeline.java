@@ -2,8 +2,10 @@ package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieTag;
 import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
+import com.baixiang.service.TagService;
 import com.baixiang.utils.FileUtil;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
@@ -41,6 +43,9 @@ public class MoviePipeline implements Pipeline {
     @Autowired
     private ActorService actorService;
 
+    @Autowired
+    private TagService tagService;
+
     @Override
     public void process(ResultItems resultItems, Task task) {
 //        logger.info("result=" + resultItems.getRequest().getUrl());
@@ -76,14 +81,12 @@ public class MoviePipeline implements Pipeline {
                           String moviePosterUrl) {
         movie.setMovieName(movieTitle);
         movie.setMovieInfo(movieInfo);
-        movie.setMovieTagSet(tagSet);
+        for (String tagName : tagSet) {
+            MovieTag movieTag = tagService.getMovieTagUnique(tagName);
+            movie.addTag(movieTag);
+        }
         for (String actorName : actorSet) {
-            Actor actor = actorService.getActorByName(actorName);
-            if (actor == null) {
-                actor = new Actor();
-                actor.setActorName(actorName);
-                actor = actorService.save(actor);
-            }
+            Actor actor = actorService.getActorUnique(actorName);
             movie.addActor(actor);
         }
         if (TextUtils.isEmpty(movie.getPoster())) {

@@ -39,6 +39,26 @@ export default class EditMovie extends React.Component {
     }
 
     componentDidMount() {
+        this.getAllTags()
+    }
+
+    getAllTags() {
+        fetch(Urls.API_GET_ALL_TAGS, {
+            method: "post",
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                console.log("json=" + JSON.stringify(json));
+                json.result.map((tag) => {
+                    if (!movieTypeOptions.includes(tag.tagName)) {
+                        movieTypeOptions.push(tag.tagName);
+                    }
+                });
+                this.getMovieDetail();
+            })
+    }
+
+    getMovieDetail() {
         if (!this.props.params.movieId) {
             return;
         }
@@ -58,11 +78,16 @@ export default class EditMovie extends React.Component {
             (json) => {
                 console.log("response=" + JSON.stringify(json));
                 console.log("" + JSON.stringify(json.result.movieTorrents));
+                let tagSet = new Array();
+                json.result.movieTagSet.map((tag) => {
+                    tagSet.push(tag.tagName);
+                });
+                console.log("tagSet=" + tagSet);
                 this.setState({
                     movie: json.result,
                     movieTitle: json.result.movieName,
                     movieInfo: json.result.movieInfo,
-                    checkedTags: json.result.movieTagSet,
+                    checkedTags: tagSet,
                     checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
                     isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
                     poster: {file: null, url: json.result.poster},

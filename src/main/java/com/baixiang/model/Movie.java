@@ -62,24 +62,30 @@ public class Movie implements Serializable {
 */
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
-    @JsonIgnore
+//    @JsonIgnore
     private Set<MovieImage> screenShots = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
-    @JsonIgnore
+//    @JsonIgnore
     private Set<MovieTorrent> movieTorrents = new HashSet<>();
 
-    @ElementCollection
-    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
-    @Column(name = "movie_tag")
-    private Set<String> movieTagSet = new HashSet<>();
+//    @ElementCollection
+//    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
+//    @Column(name = "movie_tag")
+//    private Set<String> movieTagSet = new HashSet<>();
+
+    @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
+    @JoinTable(name = "movies_tags",
+            joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+    private Set<MovieTag> movieTagSet = new HashSet<>();
 
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
-    @JsonIgnore
+//    @JsonIgnore
     private Set<Actor> actorSet = new HashSet<>();
 
     public Movie() {
@@ -114,16 +120,28 @@ public class Movie implements Serializable {
         this.movieTorrents.remove(movieTorrent);
     }
 
-
-    public void addTag(String tag) {
-        if (!movieTagSet.contains(tag)) {
-            movieTagSet.add(tag);
+    public void addTag(MovieTag tag) {
+        for (MovieTag movieTag : movieTagSet) {
+            if (movieTag.getTagName().equals(tag.getTagName())) {
+                return;
+            }
         }
+        movieTagSet.add(tag);
     }
 
-    public void removeTag(String tag) {
+    public void removeTag(MovieTag tag) {
         movieTagSet.remove(tag);
     }
+
+//    public void addTag(String tag) {
+//        if (!movieTagSet.contains(tag)) {
+//            movieTagSet.add(tag);
+//        }
+//    }
+//
+//    public void removeTag(String tag) {
+//        movieTagSet.remove(tag);
+//    }
 
     public void addActor(Actor actor) {
         for (Actor existActor : actorSet) {
@@ -203,11 +221,20 @@ public class Movie implements Serializable {
         this.releaseDate = releaseDate;
     }
 
-    public Set<String> getMovieTagSet() {
+//    public Set<String> getMovieTagSet() {
+//        return movieTagSet;
+//    }
+//
+//    public void setMovieTagSet(Set<String> movieTagSet) {
+//        this.movieTagSet = movieTagSet;
+//    }
+
+
+    public Set<MovieTag> getMovieTagSet() {
         return movieTagSet;
     }
 
-    public void setMovieTagSet(Set<String> movieTagSet) {
+    public void setMovieTagSet(Set<MovieTag> movieTagSet) {
         this.movieTagSet = movieTagSet;
     }
 

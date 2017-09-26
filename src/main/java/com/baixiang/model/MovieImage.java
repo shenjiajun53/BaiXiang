@@ -1,5 +1,6 @@
 package com.baixiang.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "movie_images")
-public class MovieImage implements Serializable{
+public class MovieImage implements Serializable {
     @Id
     @Column(name = "id")
     private long id;
@@ -35,8 +36,9 @@ public class MovieImage implements Serializable{
      * @JoinColumn:指明了被维护端（OrderItem）的外键字段为order_id，它和维护端的主键(orderid)连接,unique= true 指明order_id列的值不可重复。
      */
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.REFRESH, optional = false)
-    @JoinColumn(name = "movie_id",referencedColumnName="id")
+    @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 
     public MovieImage() {

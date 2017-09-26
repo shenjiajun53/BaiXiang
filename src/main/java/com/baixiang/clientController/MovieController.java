@@ -2,6 +2,7 @@ package com.baixiang.clientController;
 
 import com.baixiang.model.*;
 import com.baixiang.service.MovieService;
+import com.baixiang.service.TagService;
 import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,9 @@ public class MovieController {
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
     @Autowired
     MovieService movieService;
+
+    @Autowired
+    TagService tagService;
 
 
     @RequestMapping(value = "/api/movieDetail", method = RequestMethod.POST)
@@ -103,8 +107,10 @@ public class MovieController {
             if (movie.getMovieTagSet().size() > 0) {
                 movie.getMovieTagSet().clear();
             }
-            for (int i = 0; i < tagList.length; i++) {
-                movie.addTag(tagList[i]);
+
+            for (String tagName : tagList) {
+                MovieTag movieTag = tagService.getMovieTagUnique(tagName);
+                movie.addTag(movieTag);
             }
         }
 
@@ -115,8 +121,7 @@ public class MovieController {
         } else {
             redirectBean = new RedirectBean(2, "");
         }
-        Response<RedirectBean> response = new Response<>(redirectBean, null);
-        return response;
+        return new Response<>(redirectBean, null);
     }
 
     @RequestMapping(value = "/api/search_movie", method = RequestMethod.POST)
@@ -131,8 +136,13 @@ public class MovieController {
     private Response<List<Movie>> getRecommendMovie() {
         Pageable pageable = new PageRequest(0, 20);
         List<Movie> moviePage = movieService.getNewest();
-        Response<List<Movie>> response = new Response<>(moviePage, null);
-        return response;
+        return new Response<>(moviePage, null);
+    }
+
+    @RequestMapping(value = "/api/getAllTags", method = RequestMethod.POST)
+    private Response getAllTags() {
+        List<MovieTag> movieTagList = tagService.findAll();
+        return new Response<>(movieTagList, null);
     }
 
     private String saveFile(MultipartFile multipartFile, String dirPath) {

@@ -52,7 +52,9 @@ public class BtTianTangProcessor implements PageProcessor {
                 .addPipeline(moviePipeline)
 //                .addPipeline(new ConsolePipeline())
                 .addPipeline(torrentPipeline)
-                .addUrl("http://www.bttiantangs.com/").thread(5);
+                .addUrl("http://www.bttiantangs.com/list/dianying/index.html")
+//                .addUrl("http://www.bttiantangs.com/")
+                .thread(5);
         spider.run();
     }
 

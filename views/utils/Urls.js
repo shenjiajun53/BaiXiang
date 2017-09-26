@@ -22,6 +22,7 @@ exports.API_USER_SIGN_IN = CONTEXT_PATH + "/api/signIn";
 exports.API_USER_SIGN_UP = CONTEXT_PATH + "/api/signUp";
 exports.API_USER_SIGN_OUT = CONTEXT_PATH + "/api/SignOut";
 exports.API_GET_RECOMMEND_MOVIES = CONTEXT_PATH + "/api/getRecommendMovies";
+exports.API_GET_ALL_TAGS = CONTEXT_PATH + "/api/getAllTags";
 exports.API_MOVIE_DETAIL = CONTEXT_PATH + "/api/movieDetail";
 exports.API_DELETE_MOVIE = CONTEXT_PATH + "/api/delete_movie";
 exports.API_EDIT_MOVIE = CONTEXT_PATH + "/api/edit_movie";

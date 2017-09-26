@@ -30,6 +30,7 @@ public class Actor {
     @Column(columnDefinition = "LONGTEXT")
     private String actorInfo;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "actorSet")
     private Set<Movie> movieSet=new HashSet<>();
 

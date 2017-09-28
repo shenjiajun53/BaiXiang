@@ -2,6 +2,7 @@ package com.baixiang.service;
 
 import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieTag;
 import com.baixiang.repository.ActorRepository;
 import com.baixiang.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class MovieService {
     private MovieRepository movieRepository;
     @Autowired
     private ActorRepository actorRepository;
+    @Autowired
+    private TagService tagService;
 
     public Movie save(Movie movie) {
         movieRepository.saveAndFlush(movie);
@@ -56,7 +59,11 @@ public class MovieService {
     }
 
     public Page<Movie> getByTag(String tag, Pageable pageable) {
-        return movieRepository.getByMovieTagSetIn(tag, pageable);
+        MovieTag movieTag = tagService.getTagByName(tag);
+        if (null == movieTag) {
+            return null;
+        }
+        return movieRepository.getByMovieTagSetIn(movieTag, pageable);
     }
 
     public Page<Movie> getByActor(String actorName, Pageable pageable) {

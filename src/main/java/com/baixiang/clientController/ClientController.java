@@ -40,7 +40,7 @@ public class ClientController {
         ModelAndView modelAndView = new ModelAndView("/service/index");
         Pageable pageable = new PageRequest(0, 20);
         Page<Movie> movieArrayList = movieService.getByTag("推荐", pageable);
-        logger.info(movieArrayList.toString());
+//        logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);

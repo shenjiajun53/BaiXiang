@@ -2,6 +2,7 @@ package com.baixiang.repository;
 
 import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
+import com.baixiang.model.MovieTag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,7 +20,7 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Movie getById(Long id);
 
-    Page<Movie> getByMovieTagSetIn(String tag, Pageable pageable);
+    Page<Movie> getByMovieTagSetIn(MovieTag tag, Pageable pageable);
 
     Page<Movie> getByActorSetIn(Actor actor, Pageable pageable);
 

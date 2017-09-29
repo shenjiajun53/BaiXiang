@@ -12,6 +12,20 @@
     color: #757575;
 }
 
+.image-icon-dark {
+    font-size: 20px;
+    color: #333333
+}
+
+.image-icon-dark:hover {
+    font-size: 20px;
+    color: #757575;
+}
+
+.image-icon-dark:active {
+    color: #757575;
+}
+
 .delete-icon {
     font-size: 20px;
     color: #E91E63

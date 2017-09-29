@@ -50,8 +50,11 @@ export default class ActorSelect extends React.Component {
                     style={{width: 200}}
                     showArrow={false}
                     filterOption={false}
+                    onSearch={(value) => this.searchActor(value)}
                     onSelect={(value, option) => this.props.onActorSelect(value, option)}
-                    onChange={(value) => this.searchActor(value)}>
+                // onChange={(value) => this.searchActor(value)}
+                    showSearch={true}
+            >
                 {options}
             </Select>
         </div>)

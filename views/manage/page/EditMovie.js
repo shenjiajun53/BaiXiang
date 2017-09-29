@@ -194,10 +194,19 @@ export default class EditMovie extends React.Component {
             </div>)
         });
 
-        let actListView = this.state.actorList.map((actor) => {
-            return (<div key={actor.actorName}>
-                {actor.actorName}
-            </div>)
+        let actListView = this.state.actorList.map((actor, index) => {
+            return (
+                <div key={actor.actorName} style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                    <span>{actor.actorName}</span>
+                    <Icon className="image-icon-dark" type="close"
+                          onClick={(event) => {
+                              let tempActorList = this.state.actorList;
+                              tempActorList.splice(index, 1);
+                              this.setState({
+                                  actorList: tempActorList
+                              })
+                          }}/>
+                </div>)
         });
 
         return (

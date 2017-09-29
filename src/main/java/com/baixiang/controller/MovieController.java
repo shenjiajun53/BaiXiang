@@ -1,13 +1,13 @@
-package com.baixiang.clientController;
+package com.baixiang.controller;
 
 import com.baixiang.model.*;
+import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TagService;
 import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.baixiang.utils.FileUtil.*;
+import static com.baixiang.utils.Urls.*;
 
 /**
  * Created by Administrator on 2017/5/17.
@@ -35,6 +36,9 @@ public class MovieController {
 
     @Autowired
     TagService tagService;
+
+    @Autowired
+    ActorService actorService;
 
 
     @RequestMapping(value = "/api/movieDetail", method = RequestMethod.POST)
@@ -58,7 +62,8 @@ public class MovieController {
                                             @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
                                             @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
                                             @RequestParam(value = "movieDate", required = false) String movieDate,
-                                            @RequestParam(value = "tagList", required = false) String[] tagList) {
+                                            @RequestParam(value = "tagList", required = false) String[] tagList,
+                                            @RequestParam(value = "actorList", required = false) String[] actorList) {
 
         Movie movie;
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("undefined")) {
@@ -113,6 +118,16 @@ public class MovieController {
                 movie.addTag(movieTag);
             }
         }
+        if (null != actorList && actorList.length > 0) {
+            if (movie.getActorSet().size() > 0) {
+                movie.getActorSet().clear();
+            }
+
+            for (String actorName : actorList) {
+                Actor actor = actorService.getActorUnique(actorName);
+                movie.addActor(actor);
+            }
+        }
 
         movie = movieService.save(movie);
         RedirectBean redirectBean;
@@ -124,7 +139,7 @@ public class MovieController {
         return new Response<>(redirectBean, null);
     }
 
-    @RequestMapping(value = "/api/search_movie", method = RequestMethod.POST)
+    @RequestMapping(value = API_SEARCH_MOVIE, method = RequestMethod.POST)
     private Response<ArrayList<Movie>> searchMovie(@RequestParam(value = "searchStr") String searchStr) {
         ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getIncludeName(searchStr);
         Response<ArrayList<Movie>> response = new Response<>(movieArrayList, null);
@@ -132,17 +147,23 @@ public class MovieController {
         return response;
     }
 
-    @RequestMapping(value = "/api/getRecommendMovies", method = RequestMethod.GET)
+    @RequestMapping(value = API_GET_RECOMMEND_MOVIES, method = RequestMethod.GET)
     private Response<List<Movie>> getRecommendMovie() {
         Pageable pageable = new PageRequest(0, 20);
         List<Movie> moviePage = movieService.getNewest();
         return new Response<>(moviePage, null);
     }
 
-    @RequestMapping(value = "/api/getAllTags", method = RequestMethod.POST)
+    @RequestMapping(value = API_GET_ALL_TAGS, method = RequestMethod.POST)
     private Response getAllTags() {
         List<MovieTag> movieTagList = tagService.findAll();
         return new Response<>(movieTagList, null);
+    }
+
+    @RequestMapping(value = API_SEARCH_ACTOR, method = RequestMethod.POST)
+    private Response searchActor(@RequestParam(value = "searchStr") String searchStr) {
+        ArrayList<Actor> arrayList = (ArrayList<Actor>) actorService.getActorIncludeName(searchStr);
+        return new Response<>(arrayList, null);
     }
 
     private String saveFile(MultipartFile multipartFile, String dirPath) {

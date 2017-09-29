@@ -31,6 +31,8 @@ exports.API_START_SPIDER_BT = CONTEXT_PATH + "/api/start_spider_bt";
 exports.API_STOP_SPIDER_BT = CONTEXT_PATH + "/api/stop_spider_bt";
 exports.API_START_SPIDER_HUA = CONTEXT_PATH + "/api/start_spider_taohua";
 exports.API_STOP_SPIDER_HUA = CONTEXT_PATH + "/api/stop_spider_taohua";
+exports.API_SEARCH_MOVIE = CONTEXT_PATH + "/api/search_movie";
+exports.API_SEARCH_ACTOR = CONTEXT_PATH + "/api/search_actor";
 
 //export function getContextPath() {
 //     var pathName = document.location.pathname;

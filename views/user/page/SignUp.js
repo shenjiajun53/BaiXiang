@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 
-import {Input, Card, Button, Select} from "antd"
+import {Input, Card, Button, Select, Form} from "antd"
 
 import Urls from "../../utils/Urls";
 
@@ -93,7 +93,7 @@ export default class SignUp extends React.Component {
                 if (json.result) {
                     let result = json.result;
                     if (result.status == 1) {
-                        window.location.pathname = Urls.CONTEXT_PATH +result.redirect;
+                        window.location.pathname = Urls.CONTEXT_PATH + result.redirect;
                     } else {
                         this.setState({
                             nameError: json.error.errorMsg
@@ -127,15 +127,20 @@ export default class SignUp extends React.Component {
                 <div>
                     用户名*
                 </div>
-                <Input style={{marginBottom: "1em", flex: 1}}
-                       value={this.state.nameStr}
-                       onChange={
-                           (event) => {
-                               this.setState({
-                                   nameStr: event.target.value
-                               })
-                           }}
-                />
+                <Form.Item
+                    validateStatus={this.state.nameError ? "error" : ""}
+                    help={this.state.nameError}
+                >
+                    <Input style={{marginBottom: "1em", flex: 1}}
+                           value={this.state.nameStr}
+                           onChange={
+                               (event) => {
+                                   this.setState({
+                                       nameStr: event.target.value
+                                   })
+                               }}
+                    />
+                </Form.Item>
                 <div>
                     密码*
                 </div>

@@ -5,6 +5,8 @@ import com.baixiang.repository.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ActorService {
 
@@ -27,5 +29,9 @@ public class ActorService {
 
     public Actor save(Actor actor) {
         return actorRepository.saveAndFlush(actor);
+    }
+
+    public List<Actor> getActorIncludeName(String actorName) {
+        return actorRepository.getActorByActorNameContaining(actorName);
     }
 }

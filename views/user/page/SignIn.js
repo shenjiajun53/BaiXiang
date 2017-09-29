@@ -3,12 +3,13 @@
  */
 import React from 'react';
 
-import Input from 'antd/lib/input';
-import "antd/lib/input/style/css"
-import Card from 'antd/lib/card';
-import 'antd/lib/card/style/css';
-import Button from 'antd/lib/button';
-import "antd/lib/button/style/css"
+// import Input from 'antd/lib/input';
+// import "antd/lib/input/style/css"
+// import Card from 'antd/lib/card';
+// import 'antd/lib/card/style/css';
+// import Button from 'antd/lib/button';
+// import "antd/lib/button/style/css"
+import {Form, Input, Button} from "antd"
 
 import Urls from "../../utils/Urls";
 
@@ -103,31 +104,41 @@ class SignIn extends React.Component {
                 <div>
                     用户名*
                 </div>
-                <Input style={{marginBottom: "1em", flex: 1}}
-                       value={this.state.nameStr}
-                       onChange={
-                           (event) => {
-                               this.setState({
-                                   nameStr: event.target.value
-                               })
-                           }}
-                       ref="userNameTF"
-                       id="userNameTF"
-                       name="userNameTF"/>
+                <Form.Item validateStatus={this.state.nameError ? "error" : ""}
+                           help={this.state.nameError}>
+                    <Input style={{marginBottom: "1em", flex: 1}}
+                           value={this.state.nameStr}
+                           onChange={
+                               (event) => {
+                                   this.setState({
+                                       nameStr: event.target.value,
+                                       nameError: "",
+                                       passError: ""
+                                   })
+                               }}
+                           ref="userNameTF"
+                           id="userNameTF"
+                           name="userNameTF"/>
+                </Form.Item>
                 <div>
                     密码*
                 </div>
-                <Input style={{marginBottom: "1em"}}
-                       value={this.state.passStr}
-                       onChange={(event) => {
-                           this.setState({
-                               passStr: event.target.value
-                           })
-                       }}
-                       type="password"
-                       ref="passTF"
-                       id="passTF"
-                       name="passTF"/>
+                <Form.Item validateStatus={this.state.passError ? "error" : ""}
+                           help={this.state.passError}>
+                    <Input style={{marginBottom: "1em"}}
+                           value={this.state.passStr}
+                           onChange={(event) => {
+                               this.setState({
+                                   passStr: event.target.value,
+                                   nameError: "",
+                                   passError: ""
+                               })
+                           }}
+                           type="password"
+                           ref="passTF"
+                           id="passTF"
+                           name="passTF"/>
+                </Form.Item>
                 <Button onClick={() => this.onSignIn()}
                         style={{width: "10em", alignSelf: "center"}}
                 >登录</Button>

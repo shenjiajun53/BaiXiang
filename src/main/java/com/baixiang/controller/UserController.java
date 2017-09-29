@@ -1,4 +1,4 @@
-package com.baixiang.manageController;
+package com.baixiang.controller;
 
 import com.baixiang.exception.UserNotFoundException;
 import com.baixiang.model.*;

@@ -8,8 +8,9 @@ import React from 'react';
 // import "antd/lib/checkbox/style/css"
 // import DatePicker from "antd/lib/date-picker";
 // import "antd/lib/date-picker/style/css"
-import {Input, Button, Checkbox, DatePicker, Icon} from "antd"
+import {Input, Button, Checkbox, DatePicker, Icon, Select} from "antd"
 import ImageItem from "../component/ImageItem";
+import ActorSelect from "../component/ActorSelect";
 import Urls from "../../utils/Urls";
 
 // const movieTypeOptions = [
@@ -32,6 +33,7 @@ export default class EditMovie extends React.Component {
             screenShotList: [],
             torrentList: [],
             checkedTags: [],
+            actorList: [],
             checkAll: false,
             isIndeterminate: false,
             dateValue: null,
@@ -91,6 +93,7 @@ export default class EditMovie extends React.Component {
                     checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
                     isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
                     poster: {file: null, url: json.result.poster},
+                    actorList: json.result.actorSet
                 })
             }
         ).catch(
@@ -146,6 +149,9 @@ export default class EditMovie extends React.Component {
             console.log("tag=" + this.state.checkedTags[i]);
             formData.append("tagList", this.state.checkedTags[i]);
         }
+        this.state.actorList.map((actor) => {
+            formData.append("actorList", actor.actorName);
+        });
         formData.append("movieDate", this.state.dateValue);
 
         fetch(Urls.API_EDIT_MOVIE, {
@@ -185,6 +191,12 @@ export default class EditMovie extends React.Component {
         let torrentListView = this.state.torrentList.map((torrent) => {
             return (<div style={{width: 500}} key={torrent.url}>
                 {torrent.file.name}
+            </div>)
+        });
+
+        let actListView = this.state.actorList.map((actor) => {
+            return (<div key={actor.actorName}>
+                {actor.actorName}
             </div>)
         });
 
@@ -358,6 +370,18 @@ export default class EditMovie extends React.Component {
                                         movieInfo: e.target.value
                                     })
                                 }}/>
+
+                <div>
+                    {actListView}
+                </div>
+                <ActorSelect
+                    onActorSelect={(value, option) => {
+                        let tempActorList = this.state.actorList;
+                        tempActorList.push({"actorName": value});
+                        this.setState({
+                            actorList: tempActorList
+                        })
+                    }}/>
                 <Button style={{marginBottom: 16}}
                         onClick={() => this.submit()}>提交</Button>
             </div>);

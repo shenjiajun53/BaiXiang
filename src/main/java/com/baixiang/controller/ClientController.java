@@ -1,9 +1,10 @@
-package com.baixiang.clientController;
+package com.baixiang.controller;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.User;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
+import com.baixiang.utils.Urls;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,7 @@ public class ClientController {
 
     private static final int PAGE_SIZE = 10;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = Urls.BASE_URL, method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
         Pageable pageable = new PageRequest(0, 20);

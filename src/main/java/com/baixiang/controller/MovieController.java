@@ -4,6 +4,7 @@ import com.baixiang.model.*;
 import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TagService;
+import com.baixiang.service.TorrentService;
 import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,21 +41,39 @@ public class MovieController {
     @Autowired
     ActorService actorService;
 
+    @Autowired
+    TorrentService torrentService;
 
-    @RequestMapping(value = "/api/movieDetail", method = RequestMethod.POST)
+
+    @RequestMapping(value = API_MOVIE_DETAIL, method = RequestMethod.POST)
     public Response<Movie> getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
         Movie movie = movieService.getById(movieId);
         logger.info("movie=" + movie.toString());
         return new Response<>(movie, null);
     }
 
-    @RequestMapping(value = "/api/delete_movie", method = RequestMethod.POST)
+    @RequestMapping(value = API_DELETE_MOVIE, method = RequestMethod.POST)
     public Response<BaseBean> deleteMovie(@RequestParam(value = "movieId") Long movieId) {
         movieService.delete(movieId);
         return new Response<>(new BaseBean(1), null);
     }
 
-    @RequestMapping(value = "/api/edit_movie", method = RequestMethod.POST)
+    @RequestMapping(value = API_DELETE_TORRENT, method = RequestMethod.POST)
+    public Response<BaseBean> deleteTorrent(
+            @RequestParam(value = "movieId") Long movieId,
+            @RequestParam(value = "torrentId") Long torrentId) {
+        Movie movie = movieService.getById(movieId);
+        for (MovieTorrent movieTorrent : movie.getMovieTorrents()) {
+            if (movieTorrent.getId() == torrentId) {
+                movie.removTorrent(movieTorrent);
+                torrentService.delete(torrentId);
+                return new Response<>(new BaseBean(1), null);
+            }
+        }
+        return new Response<>(new BaseBean(200), null);
+    }
+
+    @RequestMapping(value = API_EDIT_MOVIE, method = RequestMethod.POST)
     public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                                             @RequestParam(value = "movieTitle") String movieTitle,
                                             @RequestParam(value = "movieInfo") String movieInfo,
@@ -147,6 +166,7 @@ public class MovieController {
         return response;
     }
 
+    //    @RequestMapping(value = "/api/getRecommendMovies", method = RequestMethod.GET)
     @RequestMapping(value = API_GET_RECOMMEND_MOVIES, method = RequestMethod.GET)
     private Response<List<Movie>> getRecommendMovie() {
         Pageable pageable = new PageRequest(0, 20);

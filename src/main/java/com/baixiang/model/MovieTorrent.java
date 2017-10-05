@@ -93,7 +93,7 @@ public class MovieTorrent implements Serializable {
                 "id=" + id +
                 ", filePath='" + filePath + '\'' +
                 ", torrentName='" + torrentName + '\'' +
-                ", movie=" + movie +
+//                ", movie=" + movie +
                 '}';
     }
 }

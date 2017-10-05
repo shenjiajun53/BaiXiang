@@ -30,9 +30,19 @@ export default class ActorSelect extends React.Component {
             .then((res) => res.json())
             .then((json) => {
                 console.log(JSON.stringify(json));
-                this.setState({
-                    actorList: json.result
-                })
+                if (json.result.length > 0) {
+                    this.setState({
+                        actorList: json.result
+                    })
+                } else {
+                    this.setState({
+                        actorList:
+                            [{
+                                id: -1,
+                                actorName: searchStr
+                            }]
+                    })
+                }
             })
     }
 
@@ -41,7 +51,7 @@ export default class ActorSelect extends React.Component {
             return (<Select.Option key={actor.actorName}>{actor.actorName}</Select.Option>)
         });
 
-        return (<div>
+        return (<div style={this.props.style}>
             <Select mode="combobox"
                     value={this.state.searchStr}
                     notFoundContent="没找到内容"

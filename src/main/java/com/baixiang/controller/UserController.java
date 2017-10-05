@@ -21,6 +21,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.IOException;
 
+import static com.baixiang.utils.Urls.API_USER_SIGN_IN;
+import static com.baixiang.utils.Urls.API_USER_SIGN_UP;
+import static com.baixiang.utils.Urls.SIGN_OUT;
+
 /**
  * Created by shenjj on 2017/5/16.
  */
@@ -35,7 +39,7 @@ public class UserController {
     UserService userService;
 
 
-    @RequestMapping(value = "/api/signIn", method = RequestMethod.POST)
+    @RequestMapping(value = API_USER_SIGN_IN, method = RequestMethod.POST)
     public Response<RedirectBean> signIn(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass) {
         UsernamePasswordToken token = new UsernamePasswordToken(userName, pass, true);
@@ -60,7 +64,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/api/signUp", method = RequestMethod.POST)
+    @RequestMapping(value = API_USER_SIGN_UP, method = RequestMethod.POST)
     public Response<RedirectBean> signUp(@RequestParam(value = "userName") String userName,
                                          @RequestParam(value = "pass") String pass,
                                          @RequestParam(value = "userIntro") String userIntro,
@@ -96,7 +100,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/user/sign_out", method = RequestMethod.GET)
+    @RequestMapping(value = SIGN_OUT, method = RequestMethod.GET)
     public ModelAndView signOut() {
         //使用权限管理工具进行用户的退出，跳出登录，给出提示信息
         SecurityUtils.getSubject().logout();

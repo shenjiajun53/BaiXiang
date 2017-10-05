@@ -37,6 +37,11 @@ public class MovieService {
     }
 
     public void delete(long id) {
+//        Movie movie=movieRepository.getById(id);
+//        movie.getActorSet().clear();
+//        movie.getMovieTagSet().clear();
+//        movie.getMovieTorrents().clear();
+//        movie.getScreenShots().clear();
         movieRepository.delete(id);
     }
 

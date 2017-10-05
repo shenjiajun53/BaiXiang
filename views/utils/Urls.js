@@ -25,6 +25,7 @@ exports.API_GET_RECOMMEND_MOVIES = CONTEXT_PATH + "/api/getRecommendMovies";
 exports.API_GET_ALL_TAGS = CONTEXT_PATH + "/api/getAllTags";
 exports.API_MOVIE_DETAIL = CONTEXT_PATH + "/api/movieDetail";
 exports.API_DELETE_MOVIE = CONTEXT_PATH + "/api/delete_movie";
+exports.API_DELETE_TORRENT = CONTEXT_PATH + "/api/delete_torrent";
 exports.API_EDIT_MOVIE = CONTEXT_PATH + "/api/edit_movie";
 exports.API_GET_SPIDER_STATUS = CONTEXT_PATH + "/api/manage/getSpiderStatus";
 exports.API_START_SPIDER_BT = CONTEXT_PATH + "/api/start_spider_bt";

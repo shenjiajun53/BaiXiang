@@ -62,7 +62,7 @@ public class JpaRealm extends AuthorizingRealm {
             return null;
         }
         User user = userService.getByName(token.getUsername());
-        System.out.printf("user=" + user.toString());
+//        System.out.printf("user=" + user.toString());
         if (user != null) {
             return new SimpleAuthenticationInfo(user.getId(), user.getPass(), getName());
         } else {

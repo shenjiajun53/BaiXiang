@@ -50,7 +50,7 @@ export default class EditMovie extends React.Component {
         })
             .then((response) => response.json())
             .then((json) => {
-                console.log("json=" + JSON.stringify(json));
+                // console.log("getAllTags=" + JSON.stringify(json));
                 json.result.map((tag) => {
                     if (!movieTypeOptions.includes(tag.tagName)) {
                         movieTypeOptions.push(tag.tagName);
@@ -78,13 +78,11 @@ export default class EditMovie extends React.Component {
             }
         ).then(
             (json) => {
-                console.log("response=" + JSON.stringify(json));
-                console.log("" + JSON.stringify(json.result.movieTorrents));
+                console.log("getMovieDetail=" + JSON.stringify(json));
                 let tagSet = new Array();
                 json.result.movieTagSet.map((tag) => {
                     tagSet.push(tag.tagName);
                 });
-                console.log("tagSet=" + tagSet);
                 this.setState({
                     movie: json.result,
                     movieTitle: json.result.movieName,
@@ -93,7 +91,8 @@ export default class EditMovie extends React.Component {
                     checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
                     isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
                     poster: {file: null, url: json.result.poster},
-                    actorList: json.result.actorSet
+                    actorList: json.result.actorSet,
+                    torrentList: json.result.movieTorrents
                 })
             }
         ).catch(
@@ -129,12 +128,48 @@ export default class EditMovie extends React.Component {
         );
     }
 
+    deleteTorrent(torrentId) {
+        let formData = new FormData();
+        if (this.state.movie !== null) {
+            formData.append('movieId', this.state.movie.id);
+            console.log("movieid=" + this.state.movie.id);
+        } else {
+            return;
+        }
+        formData.append('torrentId', torrentId);
+        fetch(Urls.API_DELETE_TORRENT, {
+            method: "post",
+            body: formData,
+            credentials: 'include'     //很重要，设置session,cookie可用
+        }).then(
+            (response) => {
+                return response.json();
+            }
+        ).then(
+            (json) => {
+                console.log(JSON.stringify(json));
+                let result = json.result;
+                if (result.status === 1) {
+                    let tempTorrentList = this.state.torrentList;
+                    tempTorrentList.map((torrent, index) => {
+                        if (torrent.id === torrentId) {
+                            tempTorrentList.splice(index, 1);
+                            this.setState({
+                                torrentList: tempTorrentList
+                            })
+                        }
+                    });
+                }
+            }
+        );
+    }
+
     submit() {
         console.log("onSubmit");
         let formData = new FormData();
         if (this.state.movie !== null) {
             formData.append('movieId', this.state.movie.id);
-            console.log("movieid=" + this.state.movie.id);
+            console.log("submit movieid=" + this.state.movie.id);
         }
         formData.append('movieInfo', this.state.movieInfo);
         formData.append('movieTitle', this.state.movieTitle);
@@ -143,7 +178,9 @@ export default class EditMovie extends React.Component {
             formData.append('screenShotList', this.state.screenShotList[i].file);
         }
         for (let i = 0; i < this.state.torrentList.length; i++) {
-            formData.append('torrentList', this.state.torrentList[i].file);
+            if (this.state.torrentList[i].id < 0) {
+                formData.append('torrentList', this.state.torrentList[i].file);
+            }
         }
         for (let i = 0; i < this.state.checkedTags.length; i++) {
             console.log("tag=" + this.state.checkedTags[i]);
@@ -188,16 +225,44 @@ export default class EditMovie extends React.Component {
                               }}/>
         });
 
-        let torrentListView = this.state.torrentList.map((torrent) => {
-            return (<div style={{width: 500}} key={torrent.url}>
-                {torrent.file.name}
-            </div>)
+        let torrentListView = this.state.torrentList.map((torrent, index) => {
+            return (
+                <div key={index}
+                     style={{
+                         display: "flex",
+                         flexDirection: "row",
+                         alignItems: "center",
+                         marginBottom: 5
+                     }}>
+                    <span style={{width: 500}}>
+                        {torrent.torrentName}
+                    </span>
+                    <Icon className="image-icon-dark" type="close"
+                          onClick={(event) => {
+                              console.log("torrentId=" + torrent.id);
+                              if (torrent.id < 0) {
+                                  let tempTorrentList = this.state.torrentList;
+                                  tempTorrentList.splice(index, 1);
+                                  this.setState({
+                                      torrentList: tempTorrentList
+                                  })
+                              } else {
+                                  this.deleteTorrent(torrent.id);
+                              }
+                          }}/>
+                </div>)
         });
 
         let actListView = this.state.actorList.map((actor, index) => {
             return (
-                <div key={actor.actorName} style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                    <span>{actor.actorName}</span>
+                <div key={actor.actorName}
+                     style={{
+                         display: "flex",
+                         flexDirection: "row",
+                         alignItems: "center",
+                         marginRight: 16
+                     }}>
+                    <span style={{marginRight: 5}}>{actor.actorName}</span>
                     <Icon className="image-icon-dark" type="close"
                           onClick={(event) => {
                               let tempActorList = this.state.actorList;
@@ -340,7 +405,9 @@ export default class EditMovie extends React.Component {
                 </div>
 
                 <div>
-                    {torrentListView}
+                    <div style={{marginBottom: 10}}>
+                        {torrentListView}
+                    </div>
                     <Button style={{marginBottom: 16}}
                             onClick={() => {
                                 this.refs.torrentInput.click();
@@ -353,17 +420,23 @@ export default class EditMovie extends React.Component {
                            style={{display: "none"}}
                            onChange={(e) => {
                                let files = this.refs.torrentInput.files;
-                               let oldTorrentList = this.state.torrentList;
+                               let tempTorrentList = this.state.torrentList;
                                if (files) {
                                    for (let i = 0; i < files.length; i++) {
                                        // 获取 window 的 URL 工具
                                        let URL = window.URL || window.webkitURL;
                                        // 通过 file 生成目标 url
                                        let torrentUrl = URL.createObjectURL(files[i]);
-                                       oldTorrentList.push({file: files[i], url: torrentUrl});
+                                       let file = files[i];
+                                       tempTorrentList.push({
+                                           file: file,
+                                           torrentName: file.name,
+                                           filePath: torrentUrl,
+                                           id: -1
+                                       });
                                    }
                                    this.setState({
-                                       torrentList: oldTorrentList
+                                       torrentList: tempTorrentList
                                    })
                                }
                            }}
@@ -380,17 +453,32 @@ export default class EditMovie extends React.Component {
                                     })
                                 }}/>
 
-                <div>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    marginBottom: 16,
+                    flexWrap: "wrap"
+                }}>
                     {actListView}
                 </div>
-                <ActorSelect
-                    onActorSelect={(value, option) => {
-                        let tempActorList = this.state.actorList;
-                        tempActorList.push({"actorName": value});
-                        this.setState({
-                            actorList: tempActorList
-                        })
-                    }}/>
+
+                <div style={{
+                    marginBottom: 16,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center"
+                }}>
+                    <span style={{marginRight: 10}}>输入演员名字：</span>
+                    <ActorSelect
+                        onActorSelect={(value, option) => {
+                            let tempActorList = this.state.actorList;
+                            tempActorList.push({"actorName": value});
+                            this.setState({
+                                actorList: tempActorList
+                            })
+                        }}/>
+                </div>
+
                 <Button style={{marginBottom: 16}}
                         onClick={() => this.submit()}>提交</Button>
             </div>);

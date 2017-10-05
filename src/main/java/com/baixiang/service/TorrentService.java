@@ -24,4 +24,8 @@ public class TorrentService {
         torrentRepository.saveAndFlush(movieTorrent);
         return movieTorrent;
     }
+
+    public void delete(long id){
+        torrentRepository.delete(id);
+    }
 }

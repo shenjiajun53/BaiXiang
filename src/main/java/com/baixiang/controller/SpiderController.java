@@ -2,8 +2,8 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Response;
 import com.baixiang.model.SpiderStatusBean;
-import com.baixiang.spider.BtTianTang.BtTianTangProcessor;
-import com.baixiang.spider.TaohuaProcessor;
+import com.baixiang.spider.Processor.BtTianTangProcessor;
+import com.baixiang.spider.Processor.TaohuaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;

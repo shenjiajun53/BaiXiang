@@ -47,7 +47,7 @@ public class TorrentPipeline implements Pipeline {
         String torrentName = resultItems.get(TORRENT_NAME);
         String magnetUrl = resultItems.get(MAGNET_URL);
         String torrentUrl = resultItems.get(TORRENT_URL);
-
+//        logger.info("movieTitle=" + movieTitle);
 
         if (!TextUtils.isEmpty(torrentName)) {
             if (torrentService.getIncludeName(torrentName).size() > 0) {

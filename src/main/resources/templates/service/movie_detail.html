@@ -58,23 +58,9 @@
 <script th:inline="javascript">
     let tagName;
     if ([[${movie!=null}]] && [[${movie.movieTagSet!=null}]]) {
-        tagName = [[${movie.movieTagSet.size()>0?movie.movieTagSet[0]:""}]];
+        tagName = [[${movie.movieTagSet.size()>0?movie.movieTagSet[0].tagName:""}]];
     }
-    //    //test
-    //    let tagSet=[[${movie.movieTagSet}]];
-    //    console.info("tagnamen="+JSON.stringify(tagSet));
-    //    let set=new Set(tagSet);
-    //    let size=set.size;
-    //    console.info("size="+size)
-    //    set.forEach(function(value) {
-    //        console.log(value);
-    //    });
-    //
-    //    let movie=[[${movie.movieName}]];
-    //    console.info("movie="+movie)
-    //    console.info("movieName="+movie.movieName);
-    //    let user=[[${user}]];
-    //    console.log("user=" + JSON.stringify(user));
+
     new Vue({
         el: "#vertical-container",
         data() {

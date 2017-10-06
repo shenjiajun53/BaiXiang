@@ -1,4 +1,4 @@
-package com.baixiang.spider;
+package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Film;
 import com.baixiang.repository.hibernateRepository.FilmHibernateRepository;

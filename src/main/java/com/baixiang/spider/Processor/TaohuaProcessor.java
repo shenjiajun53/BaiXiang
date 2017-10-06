@@ -1,5 +1,6 @@
-package com.baixiang.spider;
+package com.baixiang.spider.Processor;
 
+import com.baixiang.spider.pipeline.FilmPipeline;
 import com.baixiang.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static com.baixiang.spider.FilmPipeline.FILM_INFO;
-import static com.baixiang.spider.FilmPipeline.FILM_TITLE;
+import static com.baixiang.spider.pipeline.FilmPipeline.FILM_INFO;
+import static com.baixiang.spider.pipeline.FilmPipeline.FILM_TITLE;
 
 /**
  * Created by Administrator on 2017/6/19.

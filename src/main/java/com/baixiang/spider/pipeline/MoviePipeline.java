@@ -18,6 +18,7 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -55,8 +56,8 @@ public class MoviePipeline implements Pipeline {
         String movieTitle = resultItems.get(MOVIE_TITLE);
         String movieInfo = resultItems.get(MOVIE_INFO);
         String moviePosterUrl = resultItems.get(MOVIE_POSTER);
-        HashSet<String> tagSet = resultItems.get(MOVIE_TAGS);
-        HashSet<String> actorSet = resultItems.get(MOVIE_ACTORS);
+        ArrayList<String> tagSet = resultItems.get(MOVIE_TAGS);
+        ArrayList<String> actorSet = resultItems.get(MOVIE_ACTORS);
         if (null != movieTitle) {
             if (movieTitle.contains(":")) {
                 movieTitle = movieTitle.replace(":", "：");
@@ -76,8 +77,8 @@ public class MoviePipeline implements Pipeline {
     private void setMovie(Movie movie,
                           String movieTitle,
                           String movieInfo,
-                          Set<String> tagSet,
-                          HashSet<String> actorSet,
+                          ArrayList<String> tagSet,
+                          ArrayList<String> actorSet,
                           String moviePosterUrl) {
         movie.setMovieName(movieTitle);
         movie.setMovieInfo(movieInfo);

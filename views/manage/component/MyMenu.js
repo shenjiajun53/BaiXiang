@@ -84,7 +84,7 @@ export default class MyMenu extends React.Component {
                 <Dropdown
                     placement="bottomLeft"
                     overlay=
-                        {<Menu onSelect={(item) => this.onItemClick(item)}>
+                        {<Menu onClick={(item) => this.onItemClick(item)}>
                             <Menu.Item key="HomePage">主页</Menu.Item>
                             <Menu.Item key="AddMovie">添加影片</Menu.Item>
                             <Menu.Item key="Settings">设置</Menu.Item>
@@ -101,7 +101,7 @@ export default class MyMenu extends React.Component {
                 <Dropdown
                     placement="bottomLeft"
                     overlay=
-                        {<Menu onSelect={(item) => this.onItemClick(item)}>
+                        {<Menu onClick={(item) => this.onItemClick(item)}>
                             <Menu.Item key="HomePage">主页</Menu.Item>
                             <Menu.Item key="SignIn">登录</Menu.Item>
                             <Menu.Item key="SignUp">注册</Menu.Item>

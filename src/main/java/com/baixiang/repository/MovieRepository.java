@@ -24,7 +24,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     Page<Movie> getByActorSetIn(Actor actor, Pageable pageable);
 
-    List<Movie> getByMovieTagSetIn(String tag);
+    List<Movie> getByMovieTagSetIn(MovieTag tag);
 
     List<Movie> getByActorSetIn(Actor actor);
 

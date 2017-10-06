@@ -63,7 +63,9 @@ public class ClientController {
         int maxPage = 0;
         if (!TextUtils.isEmpty(tag)) {
             movieArrayList = movieService.getByTag(tag, pageable);
-            logger.info(movieArrayList.toString());
+            if (null != movieArrayList) {
+                logger.info(movieArrayList.toString());
+            }
             maxPage = (int) Math.ceil(((double) movieService.getSizeByTag(tag)) / PAGE_SIZE);  //进一
         } else if (!TextUtils.isEmpty(actor)) {
             movieArrayList = movieService.getByActor(actor, pageable);

@@ -84,7 +84,11 @@ public class MovieService {
     }
 
     public int getSizeByTag(String tag) {
-        return movieRepository.getByMovieTagSetIn(tag).size();
+        MovieTag movieTag = tagService.getTagByName(tag);
+        if (null == movieTag) {
+            return 0;
+        }
+        return movieRepository.getByMovieTagSetIn(movieTag).size();
     }
 
     public int getSizeByActor(String actorName) {

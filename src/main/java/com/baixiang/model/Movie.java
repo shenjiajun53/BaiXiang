@@ -70,23 +70,25 @@ public class Movie implements Serializable {
 //    @JsonIgnore
     private Set<MovieTorrent> movieTorrents = new HashSet<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
-//    @Column(name = "movie_tag")
-//    private Set<String> movieTagSet = new HashSet<>();
-
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_tags",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
+//    @JsonIgnore
     private Set<MovieTag> movieTagSet = new HashSet<>();
 
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
+    @OrderBy(value = "id asc")
 //    @JsonIgnore
     private Set<Actor> actorSet = new HashSet<>();
+
+//    @ElementCollection
+//    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
+//    @Column(name = "movie_tag")
+//    private Set<String> movieTagSet = new HashSet<>();
 
     public Movie() {
     }

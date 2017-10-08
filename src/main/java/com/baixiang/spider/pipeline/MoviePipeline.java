@@ -21,6 +21,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
@@ -56,44 +57,40 @@ public class MoviePipeline implements Pipeline {
             return;
         }
         SpiderMovieBean spiderMovieBean = resultItems.get(SPIDER_MOVIE_BEAN);
-        String movieTitle = spiderMovieBean.getMovieName();
-        String movieInfo = spiderMovieBean.getMovieInfo();
-        String moviePosterUrl = spiderMovieBean.getPoster();
-        ArrayList<String> tagSet = spiderMovieBean.getTagList();
-        ArrayList<String> actorSet = spiderMovieBean.getActorList();
 //        logger.info(spiderMovieBean.toString());
 
-        if (null != movieTitle) {
-            if (movieService.getIncludeName(movieTitle).size() > 0) {
-                Movie movie = movieService.getIncludeName(movieTitle).get(0);
-                setMovie(movie, movieTitle, movieInfo, tagSet, actorSet, moviePosterUrl);
+        if (null != spiderMovieBean.getMovieName()) {
+            List<Movie> movieList = movieService.getByName(spiderMovieBean.getMovieName());
+            //TODO movieName 不唯一bug
+            if (movieList.size() > 0) {
+                Movie movie = movieList.get(0);
+                setMovie(movie, spiderMovieBean);
                 saveMovie(movie);
             } else {
                 Movie movie = new Movie();
-                setMovie(movie, movieTitle, movieInfo, tagSet, actorSet, moviePosterUrl);
+                setMovie(movie, spiderMovieBean);
                 saveMovie(movie);
             }
         }
     }
 
     private void setMovie(Movie movie,
-                          String movieTitle,
-                          String movieInfo,
-                          ArrayList<String> tagSet,
-                          ArrayList<String> actorSet,
-                          String moviePosterUrl) {
-        movie.setMovieName(movieTitle);
-        movie.setMovieInfo(movieInfo);
-        for (String tagName : tagSet) {
+                          SpiderMovieBean spiderMovieBean) {
+        movie.setMovieName(spiderMovieBean.getMovieName());
+        movie.setMovieInfo(spiderMovieBean.getMovieInfo());
+        movie.setDoubanId(spiderMovieBean.getDoubanId());
+        movie.setDoubanUrl(spiderMovieBean.getDoubanUrl());
+        movie.setImdbUrl(spiderMovieBean.getImdbUrl());
+        for (String tagName : spiderMovieBean.getTagList()) {
             MovieTag movieTag = tagService.getMovieTagUnique(tagName);
             movie.addTag(movieTag);
         }
-        for (String actorName : actorSet) {
+        for (String actorName : spiderMovieBean.getActorList()) {
             Actor actor = actorService.getActorUnique(actorName);
             movie.addActor(actor);
         }
         if (TextUtils.isEmpty(movie.getPoster())) {
-            setPoster(movie, moviePosterUrl, movieTitle);
+            setPoster(movie, spiderMovieBean.getPoster(), spiderMovieBean.getMovieName());
         }
     }
 
@@ -105,7 +102,7 @@ public class MoviePipeline implements Pipeline {
         }
     }
 
-    public void setPoster(Movie movie, String moviePosterUrl, String movieTitle) {
+    private void setPoster(Movie movie, String moviePosterUrl, String movieTitle) {
         if (!TextUtils.isEmpty(moviePosterUrl)) {
             String fileName = System.currentTimeMillis() + "-" + movieTitle + ".jpg";
 //            logger.info(fileName);

@@ -63,6 +63,10 @@ public class MovieService {
         return movieRepository.getById(id);
     }
 
+    public List<Movie> getByName(String movieName) {
+        return movieRepository.getByMovieName(movieName);
+    }
+
     public Page<Movie> getByTag(String tag, Pageable pageable) {
         MovieTag movieTag = tagService.getTagByName(tag);
         if (null == movieTag) {

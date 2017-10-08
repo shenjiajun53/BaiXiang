@@ -44,6 +44,10 @@ public class Movie implements Serializable {
 
     private Long viewTimes;
 
+    private String doubanUrl;
+    private long doubanId;
+    private String imdbUrl;
+
     /*
 * @OneToMany: 指明Order 与OrderItem关联关系为一对多关系
 *
@@ -264,6 +268,30 @@ public class Movie implements Serializable {
         this.actorSet = actorSet;
     }
 
+    public String getDoubanUrl() {
+        return doubanUrl;
+    }
+
+    public void setDoubanUrl(String doubanUrl) {
+        this.doubanUrl = doubanUrl;
+    }
+
+    public long getDoubanId() {
+        return doubanId;
+    }
+
+    public void setDoubanId(long doubanId) {
+        this.doubanId = doubanId;
+    }
+
+    public String getImdbUrl() {
+        return imdbUrl;
+    }
+
+    public void setImdbUrl(String imdbUrl) {
+        this.imdbUrl = imdbUrl;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -275,6 +303,9 @@ public class Movie implements Serializable {
                 ", createDate=" + createDate +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", viewTimes=" + viewTimes +
+                ", doubanUrl='" + doubanUrl + '\'' +
+                ", doubanId=" + doubanId +
+                ", imdbUrl='" + imdbUrl + '\'' +
                 ", screenShots=" + screenShots +
                 ", movieTorrents=" + movieTorrents +
                 ", movieTagSet=" + movieTagSet +

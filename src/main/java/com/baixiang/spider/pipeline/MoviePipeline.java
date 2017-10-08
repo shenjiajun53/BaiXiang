@@ -3,6 +3,7 @@ package com.baixiang.spider.pipeline;
 import com.baixiang.model.Actor;
 import com.baixiang.model.Movie;
 import com.baixiang.model.MovieTag;
+import com.baixiang.model.SpiderMovieBean;
 import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TagService;
@@ -32,11 +33,12 @@ import static com.baixiang.utils.FileUtil.POSTER_PATH;
 @ComponentScan()
 public class MoviePipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
-    public final static String MOVIE_TITLE = "movie_title";
-    public final static String MOVIE_INFO = "movie_info";
-    public final static String MOVIE_POSTER = "movie_poster";
-    public final static String MOVIE_TAGS = "movie_tags";
-    public final static String MOVIE_ACTORS = "movie_actors";
+    public final static String SPIDER_MOVIE_BEAN = "spider_movie_bean";
+//    public final static String MOVIE_TITLE = "movie_title";
+//    public final static String MOVIE_INFO = "movie_info";
+//    public final static String MOVIE_POSTER = "movie_poster";
+//    public final static String MOVIE_TAGS = "movie_tags";
+//    public final static String MOVIE_ACTORS = "movie_actors";
 
     @Autowired
     private MovieService movieService;
@@ -53,15 +55,15 @@ public class MoviePipeline implements Pipeline {
         if (!resultItems.getRequest().getUrl().contains("www.bttiantangs.com/movie")) {
             return;
         }
-        String movieTitle = resultItems.get(MOVIE_TITLE);
-        String movieInfo = resultItems.get(MOVIE_INFO);
-        String moviePosterUrl = resultItems.get(MOVIE_POSTER);
-        ArrayList<String> tagSet = resultItems.get(MOVIE_TAGS);
-        ArrayList<String> actorSet = resultItems.get(MOVIE_ACTORS);
+        SpiderMovieBean spiderMovieBean = resultItems.get(SPIDER_MOVIE_BEAN);
+        String movieTitle = spiderMovieBean.getMovieName();
+        String movieInfo = spiderMovieBean.getMovieInfo();
+        String moviePosterUrl = spiderMovieBean.getPoster();
+        ArrayList<String> tagSet = spiderMovieBean.getTagList();
+        ArrayList<String> actorSet = spiderMovieBean.getActorList();
+//        logger.info(spiderMovieBean.toString());
+
         if (null != movieTitle) {
-            if (movieTitle.contains(":")) {
-                movieTitle = movieTitle.replace(":", "：");
-            }
             if (movieService.getIncludeName(movieTitle).size() > 0) {
                 Movie movie = movieService.getIncludeName(movieTitle).get(0);
                 setMovie(movie, movieTitle, movieInfo, tagSet, actorSet, moviePosterUrl);

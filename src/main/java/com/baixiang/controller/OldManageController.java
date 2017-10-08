@@ -2,7 +2,6 @@ package com.baixiang.controller;
 
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
-import com.baixiang.spider.Processor.BtTianTangProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class OldManageController {
     UserService userService;
     @Autowired
     MovieService movieService;
-    @Autowired
-    BtTianTangProcessor btTianTangProcessor;
+//    @Autowired
+//    BtTianTangProcessor btTianTangProcessor;
 
 
 //    @RequestMapping(value = "/manage", method = RequestMethod.GET)

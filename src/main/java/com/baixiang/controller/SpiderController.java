@@ -2,10 +2,9 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Response;
 import com.baixiang.model.SpiderStatusBean;
-import com.baixiang.spider.Processor.BtTianTangProcessor;
-import com.baixiang.spider.Processor.TaohuaProcessor;
+import com.baixiang.spider.processor.BtTianTangProcessor;
+import com.baixiang.spider.processor.TaohuaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +16,7 @@ import static com.baixiang.utils.Urls.*;
  */
 
 @RestController
-@ComponentScan(value = "com.baixiang.spider")
+//@ComponentScan()
 public class SpiderController {
 
     @Autowired
@@ -47,10 +46,9 @@ public class SpiderController {
     }
 
     @RequestMapping(value = API_GET_SPIDER_STATUS, method = RequestMethod.POST)
-    public Response<SpiderStatusBean> getSpiderStatus() {
+    public Response getSpiderStatus() {
         SpiderStatusBean spiderStatusBean = new SpiderStatusBean();
         spiderStatusBean.setBtRunning(btTianTangProcessor.isRunning());
-        Response<SpiderStatusBean> response = new Response<>(spiderStatusBean, null);
-        return response;
+        return new Response<>(spiderStatusBean, null);
     }
 }

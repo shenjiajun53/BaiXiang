@@ -1,4 +1,4 @@
-package com.baixiang.spider.Processor;
+package com.baixiang.spider.processor;
 
 import com.baixiang.spider.pipeline.FilmPipeline;
 import com.baixiang.utils.FileUtil;

@@ -2,6 +2,7 @@ package com.baixiang.spider.pipeline;
 
 import com.baixiang.model.Movie;
 import com.baixiang.model.MovieTorrent;
+import com.baixiang.model.SpiderTorrentBean;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TorrentService;
 import com.baixiang.utils.FileUtil;
@@ -16,6 +17,7 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+import static com.baixiang.spider.processor.BtTianTangProcessor.MOVIE_TITLE;
 import static com.baixiang.utils.FileUtil.TORRENT_PATH;
 
 /**
@@ -25,10 +27,11 @@ import static com.baixiang.utils.FileUtil.TORRENT_PATH;
 @Component
 public class TorrentPipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
-    public final static String TORRENT_NAME = "torrent_title";
-    public final static String MAGNET_URL = "magnet_url";
-    public final static String TORRENT_URL = "torrent_url";
-    public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
+    public final static String SPIDER_TORRENT_BEAN = "spider_torrent_bean";
+//    public final static String TORRENT_NAME = "torrent_title";
+//    public final static String MAGNET_URL = "magnet_url";
+//    public final static String TORRENT_URL = "torrent_url";
+//    public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
 
 
     @Autowired
@@ -42,12 +45,12 @@ public class TorrentPipeline implements Pipeline {
         if (!resultItems.getRequest().getUrl().contains("www.bttiantangs.com/download")) {
             return;
         }
-
-        String movieTitle = resultItems.get(TORRENT_MOVIE_TITLE);
-        String torrentName = resultItems.get(TORRENT_NAME);
-        String magnetUrl = resultItems.get(MAGNET_URL);
-        String torrentUrl = resultItems.get(TORRENT_URL);
-//        logger.info("movieTitle=" + movieTitle);
+        SpiderTorrentBean spiderTorrentBean = resultItems.get(SPIDER_TORRENT_BEAN);
+        String movieTitle = spiderTorrentBean.getMovieName();
+        String torrentName = spiderTorrentBean.getTorrentName();
+        String magnetUrl = spiderTorrentBean.getMagnetUrl();
+        String torrentUrl = spiderTorrentBean.getTorrentUrl();
+//        logger.info(spiderTorrentBean.toString());
 
         if (!TextUtils.isEmpty(torrentName)) {
             if (torrentService.getIncludeName(torrentName).size() > 0) {

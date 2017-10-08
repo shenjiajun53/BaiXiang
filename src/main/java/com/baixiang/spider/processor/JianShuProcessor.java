@@ -1,4 +1,4 @@
-package com.baixiang.spider.Processor;
+package com.baixiang.spider.processor;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;

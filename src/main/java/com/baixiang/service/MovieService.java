@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class MovieService {
     private TagService tagService;
 
     public Movie save(Movie movie) {
+        movie.setUpdateDate(new Date());
         movieRepository.saveAndFlush(movie);
         return movie;
     }

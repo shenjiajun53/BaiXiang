@@ -40,6 +40,9 @@ public class Movie implements Serializable {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date createDate;//创建日期
 
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date updateDate;//更新日期
+
     private String releaseDate;//上映日期
 
     private Long viewTimes;
@@ -95,11 +98,13 @@ public class Movie implements Serializable {
 //    private Set<String> movieTagSet = new HashSet<>();
 
     public Movie() {
+        setCreateDate(new Date());
     }
 
     public Movie(String movieName, String movieInfo) {
         this.movieName = movieName;
         this.movieInfo = movieInfo;
+        setCreateDate(new Date());
     }
 
     public void addScreenShot(MovieImage screenShot) {
@@ -250,6 +255,17 @@ public class Movie implements Serializable {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+        if (null == getCreateDate()) {
+            setCreateDate(updateDate);
+        }
     }
 
     public Long getViewTimes() {

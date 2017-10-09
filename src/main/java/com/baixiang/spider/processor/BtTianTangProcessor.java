@@ -4,6 +4,7 @@ import com.baixiang.model.SpiderMovieBean;
 import com.baixiang.model.SpiderTorrentBean;
 import com.baixiang.spider.pipeline.MoviePipeline;
 import com.baixiang.spider.pipeline.TorrentPipeline;
+import com.baixiang.utils.FileUtil;
 import com.baixiang.utils.RegexUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.scheduler.FileCacheQueueScheduler;
+import us.codecraft.webmagic.scheduler.PriorityScheduler;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
@@ -52,6 +55,8 @@ public class BtTianTangProcessor implements PageProcessor {
     public void start() {
         isRunning = true;
         spider = Spider.create(this)
+//                .setScheduler(new PriorityScheduler())
+                .setScheduler(new FileCacheQueueScheduler(FileUtil.ROOT_PATH))
                 .addPipeline(moviePipeline)
 //                .addPipeline(new ConsolePipeline())
                 .addPipeline(torrentPipeline)
@@ -90,7 +95,7 @@ public class BtTianTangProcessor implements PageProcessor {
         }
 //        page.addTargetRequests(page.getHtml().links().regex("(http://www\\.bttiantangs\\.com/movie/[\\w\\-]+/[\\w\\-]+)").all());
 //        page.addTargetRequests(page.getHtml().links().regex("http://www.bttiantangs.com/movie/\\d+.*").all());
-        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/movie/\\d+.*").all();
+        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/movie/\\d+.html").all();
         for (String link : links) {
             Request request = new Request(link).setPriority(2);
             page.addTargetRequest(request);
@@ -106,7 +111,7 @@ public class BtTianTangProcessor implements PageProcessor {
             page.setSkip(true);
             logger.info("skip movie page title=null " + page.getUrl());
         }
-        logger.info("parseMovie " + titleStr);
+        logger.info("Parse Movie " + titleStr);
         SpiderMovieBean spiderMovieBean = new SpiderMovieBean();
         spiderMovieBean.setMovieName(titleStr);
         spiderMovieBean.setMovieInfo(page.getHtml().xpath("//p[@class='minfos']").toString());
@@ -153,7 +158,7 @@ public class BtTianTangProcessor implements PageProcessor {
 
         page.putField(SPIDER_MOVIE_BEAN, spiderMovieBean);
 
-        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.*").all();
+        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.html").all();
         for (String link : links) {
             Request request = new Request(link).setPriority(3).putExtra(MOVIE_TITLE, titleStr);
             page.addTargetRequest(request);
@@ -162,9 +167,12 @@ public class BtTianTangProcessor implements PageProcessor {
 
     private void parseTorrent(Page page) {
         SpiderTorrentBean spiderTorrentBean = new SpiderTorrentBean();
-        spiderTorrentBean.setMovieName(page.getRequest().getExtra(MOVIE_TITLE).toString());
+        if (null != page.getRequest().getExtra(MOVIE_TITLE)) {
+            spiderTorrentBean.setMovieName(page.getRequest().getExtra(MOVIE_TITLE).toString());
+        } else {
+            spiderTorrentBean.setMovieName(page.getHtml().xpath("//div[@class='article_container']/h1/a/text()").toString());
+        }
         spiderTorrentBean.setMagnetUrl(page.getHtml().xpath("//span[@id='link_text_span']/text()").toString());
-//        page.putField(TORRENT_MOVIE_TITLE, page.getHtml().xpath("//div[@class='article_container']/h1/a/text()").toString());
         List<Selectable> contentNodes = page.getHtml().xpath("//div[@id='post_content']/p").nodes();
         for (Selectable node : contentNodes) {
             if (node.toString().contains("名　　称")) {
@@ -173,7 +181,7 @@ public class BtTianTangProcessor implements PageProcessor {
                 String torrentName = filter[0].replaceAll("◎名　　称　", "");
                 torrentName = torrentName.replaceAll("<p>", "");
                 spiderTorrentBean.setTorrentName(torrentName);
-                logger.info("parseTorrent " + torrentName);
+                logger.info("Parse Torrent " + torrentName);
                 break;
             }
         }
@@ -189,7 +197,7 @@ public class BtTianTangProcessor implements PageProcessor {
         }
         page.putField(SPIDER_TORRENT_BEAN, spiderTorrentBean);
 
-        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.*").all();
+        List<String> links = page.getHtml().links().regex("http://www.bttiantangs.com/download/\\d+.html").all();
         for (String link : links) {
             Request request = new Request(link).setPriority(4).putExtra(MOVIE_TITLE, page.getResultItems().get(MOVIE_TITLE));
             page.addTargetRequest(request);

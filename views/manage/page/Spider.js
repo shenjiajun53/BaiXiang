@@ -9,7 +9,8 @@ export default class Spider extends React.Component {
         super();
         this.state = {
             isBtRunning: false,
-            isHuaRunning: false
+            isHuaRunning: false,
+            isDoubanRunning: false
         }
     }
 
@@ -64,6 +65,22 @@ export default class Spider extends React.Component {
                                 isHuaRunning: value
                             })
                         }}/>
+                <span>豆瓣</span>
+                <Switch defaultChecked={false}
+                        checked={this.state.isDoubanRunning}
+                        size="default"
+                        onChange={(value) => {
+                            console.log("" + value);
+                            if (value) {
+                                this.post(Urls.API_START_DOUBAN_PATCH);
+                            } else {
+                                this.post(Urls.API_STOP_DOUBAN_PATCH);
+                            }
+                            this.setState({
+                                isDoubanRunning: value
+                            })
+                        }}/>
+                <br/>
             </div>
         );
     }

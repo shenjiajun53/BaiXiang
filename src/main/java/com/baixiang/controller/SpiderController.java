@@ -2,6 +2,7 @@ package com.baixiang.controller;
 
 import com.baixiang.model.Response;
 import com.baixiang.model.SpiderStatusBean;
+import com.baixiang.service.DoubanService;
 import com.baixiang.spider.processor.BtTianTangProcessor;
 import com.baixiang.spider.processor.TaohuaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class SpiderController {
     @Autowired
     TaohuaProcessor taohuaProcessor;
 
+    @Autowired
+    DoubanService doubanService;
+
     @RequestMapping(value = API_START_SPIDER_BT, method = RequestMethod.POST)
     public void startBt() {
         btTianTangProcessor.start();
@@ -42,6 +46,16 @@ public class SpiderController {
 
     @RequestMapping(value = API_STOP_SPIDER_HUA, method = RequestMethod.POST)
     public void stopTaohua() {
+        taohuaProcessor.stop();
+    }
+
+    @RequestMapping(value = API_START_DOUBAN_PATCH, method = RequestMethod.POST)
+    public void startDouban() {
+        doubanService.startDoubanPatch();
+    }
+
+    @RequestMapping(value = API_STOP_DOUBAN_PATCH, method = RequestMethod.POST)
+    public void stopDouban() {
         taohuaProcessor.stop();
     }
 

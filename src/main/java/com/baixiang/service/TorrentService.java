@@ -1,7 +1,10 @@
 package com.baixiang.service;
 
+import com.baixiang.controller.UserController;
 import com.baixiang.model.MovieTorrent;
 import com.baixiang.repository.TorrentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,8 @@ import java.util.List;
 
 @Service
 public class TorrentService {
+    private static final Logger logger = LoggerFactory.getLogger(TorrentService.class);
+
     @Autowired
     private TorrentRepository torrentRepository;
 
@@ -25,7 +30,7 @@ public class TorrentService {
         return movieTorrent;
     }
 
-    public void delete(long id){
+    public void delete(long id) {
         torrentRepository.delete(id);
     }
 }

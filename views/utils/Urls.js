@@ -32,6 +32,8 @@ exports.API_START_SPIDER_BT = CONTEXT_PATH + "/api/start_spider_bt";
 exports.API_STOP_SPIDER_BT = CONTEXT_PATH + "/api/stop_spider_bt";
 exports.API_START_SPIDER_HUA = CONTEXT_PATH + "/api/start_spider_taohua";
 exports.API_STOP_SPIDER_HUA = CONTEXT_PATH + "/api/stop_spider_taohua";
+exports.API_START_DOUBAN_PATCH = CONTEXT_PATH + "/api/start_douban_patch";
+exports.API_STOP_DOUBAN_PATCH = CONTEXT_PATH + "/api/stop_douban_patch";
 exports.API_SEARCH_MOVIE = CONTEXT_PATH + "/api/search_movie";
 exports.API_SEARCH_ACTOR = CONTEXT_PATH + "/api/search_actor";
 

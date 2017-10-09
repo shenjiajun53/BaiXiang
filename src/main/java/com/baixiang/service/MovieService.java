@@ -69,6 +69,10 @@ public class MovieService {
         return movieRepository.getByMovieName(movieName);
     }
 
+    public Page<Movie> getByPage(Pageable pageable) {
+        return movieRepository.getAll(pageable);
+    }
+
     public Page<Movie> getByTag(String tag, Pageable pageable) {
         MovieTag movieTag = tagService.getTagByName(tag);
         if (null == movieTag) {

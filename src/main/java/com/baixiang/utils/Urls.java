@@ -28,6 +28,8 @@ public final class Urls {
     public final static String API_STOP_SPIDER_BT = "/api/stop_spider_bt";
     public final static String API_START_SPIDER_HUA = "/api/start_spider_taohua";
     public final static String API_STOP_SPIDER_HUA = "/api/stop_spider_taohua";
+    public final static String API_START_DOUBAN_PATCH = "/api/start_douban_patch";
+    public final static String API_STOP_DOUBAN_PATCH = "/api/stop_douban_patch";
     public final static String API_SEARCH_MOVIE = "/api/search_movie";
     public final static String API_SEARCH_ACTOR = "/api/search_actor";
 }

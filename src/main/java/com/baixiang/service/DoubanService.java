@@ -1,6 +1,8 @@
 package com.baixiang.service;
 
 import com.baixiang.model.Movie;
+import com.baixiang.utils.Urls;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -19,10 +22,33 @@ public class DoubanService {
     private int currentNum = 0;
 
     public void startDoubanPatch() {
+        int i = 0;
         Pageable pageable = new PageRequest(currentNum, 40);
         Page<Movie> moviePage = movieService.getByPage(pageable);
         for (Movie movie : moviePage) {
-            logger.info("douban Movie=" + movie.toString());
+            if (i < 5) {
+                i++;
+                getDoubanMovieInfo(movie.getDoubanId());
+            }
         }
+    }
+
+    private void getDoubanMovieInfo(long doubanId) {
+        OkHttpClient okHttpClient = new OkHttpClient();
+        String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, doubanId);
+        logger.info("url=" + url);
+        Request request = new Request.Builder().tag("get_movie_info").url(url).build();
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseBody = response.body().string();
+                logger.info(responseBody);
+            }
+        });
     }
 }

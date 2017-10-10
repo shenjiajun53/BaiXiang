@@ -56,7 +56,7 @@ public class SpiderController {
 
     @RequestMapping(value = API_STOP_DOUBAN_PATCH, method = RequestMethod.POST)
     public void stopDouban() {
-        taohuaProcessor.stop();
+//        taohuaProcessor.stop();
     }
 
     @RequestMapping(value = API_GET_SPIDER_STATUS, method = RequestMethod.POST)

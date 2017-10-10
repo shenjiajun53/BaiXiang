@@ -20,7 +20,7 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Movie getById(Long id);
 
-    Page<Movie> getAll(Pageable pageable);
+    Page<Movie> findAll(Pageable pageable);
 
     Page<Movie> getByMovieTagSetIn(MovieTag tag, Pageable pageable);
 

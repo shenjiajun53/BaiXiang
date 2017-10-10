@@ -70,7 +70,7 @@ public class MovieService {
     }
 
     public Page<Movie> getByPage(Pageable pageable) {
-        return movieRepository.getAll(pageable);
+        return movieRepository.findAll(pageable);
     }
 
     public Page<Movie> getByTag(String tag, Pageable pageable) {

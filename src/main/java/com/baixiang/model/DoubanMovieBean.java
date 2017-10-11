@@ -27,7 +27,7 @@ public class DoubanMovieBean {
      * current_season : 1
      * original_title : Westworld
      * summary : 故事设定在未来世界，在一个庞大的高科技成人主题乐园中，有着拟真人的机器“接待员”能让游客享尽情欲、暴力等欲望的放纵，主要叙述被称为“西部世界”的未来主题公园。它提供给游客杀戮与性欲的满足。
-     但是在这世界下，各种暗流涌动。部分机器人出现自我觉醒，发现了自己只是作为故事角色的存在，并且想摆脱乐园对其的控制；乐园的管理层害怕乐园的创造者控制着乐园的一切而试图夺其控制权，而乐园创造者则不会善罢甘休并且探寻其伙伴创造者曾经留下的谜团；而买下乐园的一名高管试图重新发现当年的旅程留下的谜团。
+     * 但是在这世界下，各种暗流涌动。部分机器人出现自我觉醒，发现了自己只是作为故事角色的存在，并且想摆脱乐园对其的控制；乐园的管理层害怕乐园的创造者控制着乐园的一切而试图夺其控制权，而乐园创造者则不会善罢甘休并且探寻其伙伴创造者曾经留下的谜团；而买下乐园的一名高管试图重新发现当年的旅程留下的谜团。
      * subtype : tv
      * directors : [{"alt":"https://movie.douban.com/celebrity/1275104/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/1379217457.32.jpg","large":"https://img3.doubanio.com/img/celebrity/large/1379217457.32.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/1379217457.32.jpg"},"name":"乔纳森·诺兰","id":"1275104"},{"alt":"https://movie.douban.com/celebrity/1328760/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/1423594944.21.jpg","large":"https://img3.doubanio.com/img/celebrity/large/1423594944.21.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/1423594944.21.jpg"},"name":"强尼·坎贝尔","id":"1328760"},{"alt":"https://movie.douban.com/celebrity/1332531/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/1383990641.33.jpg","large":"https://img3.doubanio.com/img/celebrity/large/1383990641.33.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/1383990641.33.jpg"},"name":"理查德·J·刘易斯","id":"1332531"},{"alt":"https://movie.douban.com/celebrity/1321831/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/1391654882.65.jpg","large":"https://img3.doubanio.com/img/celebrity/large/1391654882.65.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/1391654882.65.jpg"},"name":"米歇尔·麦克拉伦","id":"1321831"},{"alt":"https://movie.douban.com/celebrity/1018056/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/13285.jpg","large":"https://img3.doubanio.com/img/celebrity/large/13285.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/13285.jpg"},"name":"尼尔·马歇尔","id":"1018056"},{"alt":"https://movie.douban.com/celebrity/1013778/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/6001.jpg","large":"https://img3.doubanio.com/img/celebrity/large/6001.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/6001.jpg"},"name":"文森佐·纳塔利","id":"1013778"},{"alt":"https://movie.douban.com/celebrity/1028639/","avatars":{"small":"https://img3.doubanio.com/img/celebrity/small/1499700171.23.jpg","large":"https://img3.doubanio.com/img/celebrity/large/1499700171.23.jpg","medium":"https://img3.doubanio.com/img/celebrity/medium/1499700171.23.jpg"},"name":"弗雷德·托耶","id":"1028639"},{"alt":"https://movie.douban.com/celebrity/1356468/","avatars":{"small":"https://img1.doubanio.com/img/celebrity/small/1490861923.69.jpg","large":"https://img1.doubanio.com/img/celebrity/large/1490861923.69.jpg","medium":"https://img1.doubanio.com/img/celebrity/medium/1490861923.69.jpg"},"name":"斯蒂芬·威廉姆斯","id":"1356468"}]
      * comments_count : 37008
@@ -323,6 +323,16 @@ public class DoubanMovieBean {
         public void setMin(int min) {
             this.min = min;
         }
+
+        @Override
+        public String toString() {
+            return "RatingBean{" +
+                    "max=" + max +
+                    ", average=" + average +
+                    ", stars='" + stars + '\'' +
+                    ", min=" + min +
+                    '}';
+        }
     }
 
     public static class ImagesBean {
@@ -358,6 +368,15 @@ public class DoubanMovieBean {
 
         public void setMedium(String medium) {
             this.medium = medium;
+        }
+
+        @Override
+        public String toString() {
+            return "ImagesBean{" +
+                    "small='" + small + '\'' +
+                    ", large='" + large + '\'' +
+                    ", medium='" + medium + '\'' +
+                    '}';
         }
     }
 
@@ -440,6 +459,25 @@ public class DoubanMovieBean {
             public void setMedium(String medium) {
                 this.medium = medium;
             }
+
+            @Override
+            public String toString() {
+                return "AvatarsBean{" +
+                        "small='" + small + '\'' +
+                        ", large='" + large + '\'' +
+                        ", medium='" + medium + '\'' +
+                        '}';
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "CastsBean{" +
+                    "alt='" + alt + '\'' +
+                    ", avatars=" + avatars +
+                    ", name='" + name + '\'' +
+                    ", id='" + id + '\'' +
+                    '}';
         }
     }
 
@@ -523,5 +561,48 @@ public class DoubanMovieBean {
                 this.medium = medium;
             }
         }
+
+        @Override
+        public String toString() {
+            return "DirectorsBean{" +
+                    "alt='" + alt + '\'' +
+                    ", avatars=" + avatars +
+                    ", name='" + name + '\'' +
+                    ", id='" + id + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "DoubanMovieBean{" +
+                "rating=" + rating +
+                ", reviews_count=" + reviews_count +
+                ", wish_count=" + wish_count +
+                ", douban_site='" + douban_site + '\'' +
+                ", year='" + year + '\'' +
+                ", images=" + images +
+                ", alt='" + alt + '\'' +
+                ", id='" + id + '\'' +
+                ", mobile_url='" + mobile_url + '\'' +
+                ", title='" + title + '\'' +
+                ", do_count=" + do_count +
+                ", share_url='" + share_url + '\'' +
+                ", seasons_count=" + seasons_count +
+                ", schedule_url='" + schedule_url + '\'' +
+                ", episodes_count='" + episodes_count + '\'' +
+                ", collect_count=" + collect_count +
+                ", current_season='" + current_season + '\'' +
+                ", original_title='" + original_title + '\'' +
+                ", summary='" + summary + '\'' +
+                ", subtype='" + subtype + '\'' +
+                ", comments_count=" + comments_count +
+                ", ratings_count=" + ratings_count +
+                ", countries=" + countries +
+                ", genres=" + genres +
+                ", casts=" + casts +
+                ", directors=" + directors +
+                ", aka=" + aka +
+                '}';
     }
 }

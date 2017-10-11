@@ -1,5 +1,7 @@
 package com.baixiang.service;
 
+import com.alibaba.fastjson.JSON;
+import com.baixiang.model.DoubanMovieBean;
 import com.baixiang.model.Movie;
 import com.baixiang.utils.logger.LogUtil;
 import com.baixiang.utils.Urls;
@@ -28,14 +30,14 @@ public class DoubanService {
         for (Movie movie : moviePage) {
             if (i < 5) {
                 i++;
-                getDoubanMovieInfo(movie.getDoubanId());
+                getDoubanMovieInfo(movie);
             }
         }
     }
 
-    private void getDoubanMovieInfo(long doubanId) {
+    private void getDoubanMovieInfo(Movie movie) {
         OkHttpClient okHttpClient = new OkHttpClient();
-        String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, doubanId);
+        String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, movie.getDoubanId());
 //        logger.info("url=" + url);
         LogUtil.info(DoubanService.class, "url=" + url);
         Request request = new Request.Builder().tag("get_movie_info").url(url).build();
@@ -48,6 +50,8 @@ public class DoubanService {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string();
+                DoubanMovieBean doubanMovieBean = JSON.parseObject(responseBody, DoubanMovieBean.class);
+
                 LogUtil.json(responseBody);
             }
         });

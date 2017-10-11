@@ -1,6 +1,7 @@
 package com.baixiang.service;
 
 import com.baixiang.model.Movie;
+import com.baixiang.utils.logger.LogUtil;
 import com.baixiang.utils.Urls;
 import okhttp3.*;
 import org.slf4j.Logger;
@@ -12,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
 
 @Service
 public class DoubanService {
@@ -36,7 +36,8 @@ public class DoubanService {
     private void getDoubanMovieInfo(long doubanId) {
         OkHttpClient okHttpClient = new OkHttpClient();
         String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, doubanId);
-        logger.info("url=" + url);
+//        logger.info("url=" + url);
+        LogUtil.info(DoubanService.class, "url=" + url);
         Request request = new Request.Builder().tag("get_movie_info").url(url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -47,7 +48,7 @@ public class DoubanService {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String responseBody = response.body().string();
-                logger.info(responseBody);
+                LogUtil.json(responseBody);
             }
         });
     }

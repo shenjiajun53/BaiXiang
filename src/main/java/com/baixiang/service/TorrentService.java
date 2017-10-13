@@ -1,8 +1,7 @@
 package com.baixiang.service;
 
-import com.baixiang.controller.UserController;
-import com.baixiang.model.MovieTorrent;
-import com.baixiang.repository.TorrentRepository;
+import com.baixiang.model.jpa.MovieTorrent;
+import com.baixiang.repository.jpa.TorrentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

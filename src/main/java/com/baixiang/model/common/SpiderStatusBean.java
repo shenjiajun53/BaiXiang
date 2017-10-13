@@ -1,8 +1,9 @@
-package com.baixiang.model;
+package com.baixiang.model.common;
 
 public class SpiderStatusBean {
     private boolean isBtRunning = false;
     private boolean isHuaRunning = false;
+    private boolean isDoubanRunnin = false;
 
     public boolean isBtRunning() {
         return isBtRunning;
@@ -18,5 +19,13 @@ public class SpiderStatusBean {
 
     public void setHuaRunning(boolean huaRunning) {
         isHuaRunning = huaRunning;
+    }
+
+    public boolean isDoubanRunnin() {
+        return isDoubanRunnin;
+    }
+
+    public void setDoubanRunnin(boolean doubanRunnin) {
+        isDoubanRunnin = doubanRunnin;
     }
 }

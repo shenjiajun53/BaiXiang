@@ -1,9 +1,9 @@
 package com.baixiang.spider.pipeline;
 
-import com.baixiang.model.Actor;
-import com.baixiang.model.Movie;
-import com.baixiang.model.MovieTag;
-import com.baixiang.model.SpiderMovieBean;
+import com.baixiang.model.jpa.Actor;
+import com.baixiang.model.jpa.Movie;
+import com.baixiang.model.jpa.MovieTag;
+import com.baixiang.model.common.SpiderMovieBean;
 import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TagService;
@@ -15,14 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.baixiang.utils.FileUtil.POSTER_PATH;
 
@@ -30,8 +28,8 @@ import static com.baixiang.utils.FileUtil.POSTER_PATH;
  * Created by shenjj on 2017/6/21.
  */
 
-@Component
-@ComponentScan()
+@Service
+//@ComponentScan()
 public class MoviePipeline implements Pipeline {
     private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
     public final static String SPIDER_MOVIE_BEAN = "spider_movie_bean";

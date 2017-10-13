@@ -1,7 +1,7 @@
 package com.baixiang.service;
 
-import com.baixiang.model.MovieTag;
-import com.baixiang.repository.TagRepository;
+import com.baixiang.model.jpa.MovieTag;
+import com.baixiang.repository.jpa.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

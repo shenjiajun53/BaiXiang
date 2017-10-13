@@ -1,4 +1,4 @@
-package com.baixiang.model;
+package com.baixiang.model.jpa;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -1,9 +1,7 @@
-package com.baixiang.model;
+package com.baixiang.model.mongo;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
 
 /**
  * Created by shenjj on 2017/5/9.

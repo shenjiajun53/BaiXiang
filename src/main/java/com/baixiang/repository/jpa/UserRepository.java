@@ -1,6 +1,6 @@
-package com.baixiang.repository;
+package com.baixiang.repository.jpa;
 
-import com.baixiang.model.User;
+import com.baixiang.model.jpa.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

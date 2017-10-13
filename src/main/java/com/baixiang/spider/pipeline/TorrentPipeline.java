@@ -1,8 +1,8 @@
 package com.baixiang.spider.pipeline;
 
-import com.baixiang.model.Movie;
-import com.baixiang.model.MovieTorrent;
-import com.baixiang.model.SpiderTorrentBean;
+import com.baixiang.model.jpa.Movie;
+import com.baixiang.model.jpa.MovieTorrent;
+import com.baixiang.model.common.SpiderTorrentBean;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TorrentService;
 import com.baixiang.utils.FileUtil;
@@ -17,7 +17,6 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
-import static com.baixiang.spider.processor.BtTianTangProcessor.MOVIE_TITLE;
 import static com.baixiang.utils.FileUtil.TORRENT_PATH;
 
 /**
@@ -26,7 +25,7 @@ import static com.baixiang.utils.FileUtil.TORRENT_PATH;
 
 @Component
 public class TorrentPipeline implements Pipeline {
-    private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
+    private static final Logger logger = LoggerFactory.getLogger(TorrentPipeline.class);
     public final static String SPIDER_TORRENT_BEAN = "spider_torrent_bean";
 //    public final static String TORRENT_NAME = "torrent_title";
 //    public final static String MAGNET_URL = "magnet_url";

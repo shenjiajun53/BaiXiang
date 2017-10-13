@@ -36,12 +36,12 @@ public final class Urls {
     //豆瓣api
     public final static String DOUBAN_BASE_URL = "https://api.douban.com";
     //影片信息：  /v2/movie/subject/1764796
-    public final static String DOUBAN_GET_MOVIE_INFO = DOUBAN_BASE_URL + "/v2/movie/subject/%d";
-    public final static String DOUBAN_GET_MOVIE_PHOTOS = DOUBAN_BASE_URL + "/v2/movie/subject/%d/photos";
+    public final static String DOUBAN_GET_MOVIE_INFO = DOUBAN_BASE_URL + "/v2/movie/subject/%s";
+    public final static String DOUBAN_GET_MOVIE_PHOTOS = DOUBAN_BASE_URL + "/v2/movie/subject/%s/photos";
     //评论
-    public final static String DOUBAN_GET_MOVIE_REVIEWS = DOUBAN_BASE_URL + "/v2/movie/subject/%d/reviews";
+    public final static String DOUBAN_GET_MOVIE_REVIEWS = DOUBAN_BASE_URL + "/v2/movie/subject/%s/reviews";
     //短评
-    public final static String DOUBAN_GET_MOVIE_COMMENTS = DOUBAN_BASE_URL + "/v2/movie/subject/%d/comments";
+    public final static String DOUBAN_GET_MOVIE_COMMENTS = DOUBAN_BASE_URL + "/v2/movie/subject/%s/comments";
     public final static String DOUBAN_GET_ACTOR_INFO = DOUBAN_BASE_URL + "";
     public final static String DOUBAN_SEARCH_MOVIE = DOUBAN_BASE_URL + "";
     //正在热映

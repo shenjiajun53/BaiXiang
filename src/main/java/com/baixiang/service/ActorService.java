@@ -1,7 +1,7 @@
 package com.baixiang.service;
 
-import com.baixiang.model.Actor;
-import com.baixiang.repository.ActorRepository;
+import com.baixiang.model.jpa.Actor;
+import com.baixiang.repository.jpa.ActorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

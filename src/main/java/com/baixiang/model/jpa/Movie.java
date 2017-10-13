@@ -1,12 +1,7 @@
-package com.baixiang.model;
+package com.baixiang.model.jpa;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -48,7 +43,7 @@ public class Movie implements Serializable {
     private Long viewTimes;
 
     private String doubanUrl;
-    private long doubanId;
+    private String doubanId;
     private String imdbUrl;
 
     /*
@@ -292,11 +287,11 @@ public class Movie implements Serializable {
         this.doubanUrl = doubanUrl;
     }
 
-    public long getDoubanId() {
+    public String getDoubanId() {
         return doubanId;
     }
 
-    public void setDoubanId(long doubanId) {
+    public void setDoubanId(String doubanId) {
         this.doubanId = doubanId;
     }
 

@@ -1,8 +1,8 @@
 package com.baixiang.service;
 
-import com.baixiang.model.User;
+import com.baixiang.model.jpa.User;
 import com.baixiang.repository.hibernateRepository.UserHibernateRepository;
-import com.baixiang.repository.UserRepository;
+import com.baixiang.repository.jpa.UserRepository;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.baixiang.model;
+package com.baixiang.model.response;
 
 /**
  * Created by shenjj on 2017/4/11.

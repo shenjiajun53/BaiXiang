@@ -1,7 +1,5 @@
 package com.baixiang.utils.logger;
 
-import com.baixiang.service.DoubanService;
-import com.baixiang.utils.logger.JsonFormatter;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

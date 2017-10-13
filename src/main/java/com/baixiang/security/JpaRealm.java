@@ -1,9 +1,8 @@
 package com.baixiang.security;
 
 import com.baixiang.exception.UserNotFoundException;
-import com.baixiang.model.Role;
-import com.baixiang.model.User;
-import com.baixiang.service.RoleService;
+import com.baixiang.model.mongo.Role;
+import com.baixiang.model.jpa.User;
 import com.baixiang.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

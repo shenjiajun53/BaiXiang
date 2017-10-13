@@ -1,7 +1,7 @@
 package com.baixiang.spider.processor;
 
-import com.baixiang.model.SpiderMovieBean;
-import com.baixiang.model.SpiderTorrentBean;
+import com.baixiang.model.common.SpiderMovieBean;
+import com.baixiang.model.common.SpiderTorrentBean;
 import com.baixiang.spider.pipeline.MoviePipeline;
 import com.baixiang.spider.pipeline.TorrentPipeline;
 import com.baixiang.utils.FileUtil;
@@ -16,13 +16,10 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.scheduler.FileCacheQueueScheduler;
-import us.codecraft.webmagic.scheduler.PriorityScheduler;
 import us.codecraft.webmagic.selector.Selectable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.baixiang.spider.pipeline.MoviePipeline.*;
 import static com.baixiang.spider.pipeline.TorrentPipeline.*;
@@ -133,7 +130,7 @@ public class BtTianTangProcessor implements PageProcessor {
                 if (str.contains("movie.douban.com")) {
                     String doubanUrl = RegexUtil.findFirst(str, "[a-zA-z]+://[^\\s]*");
                     doubanUrl = doubanUrl.replaceAll("/\"", "");
-                    long doubanId = Long.parseLong(doubanUrl.replaceAll("http://movie.douban.com/subject/", ""));
+                    String doubanId = doubanUrl.replaceAll("http://movie.douban.com/subject/", "");
                     spiderMovieBean.setDoubanId(doubanId);
                     spiderMovieBean.setDoubanUrl(doubanUrl);
                 }

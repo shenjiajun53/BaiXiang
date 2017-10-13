@@ -1,8 +1,7 @@
 package com.baixiang.spider.pipeline;
 
-import com.baixiang.model.Film;
+import com.baixiang.model.jpa.Film;
 import com.baixiang.repository.hibernateRepository.FilmHibernateRepository;
-import com.baixiang.spider.pipeline.MoviePipeline;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 
 @Service
 public class FilmPipeline implements Pipeline {
-    private static final Logger logger = LoggerFactory.getLogger(MoviePipeline.class);
+    private static final Logger logger = LoggerFactory.getLogger(FilmPipeline.class);
     public final static String FILM_TITLE = "film_title";
     public final static String FILM_INFO = "film_info";
     public final static String FILM_URL = "film_poster";

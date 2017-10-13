@@ -29,14 +29,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-data-mongodb</artifactId>-->
-        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-mustache</artifactId>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-mustache</artifactId>-->
         <!--</dependency>-->
 
         <dependency>
@@ -134,21 +135,21 @@
 
         <!--&lt;!&ndash; Spring AspectJ support &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-aspects</artifactId>-->
-            <!--<version>${spring.version}</version>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-aspects</artifactId>-->
+        <!--<version>${spring.version}</version>-->
         <!--</dependency>-->
 
         <!--&lt;!&ndash; Spring AspectJ has these as dependencies but fails to declare them &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework</groupId>-->
-            <!--<artifactId>spring-tx</artifactId>-->
+        <!--<groupId>org.springframework</groupId>-->
+        <!--<artifactId>spring-tx</artifactId>-->
         <!--</dependency>-->
 
         <!--&lt;!&ndash; AspectJ runtime &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.aspectj</groupId>-->
-            <!--<artifactId>aspectjrt</artifactId>-->
+        <!--<groupId>org.aspectj</groupId>-->
+        <!--<artifactId>aspectjrt</artifactId>-->
         <!--</dependency>-->
 
         <dependency>
@@ -160,17 +161,17 @@
 
         <!--&lt;!&ndash; marked the embedded servlet container as provided &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-            <!--<scope>provided</scope>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--<scope>provided</scope>-->
         <!--</dependency>-->
 
         <!--&lt;!&ndash; https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>javax.servlet</groupId>-->
-            <!--<artifactId>javax.servlet-api</artifactId>-->
-            <!--<version>4.0.0</version>-->
-            <!--<scope>provided</scope>-->
+        <!--<groupId>javax.servlet</groupId>-->
+        <!--<artifactId>javax.servlet-api</artifactId>-->
+        <!--<version>4.0.0</version>-->
+        <!--<scope>provided</scope>-->
         <!--</dependency>-->
     </dependencies>
 
@@ -182,29 +183,29 @@
             </plugin>
 
             <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>aspectj-maven-plugin</artifactId>-->
-                <!--<version>1.10</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>compile</goal>       &lt;!&ndash; use this goal to weave all your main classes &ndash;&gt;-->
-                            <!--<goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<complianceLevel>${java.version}</complianceLevel>-->
-                    <!--<source>${java.version}</source>-->
-                    <!--<target>${java.version}</target>-->
-                    <!--<aspectLibraries>-->
-                        <!--<aspectLibrary>-->
-                            <!--<groupId>org.springframework</groupId>-->
-                            <!--<artifactId>spring-aspects</artifactId>-->
-                        <!--</aspectLibrary>-->
-                    <!--</aspectLibraries>-->
-                    <!--<Xlint>ignore</Xlint>-->
-                <!--</configuration>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>aspectj-maven-plugin</artifactId>-->
+            <!--<version>1.10</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>compile</goal>       &lt;!&ndash; use this goal to weave all your main classes &ndash;&gt;-->
+            <!--<goal>test-compile</goal>  &lt;!&ndash; use this goal to weave all your test classes &ndash;&gt;-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--<configuration>-->
+            <!--<complianceLevel>${java.version}</complianceLevel>-->
+            <!--<source>${java.version}</source>-->
+            <!--<target>${java.version}</target>-->
+            <!--<aspectLibraries>-->
+            <!--<aspectLibrary>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-aspects</artifactId>-->
+            <!--</aspectLibrary>-->
+            <!--</aspectLibraries>-->
+            <!--<Xlint>ignore</Xlint>-->
+            <!--</configuration>-->
             <!--</plugin>-->
         </plugins>
     </build>

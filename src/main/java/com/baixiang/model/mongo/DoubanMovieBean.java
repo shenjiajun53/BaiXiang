@@ -1,7 +1,10 @@
-package com.baixiang.model;
+package com.baixiang.model.mongo;
+
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
+@Document(collection = "DoubanMovie")
 public class DoubanMovieBean {
 
     /**

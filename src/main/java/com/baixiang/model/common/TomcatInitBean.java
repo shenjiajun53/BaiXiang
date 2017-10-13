@@ -1,4 +1,4 @@
-package com.baixiang.model;
+package com.baixiang.model.common;
 
 import org.springframework.stereotype.Component;
 

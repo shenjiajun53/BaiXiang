@@ -1,5 +1,7 @@
-package com.baixiang.model;
+package com.baixiang.model.jpa;
 
+
+import com.baixiang.model.mongo.Role;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

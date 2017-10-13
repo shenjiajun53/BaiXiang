@@ -1,8 +1,8 @@
 package com.baixiang.controller;
 
-import com.baixiang.model.Response;
-import com.baixiang.model.SpiderStatusBean;
-import com.baixiang.service.DoubanService;
+import com.baixiang.model.response.Response;
+import com.baixiang.model.common.SpiderStatusBean;
+import com.baixiang.service.DoubanPatchService;
 import com.baixiang.spider.processor.BtTianTangProcessor;
 import com.baixiang.spider.processor.TaohuaProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class SpiderController {
     TaohuaProcessor taohuaProcessor;
 
     @Autowired
-    DoubanService doubanService;
+    DoubanPatchService doubanPatchService;
 
     @RequestMapping(value = API_START_SPIDER_BT, method = RequestMethod.POST)
     public void startBt() {
@@ -51,18 +51,19 @@ public class SpiderController {
 
     @RequestMapping(value = API_START_DOUBAN_PATCH, method = RequestMethod.POST)
     public void startDouban() {
-        doubanService.startDoubanPatch();
+        doubanPatchService.startDoubanPatch();
     }
 
     @RequestMapping(value = API_STOP_DOUBAN_PATCH, method = RequestMethod.POST)
     public void stopDouban() {
-//        taohuaProcessor.stop();
+        doubanPatchService.stop();
     }
 
     @RequestMapping(value = API_GET_SPIDER_STATUS, method = RequestMethod.POST)
     public Response getSpiderStatus() {
         SpiderStatusBean spiderStatusBean = new SpiderStatusBean();
         spiderStatusBean.setBtRunning(btTianTangProcessor.isRunning());
+        spiderStatusBean.setDoubanRunnin(doubanPatchService.isRunning());
         return new Response<>(spiderStatusBean, null);
     }
 }

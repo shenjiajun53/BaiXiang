@@ -1,8 +1,11 @@
 package com.baixiang.controller;
 
 import com.baixiang.exception.UserNotFoundException;
-import com.baixiang.model.*;
-import com.baixiang.model.Error;
+import com.baixiang.model.jpa.User;
+import com.baixiang.model.mongo.Role;
+import com.baixiang.model.response.Error;
+import com.baixiang.model.response.RedirectBean;
+import com.baixiang.model.response.Response;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.SecurityUtils;

@@ -1,28 +1,25 @@
-package com.baixiang.model;
+package com.baixiang.model.jpa;
 
+import com.baixiang.model.jpa.Movie;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by Administrator on 2017/5/22.
+ * Created by shenjj on 2017/5/19.
  */
 
 @Entity
-@Table(name = "movie_torrents")
-public class MovieTorrent implements Serializable {
+@Table(name = "movie_images")
+public class MovieImage implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
-    private String filePath;
+    private String url;
 
-    private String torrentName;
-
-    @Column(columnDefinition = "LONGTEXT")
-    private String magnetUrl;
+    private String imageName;
 
 
      /*
@@ -44,7 +41,7 @@ public class MovieTorrent implements Serializable {
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
 
-    public MovieTorrent() {
+    public MovieImage() {
     }
 
     public long getId() {
@@ -55,20 +52,20 @@ public class MovieTorrent implements Serializable {
         this.id = id;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getUrl() {
+        return url;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public String getTorrentName() {
-        return torrentName;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setTorrentName(String torrentName) {
-        this.torrentName = torrentName;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Movie getMovie() {
@@ -79,21 +76,13 @@ public class MovieTorrent implements Serializable {
         this.movie = movie;
     }
 
-    public String getMagnetUrl() {
-        return magnetUrl;
-    }
-
-    public void setMagnetUrl(String magnetUrl) {
-        this.magnetUrl = magnetUrl;
-    }
-
     @Override
     public String toString() {
-        return "MovieTorrent{" +
+        return "MovieImage{" +
                 "id=" + id +
-                ", filePath='" + filePath + '\'' +
-                ", torrentName='" + torrentName + '\'' +
-//                ", movie=" + movie +
+                ", url='" + url + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", movie=" + movie +
                 '}';
     }
 }

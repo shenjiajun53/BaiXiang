@@ -1,13 +1,11 @@
-package com.baixiang.repository;
+package com.baixiang.repository.jpa;
 
-import com.baixiang.model.Actor;
-import com.baixiang.model.Movie;
-import com.baixiang.model.MovieTag;
+import com.baixiang.model.jpa.Actor;
+import com.baixiang.model.jpa.Movie;
+import com.baixiang.model.jpa.MovieTag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

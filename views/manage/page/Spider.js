@@ -26,7 +26,8 @@ export default class Spider extends React.Component {
             .then((json) => {
                 console.log(JSON.stringify(json));
                 this.setState({
-                    isBtRunning: json.result.btRunning
+                    isBtRunning: json.result.btRunning,
+                    isDoubanRunning: json.result.doubanRunning
                 })
             })
     }

@@ -1,12 +1,11 @@
 package com.baixiang.service;
 
-import com.baixiang.model.Actor;
-import com.baixiang.model.Movie;
-import com.baixiang.model.MovieTag;
-import com.baixiang.repository.ActorRepository;
-import com.baixiang.repository.MovieRepository;
+import com.baixiang.model.jpa.Actor;
+import com.baixiang.model.jpa.Movie;
+import com.baixiang.model.jpa.MovieTag;
+import com.baixiang.repository.jpa.ActorRepository;
+import com.baixiang.repository.jpa.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

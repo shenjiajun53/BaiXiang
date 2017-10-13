@@ -1,6 +1,6 @@
 package com.baixiang.config;
 
-import com.baixiang.model.TomcatInitBean;
+import com.baixiang.model.common.TomcatInitBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

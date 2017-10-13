@@ -1,5 +1,6 @@
-package com.baixiang.model;
+package com.baixiang.model.jpa;
 
+import com.baixiang.model.jpa.Movie;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

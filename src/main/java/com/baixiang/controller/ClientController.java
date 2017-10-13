@@ -1,7 +1,7 @@
 package com.baixiang.controller;
 
-import com.baixiang.model.Movie;
-import com.baixiang.model.User;
+import com.baixiang.model.jpa.Movie;
+import com.baixiang.model.jpa.User;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.Urls;

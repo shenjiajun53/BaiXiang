@@ -1,4 +1,4 @@
-package com.baixiang.model;
+package com.baixiang.model.common;
 
 import javax.persistence.Column;
 import javax.persistence.Temporal;
@@ -11,7 +11,7 @@ public class SpiderMovieBean {
     private String movieInfo;
     private String poster;
     private String doubanUrl;
-    private long doubanId;
+    private String doubanId;
     private String imdbUrl;
     private ArrayList<String> tagList;
     private ArrayList<String> actorList;
@@ -49,11 +49,11 @@ public class SpiderMovieBean {
         this.doubanUrl = doubanUrl;
     }
 
-    public long getDoubanId() {
+    public String getDoubanId() {
         return doubanId;
     }
 
-    public void setDoubanId(long doubanId) {
+    public void setDoubanId(String doubanId) {
         this.doubanId = doubanId;
     }
 

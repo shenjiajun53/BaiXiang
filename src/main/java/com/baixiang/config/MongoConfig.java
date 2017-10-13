@@ -1,31 +1,32 @@
 package com.baixiang.config;
 
-//import com.mongodb.Mongo;
-//import com.mongodb.MongoClient;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
-//import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.core.MongoClientFactoryBean;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
  * Created by shenjiajun on 2017/4/3.
  */
 
-//@Configuration
-//@EnableMongoRepositories(basePackages = "com.baixiang")
-public class MongoConfig
-//        extends AbstractMongoConfiguration
-{
+@Configuration
+@EnableMongoRepositories(basePackages = "com.baixiang")
+public class MongoConfig extends AbstractMongoConfiguration {
 
+    @Override
+    protected String getDatabaseName() {
+        return "baixiang";
+    }
 
-//    @Override
-//    protected String getDatabaseName() {
-//        return "BaiXiang";
-//    }
-//
-//    @Override
-//    public Mongo mongo() throws Exception {
-//        return new MongoClient();
-//    }
+    @Override
+    public Mongo mongo() throws Exception {
+        return new MongoClient();
+    }
 
 
 //    @Bean
@@ -36,9 +37,9 @@ public class MongoConfig
 //        return factoryBean;
 //    }
 
-//    @Bean
-//    public MongoOperations mongoTemplate(Mongo mongo) {
-//        // 操作Mongo的模板类，提供了非常纯粹的oo操作数据库的api
-//        return new MongoTemplate(mongo, "oneblog"); // dbtest 为数据库名
-//    }
+    @Bean
+    public MongoOperations mongoTemplate(Mongo mongo) {
+        // 操作Mongo的模板类，提供了非常纯粹的oo操作数据库的api
+        return new MongoTemplate(mongo, "moviedb"); // dbtest 为数据库名
+    }
 }

@@ -25,19 +25,47 @@ public class DoubanPatchService {
     private DoubanMovieService doubanMovieService;
 
     private int currentNum = 0;
+    private int movieIndex = 0;
+    private int pageNumber = 0;
     private Page<Movie> moviePage;
     private boolean isRunning = false;
     private OkHttpClient okHttpClient = new OkHttpClient();
 
     public void startDoubanPatch() {
         isRunning = true;
-        Pageable pageable = new PageRequest(currentNum, 40);
+        currentNum = 0;
+        movieIndex = 0;
+        Pageable pageable = new PageRequest(movieIndex, 40);
         moviePage = movieService.getByPage(pageable);
         getDoubanMovieInfo(moviePage.getContent().get(currentNum));
     }
 
+    private void getNext() {
+        currentNum++;
+        if (currentNum >= moviePage.getSize()) {
+            if (0 == pageNumber || movieIndex < pageNumber) {
+                movieIndex++;
+                Pageable pageable = new PageRequest(movieIndex, 40);
+                moviePage = movieService.getByPage(pageable);
+//            LogUtil.info("getPageNumber=" + pageable.getPageNumber() + " getPageSize=" + pageable.getPageSize());
+                LogUtil.info("getTotalPages=" + moviePage.getTotalPages() + " getTotalElements=" + moviePage.getTotalElements());
+                pageNumber = moviePage.getTotalPages();
+                currentNum = 0;
+            } else {
+                LogUtil.info("get movie finished");
+            }
+        }
+    }
+
     private void getDoubanMovieInfo(Movie movie) {
         if (!isRunning) {
+            return;
+        }
+        if (null != doubanMovieService.getById(movie.getDoubanId())) {
+            getNext();
+            if (currentNum < moviePage.getSize()) {
+                getDoubanMovieInfo(moviePage.getContent().get(currentNum));
+            }
             return;
         }
         String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, movie.getDoubanId());
@@ -55,11 +83,18 @@ public class DoubanPatchService {
                 String responseBody = response.body().string();
                 DoubanMovieBean doubanMovieBean = JSON.parseObject(responseBody, DoubanMovieBean.class);
                 if (doubanMovieBean.getId() != null) {
+                    doubanMovieBean.setMovieId(movie.getId());
                     doubanMovieService.save(doubanMovieBean);
                 }
                 LogUtil.info(doubanMovieBean.toString());
-                currentNum++;
-                getDoubanMovieInfo(moviePage.getContent().get(currentNum));
+                getNext();
+                if (currentNum < moviePage.getSize()) {
+                    getDoubanMovieInfo(moviePage.getContent().get(currentNum));
+                }
+                if (doubanMovieBean.getCode() == 112) {
+                    LogUtil.info(doubanMovieBean.getMsg());
+                    stop();
+                }
             }
         });
     }

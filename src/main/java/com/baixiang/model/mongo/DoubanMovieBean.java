@@ -38,6 +38,12 @@ public class DoubanMovieBean {
      * aka : ["西方极乐园"]
      */
 
+    private long movieId;
+
+    private String msg;
+    private int code;
+    private String request;
+
     private RatingBean rating;
     private int reviews_count;
     private int wish_count;
@@ -65,6 +71,38 @@ public class DoubanMovieBean {
     private List<CastsBean> casts;
     private List<DirectorsBean> directors;
     private List<String> aka;
+
+    public long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getRequest() {
+        return request;
+    }
+
+    public void setRequest(String request) {
+        this.request = request;
+    }
 
     public RatingBean getRating() {
         return rating;
@@ -579,7 +617,11 @@ public class DoubanMovieBean {
     @Override
     public String toString() {
         return "DoubanMovieBean{" +
-                "rating=" + rating +
+                "movieId=" + movieId +
+                ", msg='" + msg + '\'' +
+                ", code=" + code +
+                ", request='" + request + '\'' +
+                ", rating=" + rating +
                 ", reviews_count=" + reviews_count +
                 ", wish_count=" + wish_count +
                 ", douban_site='" + douban_site + '\'' +

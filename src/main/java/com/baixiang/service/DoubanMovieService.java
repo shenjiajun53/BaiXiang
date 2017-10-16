@@ -13,4 +13,8 @@ public class DoubanMovieService {
     public DoubanMovieBean save(DoubanMovieBean doubanMovieBean) {
         return doubanMovieRepository.save(doubanMovieBean);
     }
+
+    public DoubanMovieBean getById(String id) {
+        return doubanMovieRepository.findOne(id);
+    }
 }

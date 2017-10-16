@@ -30,6 +30,8 @@ public class MovieService {
     private ActorRepository actorRepository;
     @Autowired
     private TagService tagService;
+    @Autowired
+    private DoubanMovieService doubanMovieService;
 
     public Movie save(Movie movie) {
         movie.setUpdateDate(new Date());
@@ -43,6 +45,8 @@ public class MovieService {
 //        movie.getMovieTagSet().clear();
 //        movie.getMovieTorrents().clear();
 //        movie.getScreenShots().clear();
+        Movie movie = movieRepository.getById(id);
+        doubanMovieService.deleteById(movie.getDoubanId());
         movieRepository.delete(id);
     }
 

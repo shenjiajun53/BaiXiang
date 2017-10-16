@@ -28,6 +28,11 @@
 
         <img th:src="@{${movie.poster}}" style="width: 200px;margin-bottom: 1em"/>
 
+        <h2 style="margin-bottom: 10px" th:hidden="${doubanInfo.directors.size()==0}">导演</h2>
+        <span th:each="director : ${doubanInfo.directors}" style="margin-bottom: 1em">
+            <a th:text="${director.name}" th:href="@{${'/movie_list?actor='+director.name}}"></a>
+        </span>
+
         <h2 style="margin-bottom: 10px" th:hidden="${movie.actorSet.size()==0}">演员表</h2>
         <div th:each="actor : ${movie.actorSet}" style="margin-bottom: 1em">
             <a th:text="${actor.actorName}" th:href="@{${'/movie_list?actor='+actor.actorName}}"></a>

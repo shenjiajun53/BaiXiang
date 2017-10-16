@@ -2,6 +2,7 @@ package com.baixiang.controller;
 
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.User;
+import com.baixiang.service.DoubanMovieService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.Urls;
@@ -29,10 +30,13 @@ import java.util.ArrayList;
 public class ClientController {
     private static final Logger logger = LoggerFactory.getLogger(ClientController.class);
     @Autowired
-    MovieService movieService;
+    private MovieService movieService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
+
+    @Autowired
+    private DoubanMovieService doubanMovieService;
 
     private static final int PAGE_SIZE = 10;
 
@@ -69,7 +73,9 @@ public class ClientController {
             maxPage = (int) Math.ceil(((double) movieService.getSizeByTag(tag)) / PAGE_SIZE);  //进一
         } else if (!TextUtils.isEmpty(actor)) {
             movieArrayList = movieService.getByActor(actor, pageable);
-            logger.info(movieArrayList.toString());
+            if (null != movieArrayList) {
+                logger.info(movieArrayList.toString());
+            }
             maxPage = (int) Math.ceil(((double) movieService.getSizeByActor(actor)) / PAGE_SIZE);  //进一
         }
         modelAndView.addObject("movieList", movieArrayList);
@@ -96,6 +102,7 @@ public class ClientController {
             movie.setViewTimes(++viewTimes);
             movieService.save(movie);
             modelAndView.addObject("movie", movie);
+            modelAndView.addObject("doubanInfo", doubanMovieService.getById(movie.getDoubanId()));
         } else {
             modelAndView.setViewName("/default/error_page");
         }

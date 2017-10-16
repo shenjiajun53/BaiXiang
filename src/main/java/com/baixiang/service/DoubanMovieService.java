@@ -17,4 +17,8 @@ public class DoubanMovieService {
     public DoubanMovieBean getById(String id) {
         return doubanMovieRepository.findOne(id);
     }
+
+    public void deleteById(String id) {
+        doubanMovieRepository.delete(id);
+    }
 }

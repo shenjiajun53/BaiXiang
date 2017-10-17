@@ -55,17 +55,22 @@ public class DoubanPatchService {
                 LogUtil.info("get movie finished");
             }
         }
+
+        if (currentNum < moviePage.getContent().size()) {
+            getDoubanMovieInfo(moviePage.getContent().get(currentNum));
+        }
     }
 
     private void getDoubanMovieInfo(Movie movie) {
         if (!isRunning) {
             return;
         }
+        if (null == movie.getDoubanId()) {
+            getNext();
+            return;
+        }
         if (null != doubanMovieService.getById(movie.getDoubanId())) {
             getNext();
-            if (currentNum < moviePage.getSize()) {
-                getDoubanMovieInfo(moviePage.getContent().get(currentNum));
-            }
             return;
         }
         String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, movie.getDoubanId());
@@ -88,9 +93,6 @@ public class DoubanPatchService {
                 }
                 LogUtil.info(doubanMovieBean.toString());
                 getNext();
-                if (currentNum < moviePage.getSize()) {
-                    getDoubanMovieInfo(moviePage.getContent().get(currentNum));
-                }
                 if (doubanMovieBean.getCode() == 112) {
                     LogUtil.info(doubanMovieBean.getMsg());
                     stop();

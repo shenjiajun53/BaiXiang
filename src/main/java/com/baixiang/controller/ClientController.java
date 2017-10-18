@@ -2,6 +2,7 @@ package com.baixiang.controller;
 
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.User;
+import com.baixiang.model.response.MovieWrapBean;
 import com.baixiang.service.DoubanMovieService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
@@ -101,8 +102,9 @@ public class ClientController {
             }
             movie.setViewTimes(++viewTimes);
             movieService.save(movie);
-            modelAndView.addObject("movie", movie);
-            modelAndView.addObject("doubanInfo", doubanMovieService.getById(movie.getDoubanId()));
+            modelAndView.addObject("movie", new MovieWrapBean(movie, doubanMovieService.getById(movie.getDoubanId())));
+//            modelAndView.addObject("movie", movie);
+//            modelAndView.addObject("doubanInfo", doubanMovieService.getById(movie.getDoubanId()));
         } else {
             modelAndView.setViewName("/default/error_page");
         }

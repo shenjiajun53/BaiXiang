@@ -24,30 +24,52 @@
     <div style="display: flex;flex-direction: column;align-items: flex-start">
 
 
-        <h1 th:text="${movie.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
+        <h1 th:text="${movie.baseInfo.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
 
-        <img th:src="@{${movie.poster}}" style="width: 200px;margin-bottom: 1em"/>
+        <div th:if="${null!=movie.doubanInfo}">
+            <img th:src="@{${movie.doubanInfo.images.large}}" style="width: 200px;margin-bottom: 1em"/>
+            <span th:text="豆瓣评分+${movie.doubanInfo.rating.average}">0</span>
+            <div><a th:href="${movie.doubanInfo.share_url}">豆瓣链接</a></div>
 
-        <h2 style="margin-bottom: 10px" th:hidden="${doubanInfo.directors.size()==0}">导演</h2>
-        <span th:each="director : ${doubanInfo.directors}" style="margin-bottom: 1em">
-            <a th:text="${director.name}" th:href="@{${'/movie_list?actor='+director.name}}"></a>
+            <div th:if="${null!=movie.doubanInfo.current_season}"
+                 th:text="第+${movie.doubanInfo.current_season}+季"></div>
+            <div th:if="${null!=movie.doubanInfo.episodes_count}"
+                 th:text="共+${movie.doubanInfo.episodes_count}+集"></div>
+
+            <h2 style="margin-bottom: 10px"
+                th:hidden="${null==movie.doubanInfo||movie.doubanInfo.directors.size()==0}">
+                导演</h2>
+            <div th:if="${null!=movie.doubanInfo&&movie.doubanInfo.directors.size()>0}">
+        <span th:each="director,iter : ${movie.doubanInfo.directors}" style="margin-bottom: 1em">
+            <a th:text="${director.name}" th:href="@{${'/movie_list?actor='+director.name}}">
+            </a>
+            <span th:if="${iter.count<movie.doubanInfo.directors.size()}"> | </span>
         </span>
-
-        <h2 style="margin-bottom: 10px" th:hidden="${movie.actorSet.size()==0}">演员表</h2>
-        <div th:each="actor : ${movie.actorSet}" style="margin-bottom: 1em">
-            <a th:text="${actor.actorName}" th:href="@{${'/movie_list?actor='+actor.actorName}}"></a>
+            </div>
         </div>
 
-        <h2 style="margin-bottom: 5px" th:hidden="${movie.movieInfo==null}">介绍</h2>
-        <div th:utext="${movie.movieInfo}" style="margin-bottom: 1em"></div>
+        <div th:if="${null==movie.doubanInfo}">
+            <img th:src="@{${movie.baseInfo.poster}}" style="width: 200px;margin-bottom: 1em"/>
+        </div>
 
-        <div style="margin-bottom: 5px" th:hidden="${movie.screenShots.size()==0}">截图</div>
-        <div th:each="screenShot :${movie.screenShots}" style="margin-bottom: 1em">
+        <h2 style="margin-bottom: 10px" th:hidden="${movie.baseInfo.actorSet.size()==0}">演员表</h2>
+        <div>
+        <span th:each="actor,iter: ${movie.baseInfo.actorSet}" style="margin-bottom: 1em">
+            <a th:text="${actor.actorName}" th:href="@{${'/movie_list?actor='+actor.actorName}}"></a>
+            <span th:if="${iter.count<movie.baseInfo.actorSet.size()}"> | </span>
+        </span>
+        </div>
+
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieInfo==null}">介绍</h2>
+        <div th:utext="${movie.baseInfo.movieInfo}" style="margin-bottom: 1em"></div>
+
+        <div style="margin-bottom: 5px" th:hidden="${movie.baseInfo.screenShots.size()==0}">截图</div>
+        <div th:each="screenShot :${movie.baseInfo.screenShots}" style="margin-bottom: 1em">
             <img th:src="@{${screenShot.url}}" style="width: 200px"/>
         </div>
 
-        <h2 style="margin-bottom: 5px" th:hidden="${movie.movieTorrents.size()==0}">种子下载</h2>
-        <div th:each="torrent :${movie.movieTorrents}"
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieTorrents.size()==0}">种子下载</h2>
+        <div th:each="torrent :${movie.baseInfo.movieTorrents}"
              style="margin-bottom: 5px;display: flex;flex-direction:row;align-items: center">
             <a th:hidden="${torrent.magnetUrl==null}" th:text="${torrent.torrentName}"
                th:href="@{${torrent.magnetUrl}}"></a>
@@ -62,8 +84,8 @@
 
 <script th:inline="javascript">
     let tagName;
-    if ([[${movie!=null}]] && [[${movie.movieTagSet!=null}]]) {
-        tagName = [[${movie.movieTagSet.size()>0?movie.movieTagSet[0].tagName:""}]];
+    if ([[${movie!=null}]] && [[${movie.baseInfo.movieTagSet!=null}]]) {
+        tagName = [[${movie.baseInfo.movieTagSet.size()>0?movie.baseInfo.movieTagSet[0].tagName:""}]];
     }
 
     new Vue({

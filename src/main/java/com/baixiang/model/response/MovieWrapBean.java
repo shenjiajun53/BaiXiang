@@ -7,6 +7,14 @@ public class MovieWrapBean {
     private Movie baseInfo;
     private DoubanMovieBean doubanInfo;
 
+    public MovieWrapBean() {
+    }
+
+    public MovieWrapBean(Movie baseInfo, DoubanMovieBean doubanInfo) {
+        this.baseInfo = baseInfo;
+        this.doubanInfo = doubanInfo;
+    }
+
     public Movie getBaseInfo() {
         return baseInfo;
     }

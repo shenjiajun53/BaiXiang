@@ -15,6 +15,9 @@ public class DoubanMovieService {
     }
 
     public DoubanMovieBean getById(String id) {
+        if(null==id){
+            return null;
+        }
         return doubanMovieRepository.findOne(id);
     }
 

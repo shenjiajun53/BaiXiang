@@ -163,7 +163,7 @@ public class MovieController {
 
     @RequestMapping(value = API_SEARCH_MOVIE, method = RequestMethod.POST)
     private Response<ArrayList<Movie>> searchMovie(@RequestParam(value = "searchStr") String searchStr) {
-        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getIncludeName(searchStr);
+        ArrayList<Movie> movieArrayList = (ArrayList<Movie>) movieService.getIncludeNameFirst10(searchStr);
         Response<ArrayList<Movie>> response = new Response<>(movieArrayList, null);
         logger.info("movie size=" + movieArrayList.size());
         return response;

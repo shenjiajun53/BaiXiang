@@ -3,8 +3,9 @@
  */
 import React from 'react';
 
-import {Avatar,Card} from 'antd';
+import {Avatar, Card} from 'antd';
 import MyMenu from "./MyMenu";
+import MovieSearcher from "./MovieSearcher";
 import Urls from "../../utils/Urls";
 
 
@@ -109,6 +110,10 @@ class TopBar extends React.Component {
                     爬虫
                 </div>
 
+                <MovieSearcher onMovieSelect={(value, option) => {
+                    console.log(value)
+                    console.log(option)
+                }}/>
 
                 <div style={{
                     display: "flex",

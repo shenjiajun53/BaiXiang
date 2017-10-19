@@ -1,13 +1,15 @@
 /**
  * Created by shenjj on 2017/5/27.
  */
+import Url from "../../utils/Urls";
+
 Vue.component('my-item-zh', {
     functional: true,
     render: function (h, ctx) {
         var item = ctx.props.item;
         return h('li', ctx.data, [
             h('div', {style: {textOverflow: "ellipsis", overFlow: "hidden"}}, [item.movieName]),
-            h('span', {style: {color: "#b4b4b4", fontSize: "12px"}}, [item.movieInfo])
+            // h('span', {style: {color: "#b4b4b4", fontSize: "12px"}}, [item.movieInfo])
         ]);
     },
     props: {
@@ -29,12 +31,11 @@ let header = new Vue({
             console.log(this.activeName);
 
         },
-        searchMovie(queryString, cb){
+        searchMovie(queryString, cb) {
             console.log(queryString);
-            let url = "/api/search_movie";
             let formData = new FormData();
             formData.append("searchStr", queryString);
-            fetch(url, {
+            fetch(Url.API_SEARCH_MOVIE, {
                 method: "post",
                 body: formData,
                 credentials: 'include'     //很重要，设置session,cookie可用
@@ -60,9 +61,9 @@ let header = new Vue({
                 return (state.value.indexOf(queryString.toLowerCase()) === 0);
             };
         },
-        handleSelect(movie){
+        handleSelect(movie) {
             console.log(movie);
-            window.location.href='/movie_detail?movieId='+movie.id;
+            window.location.href = '/movie_detail?movieId=' + movie.id;
         }
     }
 });

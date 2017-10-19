@@ -10,6 +10,9 @@ import 'antd/lib/layout/style/css';
 import {Card} from "antd";
 import {Tabs} from "antd";
 
+// import  {polyfill} from 'es6-promise';
+// import fetch from 'isomorphic-fetch';
+
 import SignIn from "./page/SignIn";
 import SignUp from "./page/SignUp";
 import Urls from "../utils/Urls";

@@ -117,6 +117,10 @@ public class MovieService {
         return movieRepository.getByMovieNameContaining(nameStr);
     }
 
+    public List<Movie> getIncludeNameFirst10(String nameStr) {
+        return movieRepository.getTop10ByMovieNameContaining(nameStr);
+    }
+
 //    public List<Movie> getIncludeName(String movieName) {
 //        return movieRepository.getIncludeName(movieName);
 //    }

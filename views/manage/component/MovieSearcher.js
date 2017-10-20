@@ -36,15 +36,15 @@ export default class MovieSearcher extends React.Component {
                     })
                 } else {
                     this.setState({
-                        movieList:[]
+                        movieList: []
                     })
                 }
             })
     }
 
     render() {
-        const options = this.state.movieList.map((movie) => {
-            return (<Select.Option key={movie.movieName}>{movie.movieName}</Select.Option>)
+        const options = this.state.movieList.map((movie, index) => {
+            return (<Select.Option key={index}>{movie.movieName}</Select.Option>)
         });
 
         return (<div style={this.props.style}>
@@ -57,8 +57,14 @@ export default class MovieSearcher extends React.Component {
                     showArrow={false}
                     filterOption={false}
                     onSearch={(value) => this.searchMovie(value)}
-                    onSelect={(value, option) => this.props.onMovieSelect(value, option)}
-                // onChange={(value) => this.searchActor(value)}
+                    onSelect={(value, option) => {
+                        let movie = this.state.movieList[value];
+                        this.setState({
+                            searchStr: movie.movieName
+                        });
+                        // this.props.onMovieSelect(value, movie);
+                        location.pathname = Urls.MANAGE_EDIT_MOVIE + movie.id;
+                    }}
                     showSearch={true}
             >
                 {options}

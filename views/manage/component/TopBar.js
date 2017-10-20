@@ -110,10 +110,7 @@ class TopBar extends React.Component {
                     爬虫
                 </div>
 
-                <MovieSearcher onMovieSelect={(value, option) => {
-                    console.log(value)
-                    console.log(option)
-                }}/>
+                <MovieSearcher/>
 
                 <div style={{
                     display: "flex",

@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import Urls from "../../utils/Urls";
-import {Menu,Dropdown} from "antd";
+import {Menu, Dropdown} from "antd";
 
 let iconMenu;
 export default class MyMenu extends React.Component {
@@ -84,13 +84,16 @@ export default class MyMenu extends React.Component {
                 <Dropdown
                     placement="bottomLeft"
                     overlay=
-                        {<Menu onClick={(item) => this.onItemClick(item)}>
+                        {<Menu onClick={(item) => this.onItemClick(item)} style={{width: 100, fontSize: 14}}>
                             <Menu.Item key="HomePage">主页</Menu.Item>
                             <Menu.Item key="AddMovie">添加影片</Menu.Item>
                             <Menu.Item key="Settings">设置</Menu.Item>
                             <Menu.Item key="SignOut">退出</Menu.Item>
                         </Menu>}>
-                    <div style={{color: "#ffffff", hover: "pointer"}}>
+                    <div style={{
+                        color: "#ffffff", marginRight: "10px", cursor: "pointer",
+                        fontSize: 16
+                    }}>
                         菜单
                     </div>
                 </Dropdown>
@@ -101,12 +104,15 @@ export default class MyMenu extends React.Component {
                 <Dropdown
                     placement="bottomLeft"
                     overlay=
-                        {<Menu onClick={(item) => this.onItemClick(item)}>
+                        {<Menu onClick={(item) => this.onItemClick(item)} style={{width: 100, fontSize: 14}}>
                             <Menu.Item key="HomePage">主页</Menu.Item>
                             <Menu.Item key="SignIn">登录</Menu.Item>
                             <Menu.Item key="SignUp">注册</Menu.Item>
                         </Menu>}>
-                    <div style={{color: "#ffffff", hover: "pointer"}}>
+                    <div style={{
+                        color: "#ffffff", marginRight: "10px", cursor: "pointer",
+                        fontSize: 16
+                    }}>
                         菜单
                     </div>
                 </Dropdown>

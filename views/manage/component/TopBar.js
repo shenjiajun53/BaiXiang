@@ -110,7 +110,7 @@ class TopBar extends React.Component {
                     爬虫
                 </div>
 
-                <MovieSearcher/>
+                <MovieSearcher style={{marginRight: "10px"}}/>
 
                 <div style={{
                     display: "flex",

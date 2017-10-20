@@ -1,13 +1,21 @@
 <template>
     <div style="display: flex;flex-direction: row">
         <div v-for="(breadcrumbItem , index) in breadcrumbList" style="display: flex;flex-direction: row">
-            <a :href="breadcrumbItem.url" style="">{{breadcrumbItem.itemName}}</a>
+            <div v-if="breadcrumbItem.url">
+                <a :href="breadcrumbItem.url" style="">{{breadcrumbItem.itemName}}</a>
+            </div>
+            <div v-else>
+                <div v-for="(subItem , subIndex) in breadcrumbItem">
+                    <a :href="subItem.url" style="">{{subItem.itemName}}</a>
+                    <div v-if="subIndex<subItem.length-1" style="color: #757575">,</div>
+                </div>
+            </div>
             <div v-if="index<breadcrumbList.length-1" style="color: #757575">\</div>
         </div>
     </div>
 </template>
 <script>
-    export default{
+    export default {
         name: 'breadcrumb',
         props: {
             breadcrumbList: {

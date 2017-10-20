@@ -6,6 +6,7 @@ import com.baixiang.model.mongo.Role;
 import com.baixiang.model.response.Error;
 import com.baixiang.model.response.RedirectBean;
 import com.baixiang.model.response.Response;
+import com.baixiang.model.response.UserBean;
 import com.baixiang.service.UserService;
 import com.baixiang.utils.FileUtil;
 import org.apache.shiro.SecurityUtils;
@@ -112,9 +113,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST)
-    public Response<User> getUserInfo() {
-        User user = userService.getUserBySession();
-        Response<User> response = new Response<>(user, null);
+    public Response getUserInfo() {
+        Response<UserBean> response = new Response<>(userService.getUserBeanBySession(), null);
         return response;
     }
 

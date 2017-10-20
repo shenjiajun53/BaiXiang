@@ -3,6 +3,7 @@ package com.baixiang.controller;
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.User;
 import com.baixiang.model.response.MovieWrapBean;
+import com.baixiang.model.response.UserBean;
 import com.baixiang.service.DoubanMovieService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.UserService;
@@ -50,8 +51,7 @@ public class ClientController {
         modelAndView.addObject("movieList", movieArrayList);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);
-        User user = userService.getUserBySession();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userService.getUserBeanBySession());
         return modelAndView;
     }
 
@@ -83,16 +83,14 @@ public class ClientController {
         modelAndView.addObject("maxPage", maxPage);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);
-        User user = userService.getUserBySession();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userService.getUserBeanBySession());
         return modelAndView;
     }
 
     @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
     public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
         ModelAndView modelAndView = new ModelAndView("/service/movie_detail");
-        User user = userService.getUserBySession();
-        modelAndView.addObject("user", user);
+        modelAndView.addObject("user", userService.getUserBeanBySession());
         if (null != movieId) {
             Movie movie = movieService.getById(movieId);
 //            System.out.printf("movie=" + movie.toString());
@@ -114,8 +112,7 @@ public class ClientController {
 
 //    @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
 //    public String movieDetail(Model model,@RequestParam(value = "movieId", required = false) Integer movieId) {
-//        User user = userService.getUserBySession();
-//        model.addAttribute("user", user);
+//        model.addAttribute("user", userService.getUserBeanBySession());
 //        if (null != movieId) {
 //            Movie movie = movieService.getById(movieId);
 ////            System.out.printf("movie=" + movie.toString());

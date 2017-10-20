@@ -97,9 +97,14 @@
 </body>
 
 <script th:inline="javascript">
-    let tagName;
+    let tagSet;
+    let tagList;
     if ([[${movie!=null}]] && [[${movie.baseInfo.movieTagSet!=null}]]) {
-        tagName = [[${movie.baseInfo.movieTagSet.size()>0?movie.baseInfo.movieTagSet[0].tagName:""}]];
+        let movie = [[${movie!=null}]];
+        tagSet = movie.baseInfo.movieTagSet;
+        tagSet.map((tag, index) => {
+            tagList.push({url: "/movie_list?tag=" + tag.tagName, itemName: tag.tagName})
+        })
     }
 
     new Vue({
@@ -107,7 +112,7 @@
         data() {
             return {
                 breadcrumbList: [{url: "/", itemName: "首页"},
-                    {url: "/movie_list?tag=" + tagName, itemName: tagName}]
+                    tagList]
             };
         },
         methods: {

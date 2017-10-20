@@ -1,6 +1,7 @@
 package com.baixiang.service;
 
 import com.baixiang.model.jpa.User;
+import com.baixiang.model.response.UserBean;
 import com.baixiang.repository.hibernateRepository.UserHibernateRepository;
 import com.baixiang.repository.jpa.UserRepository;
 import org.apache.shiro.SecurityUtils;
@@ -60,5 +61,10 @@ public class UserService {
             System.out.printf("session user=" + user.toString() + "/n ");
         }
         return user;
+    }
+
+    public UserBean getUserBeanBySession() {
+        User user = getUserBySession();
+        return new UserBean(user);
     }
 }

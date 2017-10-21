@@ -2,6 +2,7 @@ package com.baixiang.utils;
 
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 
 import java.io.*;
 import java.security.DigestInputStream;
@@ -14,8 +15,10 @@ import java.util.List;
 /**
  * Created by shenjj on 2017/4/17.
  */
+@PropertySource(value = {"classpath:application-release.properties"})
 public final class FileUtil {
-    public static final String ROOT_PATH = "D:/Baixiang";
+    @Value("${file.default-path}")
+    public static String ROOT_PATH;
     public static final String PROJECT_PATH = System.getProperty("user.dir");
     public static final String STATIC_PATH = PROJECT_PATH + "/src/main/webapp";
     public static final String POSTER_PATH = "/files/movie/posters/";

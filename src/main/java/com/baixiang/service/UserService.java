@@ -65,6 +65,9 @@ public class UserService {
 
     public UserBean getUserBeanBySession() {
         User user = getUserBySession();
+        if (null == user) {
+            return null;
+        }
         return new UserBean(user);
     }
 }

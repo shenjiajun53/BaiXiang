@@ -55,7 +55,7 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/movie_list", method = RequestMethod.GET)
+    @RequestMapping(value = Urls.MOVIE_LIST, method = RequestMethod.GET)
     public ModelAndView movieList(@RequestParam(value = "tag", required = false) String tag,
                                   @RequestParam(value = "actor", required = false) String actor,
                                   @RequestParam(value = "page", required = false) Integer page) {
@@ -87,7 +87,7 @@ public class ClientController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/movie_detail", method = RequestMethod.GET)
+    @RequestMapping(value = Urls.MOVIE_DETAIL, method = RequestMethod.GET)
     public ModelAndView movieDetail(@RequestParam(value = "movieId", required = false) Integer movieId) {
         ModelAndView modelAndView = new ModelAndView("/service/movie_detail");
         modelAndView.addObject("user", userService.getUserBeanBySession());

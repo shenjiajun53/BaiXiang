@@ -98,11 +98,12 @@
 
 <script th:inline="javascript">
     let tagSet;
-    let tagList;
+    let tagList=new Array();
     if ([[${movie!=null}]] && [[${movie.baseInfo.movieTagSet!=null}]]) {
-        let movie = [[${movie!=null}]];
+        let movie = [[${movie}]];
         tagSet = movie.baseInfo.movieTagSet;
         tagSet.map((tag, index) => {
+            console.log("tag="+tag.tagName);
             tagList.push({url: "/movie_list?tag=" + tag.tagName, itemName: tag.tagName})
         })
     }

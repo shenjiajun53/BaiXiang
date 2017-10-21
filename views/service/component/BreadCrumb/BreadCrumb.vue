@@ -5,10 +5,10 @@
                 <a :href="breadcrumbItem.url" style="">{{breadcrumbItem.itemName}}</a>
             </div>
             <div v-else>
-                <div v-for="(subItem , subIndex) in breadcrumbItem">
+                <span v-for="(subItem , subIndex) in breadcrumbItem">
                     <a :href="subItem.url" style="">{{subItem.itemName}}</a>
-                    <div v-if="subIndex<subItem.length-1" style="color: #757575">,</div>
-                </div>
+                    <span v-if="subIndex<breadcrumbItem.length-1" style="color: #757575"> </span>
+                </span>
             </div>
             <div v-if="index<breadcrumbList.length-1" style="color: #757575">\</div>
         </div>

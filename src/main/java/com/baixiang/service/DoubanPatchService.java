@@ -48,7 +48,7 @@ public class DoubanPatchService {
                 Pageable pageable = new PageRequest(movieIndex, 40);
                 moviePage = movieService.getByPage(pageable);
 //            LogUtil.info("getPageNumber=" + pageable.getPageNumber() + " getPageSize=" + pageable.getPageSize());
-                LogUtil.info("getTotalPages=" + moviePage.getTotalPages() + " getTotalElements=" + moviePage.getTotalElements());
+//                LogUtil.info("getTotalPages=" + moviePage.getTotalPages() + " getTotalElements=" + moviePage.getTotalElements());
                 pageNumber = moviePage.getTotalPages();
                 currentNum = 0;
             } else {

@@ -1,6 +1,8 @@
 package com.baixiang.model.jpa;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -62,29 +64,29 @@ public class Movie implements Serializable {
 * 同时加载;后者表示关系类在被访问时才加载,默认值是FetchType. LAZY。
 *
 */
+//    @JsonIgnore
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
-//    @JsonIgnore
     private Set<MovieImage> screenShots = new HashSet<>();
 
+//    @JsonIgnore
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
-//    @JsonIgnore
     private Set<MovieTorrent> movieTorrents = new HashSet<>();
 
+//    @JsonIgnore
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_tags",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
-//    @JsonIgnore
     private Set<MovieTag> movieTagSet = new HashSet<>();
 
+//    @JsonIgnore
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "id"))
     @OrderBy(value = "id asc")
-//    @JsonIgnore
     private Set<Actor> actorSet = new HashSet<>();
 
 //    @ElementCollection

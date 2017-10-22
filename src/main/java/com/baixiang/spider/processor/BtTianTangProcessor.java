@@ -1,11 +1,13 @@
 package com.baixiang.spider.processor;
 
+import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.common.SpiderMovieBean;
 import com.baixiang.model.common.SpiderTorrentBean;
 import com.baixiang.spider.pipeline.MoviePipeline;
 import com.baixiang.spider.pipeline.TorrentPipeline;
 import com.baixiang.utils.FileUtil;
 import com.baixiang.utils.RegexUtil;
+import com.baixiang.utils.logger.LogUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class BtTianTangProcessor implements PageProcessor {
     private static final Logger logger = LoggerFactory.getLogger(BtTianTangProcessor.class);
     public final static String MOVIE_TITLE = "movie_title";
 
+    @Autowired
+    private PropertiesConfig propertiesConfig;
 
     @Autowired
     private MoviePipeline moviePipeline;
@@ -53,7 +57,7 @@ public class BtTianTangProcessor implements PageProcessor {
         isRunning = true;
         spider = Spider.create(this)
 //                .setScheduler(new PriorityScheduler())
-                .setScheduler(new FileCacheQueueScheduler(FileUtil.ROOT_PATH))
+                .setScheduler(new FileCacheQueueScheduler(propertiesConfig.getRootPath() + "/webmagic"))
                 .addPipeline(moviePipeline)
 //                .addPipeline(new ConsolePipeline())
                 .addPipeline(torrentPipeline)
@@ -65,7 +69,9 @@ public class BtTianTangProcessor implements PageProcessor {
 
     public void stop() {
         isRunning = false;
-        spider.stop();
+        if (null != spider) {
+            spider.stop();
+        }
     }
 
     public boolean isRunning() {

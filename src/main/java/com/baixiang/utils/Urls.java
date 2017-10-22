@@ -1,7 +1,7 @@
 package com.baixiang.utils;
 
 public final class Urls {
-    public final static String CONTEXT_PATH = "/baixiang";
+//    public final static String CONTEXT_PATH = "/baixiang";
     //url
     public final static String BASE_URL = "/";
     public final static String MOVIE_LIST = "/movie_list";

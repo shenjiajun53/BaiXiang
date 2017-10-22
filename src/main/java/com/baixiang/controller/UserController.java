@@ -25,9 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.File;
 import java.io.IOException;
 
-import static com.baixiang.utils.Urls.API_USER_SIGN_IN;
-import static com.baixiang.utils.Urls.API_USER_SIGN_UP;
-import static com.baixiang.utils.Urls.SIGN_OUT;
+import static com.baixiang.utils.Urls.*;
 
 /**
  * Created by shenjj on 2017/5/16.
@@ -112,7 +110,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/api/getUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = API_GET_USER_INFO, method = RequestMethod.POST)
     public Response getUserInfo() {
         Response<UserBean> response = new Response<>(userService.getUserBeanBySession(), null);
         return response;

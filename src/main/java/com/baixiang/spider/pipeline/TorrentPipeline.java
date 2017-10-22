@@ -1,5 +1,6 @@
 package com.baixiang.spider.pipeline;
 
+import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.MovieTorrent;
 import com.baixiang.model.common.SpiderTorrentBean;
@@ -17,7 +18,7 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
-import static com.baixiang.utils.FileUtil.TORRENT_PATH;
+import static com.baixiang.config.PropertiesConfig.TORRENT_PATH;
 
 /**
  * Created by shenjj on 2017/6/29.
@@ -32,6 +33,8 @@ public class TorrentPipeline implements Pipeline {
 //    public final static String TORRENT_URL = "torrent_url";
 //    public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
 
+    @Autowired
+    private PropertiesConfig propertiesConfig;
 
     @Autowired
     private MovieService movieService;
@@ -85,7 +88,7 @@ public class TorrentPipeline implements Pipeline {
     public void setTorrentFile(String torrentUrl, String torrentName, MovieTorrent movieTorrent) {
         if (!TextUtils.isEmpty(torrentUrl)) {
             String fileName = System.currentTimeMillis() + "-" + torrentName + ".torrent";
-            String filePath = FileUtil.getFilePath(TORRENT_PATH, fileName);
+            String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), TORRENT_PATH, fileName);
             FileUtil.downLoadFile(filePath, torrentUrl);
             movieTorrent.setFilePath(TORRENT_PATH + fileName);
         }

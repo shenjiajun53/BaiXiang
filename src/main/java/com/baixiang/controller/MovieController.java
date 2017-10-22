@@ -1,5 +1,6 @@
 package com.baixiang.controller;
 
+import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.*;
 import com.baixiang.model.response.BaseBean;
 import com.baixiang.model.response.RedirectBean;
@@ -25,6 +26,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.baixiang.config.PropertiesConfig.POSTER_PATH;
+import static com.baixiang.config.PropertiesConfig.SCREEN_SHOT_PATH;
+import static com.baixiang.config.PropertiesConfig.TORRENT_PATH;
 import static com.baixiang.utils.FileUtil.*;
 import static com.baixiang.utils.Urls.*;
 
@@ -46,6 +50,8 @@ public class MovieController {
 
     @Autowired
     TorrentService torrentService;
+    @Autowired
+    PropertiesConfig propertiesConfig;
 
 
     @RequestMapping(value = API_MOVIE_DETAIL, method = RequestMethod.POST)
@@ -194,7 +200,7 @@ public class MovieController {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
                 String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-                String filePath = FileUtil.getFilePath(dirPath, fileName);
+                String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), dirPath, fileName);
                 File file = new File(filePath);
                 multipartFile.transferTo(file);
                 return fileName;

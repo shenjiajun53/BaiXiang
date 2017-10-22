@@ -1,9 +1,13 @@
 package com.baixiang.utils;
 
+import com.baixiang.config.PropertiesConfig;
+import com.baixiang.utils.logger.LogUtil;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.*;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -15,15 +19,7 @@ import java.util.List;
 /**
  * Created by shenjj on 2017/4/17.
  */
-@PropertySource(value = {"classpath:application-release.properties"})
 public final class FileUtil {
-    @Value("${file.default-path}")
-    public static String ROOT_PATH;
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String STATIC_PATH = PROJECT_PATH + "/src/main/webapp";
-    public static final String POSTER_PATH = "/files/movie/posters/";
-    public static final String SCREEN_SHOT_PATH = "/files/movie/screenShots/";
-    public static final String TORRENT_PATH = "/files/movie/torrents/";
 
 
     private FileUtil() {
@@ -1374,8 +1370,7 @@ public final class FileUtil {
     }
 
 
-    public static String getFilePath(String dirPath, String fileName) {
-        String rootPath = ROOT_PATH;
+    public static String getFilePath(String rootPath, String dirPath, String fileName) {
         FileUtil.createOrExistsDir(rootPath + dirPath);
         String filePath = rootPath + dirPath + fileName;
         return filePath;

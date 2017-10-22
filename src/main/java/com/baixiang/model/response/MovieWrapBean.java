@@ -43,9 +43,9 @@ public class MovieWrapBean {
     }
 
     private void clearRecycleMovie(Movie movie) {
-        for (MovieImage movieImage : movie.getScreenShots()) {
-            movieImage.setMovie(null);
-        }
+//        for (MovieImage movieImage : movie.getScreenShots()) {
+//            movieImage.setMovie(null);
+//        }
         for (MovieTorrent movieTorrent : movie.getMovieTorrents()) {
             movieTorrent.setMovie(null);
         }

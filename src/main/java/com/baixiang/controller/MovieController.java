@@ -4,10 +4,7 @@ import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.*;
 import com.baixiang.model.response.BaseBean;
 import com.baixiang.model.response.Response;
-import com.baixiang.service.ActorService;
-import com.baixiang.service.MovieService;
-import com.baixiang.service.TagService;
-import com.baixiang.service.TorrentService;
+import com.baixiang.service.*;
 import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +49,9 @@ public class MovieController {
     @Autowired
     PropertiesConfig propertiesConfig;
 
+    @Autowired
+    MovieImageService movieImageService;
+
 
     @RequestMapping(value = API_MOVIE_DETAIL, method = RequestMethod.POST)
     public Response<Movie> getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
@@ -79,6 +79,23 @@ public class MovieController {
             }
         }
         return new Response<>(new BaseBean(200), null);
+    }
+
+    @RequestMapping(value = API_UPLOAD_IMAGE, method = RequestMethod.POST)
+    public Response uploadImage(@RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
+        if (null != imageFile) {
+            MovieImage movieImage = new MovieImage();
+            String imageFileName = saveFile(imageFile, SCREEN_SHOT_PATH);
+            if (!imageFileName.equals(null)) {
+                movieImage.setUrl(SCREEN_SHOT_PATH + imageFileName);
+                movieImage.setImageName(imageFileName);
+            }
+            movieImage = movieImageService.save(movieImage);
+            if (movieImage.getId() != 0) {
+                return new Response<BaseBean>(new BaseBean(1), null);
+            }
+        }
+        return new Response<BaseBean>(new BaseBean(2), null);
     }
 
     @RequestMapping(value = API_EDIT_MOVIE, method = RequestMethod.POST)

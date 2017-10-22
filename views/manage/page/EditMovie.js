@@ -164,6 +164,36 @@ export default class EditMovie extends React.Component {
         );
     }
 
+    uploadScreenShots() {
+        let formData = new FormData();
+        for (let i = 0; i < this.state.screenShotList.length; i++) {
+            formData.append('imageFile', this.state.screenShotList[i].file);
+        }
+
+        fetch(Urls.API_UPLOAD_IMAGE, {
+            method: "post",
+            body: formData,
+            credentials: 'include'     //很重要，设置session,cookie可用
+        }).then(
+            (response) => {
+                return response.json();
+            }
+        ).then(
+            (json) => {
+                console.log(JSON.stringify(json));
+                let result = json.result;
+                if (result.status === 1) {
+                    console.log("upload image success");
+                } else {
+                    console.log("upload image failed");
+                }
+            }
+        ).catch(
+            (ex) => {
+                console.error('parsing failed', ex);
+            });
+    }
+
     submit() {
         console.log("onSubmit");
         let formData = new FormData();
@@ -400,6 +430,7 @@ export default class EditMovie extends React.Component {
                                    this.setState({
                                        screenShotList: oldScreenShotList
                                    })
+                                   this.uploadScreenShots();
                                }
                            }}
                     />

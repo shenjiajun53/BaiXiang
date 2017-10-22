@@ -64,24 +64,20 @@ public class Movie implements Serializable {
 * 同时加载;后者表示关系类在被访问时才加载,默认值是FetchType. LAZY。
 *
 */
-//    @JsonIgnore
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
-    private Set<MovieImage> screenShots = new HashSet<>();
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy(value = "id ASC")//注释指明加载OrderItem时按id的升序排序
     private Set<MovieTorrent> movieTorrents = new HashSet<>();
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_tags",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<MovieTag> movieTagSet = new HashSet<>();
 
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToMany(cascade = {MERGE, REMOVE, REFRESH, DETACH}, fetch = FetchType.EAGER)
     @JoinTable(name = "movies_actors",
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
@@ -89,10 +85,16 @@ public class Movie implements Serializable {
     @OrderBy(value = "id asc")
     private Set<Actor> actorSet = new HashSet<>();
 
-//    @ElementCollection
-//    @CollectionTable(name = "movie_tags", joinColumns = @JoinColumn(name = "movie_id"))
-//    @Column(name = "movie_tag")
-//    private Set<String> movieTagSet = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "screenshot_ids", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "id")
+    private Set<Long> screenshotIdSet = new HashSet<>();
+
+    @ElementCollection
+    @CollectionTable(name = "screenshot_urls", joinColumns = @JoinColumn(name = "movie_id"))
+    @Column(name = "url")
+    private Set<String> screenshotUrlSet = new HashSet<>();
 
     public Movie() {
         setCreateDate(new Date());
@@ -105,15 +107,17 @@ public class Movie implements Serializable {
     }
 
     public void addScreenShot(MovieImage screenShot) {
-        if (!this.screenShots.contains(screenShot)) {
-            this.screenShots.add(screenShot);
-            screenShot.setMovie(this);
+        if (!this.screenshotIdSet.contains(screenShot.getId())) {
+            this.screenshotIdSet.add(screenShot.getId());
+        }
+        if (!this.screenshotUrlSet.contains(screenShot.getUrl())) {
+            this.screenshotUrlSet.add(screenShot.getUrl());
         }
     }
 
     public void removeScreenShot(MovieImage screenShot) {
-        screenShot.setMovie(null);
-        this.screenShots.remove(screenShot);
+        this.screenshotIdSet.remove(screenShot.getId());
+        this.screenshotUrlSet.remove(screenShot.getUrl());
     }
 
     public void addTorrent(MovieTorrent movieTorrent) {
@@ -205,12 +209,20 @@ public class Movie implements Serializable {
         this.poster = poster;
     }
 
-    public Set<MovieImage> getScreenShots() {
-        return screenShots;
+    public Set<Long> getScreenshotIdSet() {
+        return screenshotIdSet;
     }
 
-    public void setScreenShots(Set<MovieImage> screenShots) {
-        this.screenShots = screenShots;
+    public void setScreenshotIdSet(Set<Long> screenshotIdSet) {
+        this.screenshotIdSet = screenshotIdSet;
+    }
+
+    public Set<String> getScreenshotUrlSet() {
+        return screenshotUrlSet;
+    }
+
+    public void setScreenshotUrlSet(Set<String> screenshotUrlSet) {
+        this.screenshotUrlSet = screenshotUrlSet;
     }
 
     public Set<MovieTorrent> getMovieTorrents() {
@@ -314,15 +326,17 @@ public class Movie implements Serializable {
                 ", movieInfo='" + movieInfo + '\'' +
                 ", poster='" + poster + '\'' +
                 ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", viewTimes=" + viewTimes +
                 ", doubanUrl='" + doubanUrl + '\'' +
-                ", doubanId=" + doubanId +
+                ", doubanId='" + doubanId + '\'' +
                 ", imdbUrl='" + imdbUrl + '\'' +
-                ", screenShots=" + screenShots +
                 ", movieTorrents=" + movieTorrents +
                 ", movieTagSet=" + movieTagSet +
                 ", actorSet=" + actorSet +
+                ", screenshotIdSet=" + screenshotIdSet +
+                ", screenshotUrlSet=" + screenshotUrlSet +
                 '}';
     }
 }

@@ -26,6 +26,7 @@ public final class Urls {
     public final static String API_DELETE_MOVIE = "/api/delete_movie";
     public final static String API_DELETE_TORRENT = "/api/delete_torrent";
     public final static String API_EDIT_MOVIE = "/api/edit_movie";
+    public final static String API_UPLOAD_IMAGE = "/api/upload_image";
     public final static String API_GET_SPIDER_STATUS = "/api/manage/getSpiderStatus";
     public final static String API_START_SPIDER_BT = "/api/start_spider_bt";
     public final static String API_STOP_SPIDER_BT = "/api/stop_spider_bt";

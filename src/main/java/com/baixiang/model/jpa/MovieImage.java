@@ -82,7 +82,7 @@ public class MovieImage implements Serializable {
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", imageName='" + imageName + '\'' +
-                ", movie=" + movie +
+//                ", movie=" + movie +
                 '}';
     }
 }

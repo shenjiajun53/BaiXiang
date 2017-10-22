@@ -3,7 +3,6 @@ package com.baixiang.controller;
 import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.*;
 import com.baixiang.model.response.BaseBean;
-import com.baixiang.model.response.RedirectBean;
 import com.baixiang.model.response.Response;
 import com.baixiang.service.ActorService;
 import com.baixiang.service.MovieService;
@@ -83,15 +82,15 @@ public class MovieController {
     }
 
     @RequestMapping(value = API_EDIT_MOVIE, method = RequestMethod.POST)
-    public Response<RedirectBean> postMovie(@RequestParam(value = "movieId", required = false) String movieId,
-                                            @RequestParam(value = "movieTitle") String movieTitle,
-                                            @RequestParam(value = "movieInfo") String movieInfo,
-                                            @RequestParam(value = "poster", required = false) MultipartFile poster,
-                                            @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
-                                            @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
-                                            @RequestParam(value = "movieDate", required = false) String movieDate,
-                                            @RequestParam(value = "tagList", required = false) String[] tagList,
-                                            @RequestParam(value = "actorList", required = false) String[] actorList) {
+    public Response postMovie(@RequestParam(value = "movieId", required = false) String movieId,
+                              @RequestParam(value = "movieTitle") String movieTitle,
+                              @RequestParam(value = "movieInfo") String movieInfo,
+                              @RequestParam(value = "poster", required = false) MultipartFile poster,
+                              @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
+                              @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
+                              @RequestParam(value = "movieDate", required = false) String movieDate,
+                              @RequestParam(value = "tagList", required = false) String[] tagList,
+                              @RequestParam(value = "actorList", required = false) String[] actorList) {
 
         Movie movie;
         if (movieId != null && !movieId.isEmpty() && !movieId.equals("undefined")) {
@@ -158,13 +157,13 @@ public class MovieController {
         }
 
         movie = movieService.save(movie);
-        RedirectBean redirectBean;
+        BaseBean baseBean;
         if (movie.getId() != 0) {
-            redirectBean = new RedirectBean(1, "/manage");
+            baseBean = new BaseBean(1);
         } else {
-            redirectBean = new RedirectBean(2, "");
+            baseBean = new BaseBean(2);
         }
-        return new Response<>(redirectBean, null);
+        return new Response<>(baseBean, null);
     }
 
     @RequestMapping(value = API_SEARCH_MOVIE, method = RequestMethod.POST)

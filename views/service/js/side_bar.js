@@ -1,7 +1,7 @@
 /**
  * Created by shenjj on 2017/5/27.
  */
-import Url from "../../utils/Urls";
+import Urls from "../../utils/Urls";
 
 Vue.component('my-item-zh', {
     functional: true,
@@ -35,7 +35,7 @@ let header = new Vue({
             console.log(queryString);
             let formData = new FormData();
             formData.append("searchStr", queryString);
-            fetch(Url.API_SEARCH_MOVIE, {
+            fetch(Urls.API_SEARCH_MOVIE, {
                 method: "post",
                 body: formData,
                 credentials: 'include'     //很重要，设置session,cookie可用
@@ -63,7 +63,7 @@ let header = new Vue({
         },
         handleSelect(movie) {
             console.log(movie);
-            window.location.href = '/movie_detail?movieId=' + movie.id;
+            window.location.href = Urls.MANAGE_EDIT_MOVIE + '?movieId=' + movie.id;
         }
     }
 });

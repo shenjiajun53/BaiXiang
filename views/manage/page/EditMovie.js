@@ -204,7 +204,7 @@ export default class EditMovie extends React.Component {
                 console.log(JSON.stringify(json));
                 let result = json.result;
                 if (result.status == 1) {
-                    window.location.href = result.redirect;
+                    window.location.href = Urls.MANAGE;
                 }
             }
         ).catch(
@@ -327,9 +327,10 @@ export default class EditMovie extends React.Component {
                                console.info("file=" + file.name);
                                if (file) {
                                    // 获取 window 的 URL 工具
-                                   let URL = window.URL || window.webkitURL;
+                                   // let URL = window.URL || window.webkitURL;
                                    // 通过 file 生成目标 url
-                                   let url = URL.createObjectURL(file);
+                                   let url = window.URL.createObjectURL(file);
+                                   console.info("url=" + url);
                                    this.setState({
                                        poster: {file: file, url: url}
                                    })
@@ -392,8 +393,8 @@ export default class EditMovie extends React.Component {
                                if (files) {
                                    for (let i = 0; i < files.length; i++) {
                                        console.info("file=" + files[i].name);
-                                       let URL = window.URL || window.webkitURL;
-                                       let screenShotUrl = URL.createObjectURL(files[i]);
+                                       // let URL = window.URL || window.webkitURL;
+                                       let screenShotUrl = window.URL.createObjectURL(files[i]);
                                        oldScreenShotList.push({file: files[i], url: screenShotUrl});
                                    }
                                    this.setState({

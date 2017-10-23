@@ -79,20 +79,22 @@ export default class EditMovie extends React.Component {
         ).then(
             (json) => {
                 console.log("getMovieDetail=" + JSON.stringify(json));
+                let baseInfo = json.result.baseInfo;
                 let tagSet = new Array();
-                json.result.movieTagSet.map((tag) => {
+                baseInfo.movieTagSet.map((tag) => {
                     tagSet.push(tag.tagName);
                 });
                 this.setState({
-                    movie: json.result,
-                    movieTitle: json.result.movieName,
-                    movieInfo: json.result.movieInfo,
+                    movie: baseInfo,
+                    movieTitle: baseInfo.movieName,
+                    movieInfo: baseInfo.movieInfo,
                     checkedTags: tagSet,
-                    checkAll: json.result.movieTagSet.length === movieTypeOptions.length,
-                    isIndeterminate: json.result.movieTagSet.length !== 0 && json.result.movieTagSet.length < movieTypeOptions.length,
-                    poster: {file: null, url: json.result.poster},
-                    actorList: json.result.actorSet,
-                    torrentList: json.result.movieTorrents
+                    checkAll: baseInfo.movieTagSet.length === movieTypeOptions.length,
+                    isIndeterminate: baseInfo.movieTagSet.length !== 0 && baseInfo.movieTagSet.length < movieTypeOptions.length,
+                    poster: {file: null, url: baseInfo.poster},
+                    actorList: baseInfo.actorSet,
+                    torrentList: baseInfo.movieTorrents,
+                    screenShotList: json.result.screenshotList
                 })
             }
         ).catch(
@@ -164,11 +166,10 @@ export default class EditMovie extends React.Component {
         );
     }
 
-    uploadScreenShots() {
+    uploadImage(type, imageFile) {
         let formData = new FormData();
-        for (let i = 0; i < this.state.screenShotList.length; i++) {
-            formData.append('imageFile', this.state.screenShotList[i].file);
-        }
+        formData.append("type", type);
+        formData.append('imageFile', imageFile);
 
         fetch(Urls.API_UPLOAD_IMAGE, {
             method: "post",
@@ -182,10 +183,14 @@ export default class EditMovie extends React.Component {
             (json) => {
                 console.log(JSON.stringify(json));
                 let result = json.result;
-                if (result.status === 1) {
-                    console.log("upload image success");
-                } else {
-                    console.log("upload image failed");
+                let imageId = result.id;
+                if (imageId > 0) {
+                    console.log("upload image succeed");
+                    let oldScreenshotList = this.state.screenShotList;
+                    oldScreenshotList.push(result);
+                    this.setState({
+                        screenshotList: oldScreenshotList
+                    })
                 }
             }
         ).catch(
@@ -205,7 +210,7 @@ export default class EditMovie extends React.Component {
         formData.append('movieTitle', this.state.movieTitle);
         formData.append('poster', this.state.poster.file);
         for (let i = 0; i < this.state.screenShotList.length; i++) {
-            formData.append('screenShotList', this.state.screenShotList[i].file);
+            formData.append('screenShotList', this.state.screenShotList[i].id);
         }
         for (let i = 0; i < this.state.torrentList.length; i++) {
             if (this.state.torrentList[i].id < 0) {
@@ -419,18 +424,13 @@ export default class EditMovie extends React.Component {
                            style={{display: "none"}}
                            onChange={(e) => {
                                let files = this.refs.screenShotInput.files;
-                               let oldScreenShotList = this.state.screenShotList;
                                if (files) {
-                                   for (let i = 0; i < files.length; i++) {
-                                       console.info("file=" + files[i].name);
-                                       // let URL = window.URL || window.webkitURL;
-                                       let screenShotUrl = window.URL.createObjectURL(files[i]);
-                                       oldScreenShotList.push({file: files[i], url: screenShotUrl});
+                                   for(let i=0;i<files.length;i++){
+                                       this.uploadImage("screenshot", files[i]);
                                    }
-                                   this.setState({
-                                       screenShotList: oldScreenShotList
-                                   })
-                                   this.uploadScreenShots();
+                                   // files.map((file, index) => {
+                                   //     this.uploadImage("screenshot", file);
+                                   // });
                                }
                            }}
                     />

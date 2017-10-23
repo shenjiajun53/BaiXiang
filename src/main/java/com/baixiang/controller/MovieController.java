@@ -3,6 +3,7 @@ package com.baixiang.controller;
 import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.*;
 import com.baixiang.model.response.BaseBean;
+import com.baixiang.model.response.MovieWrapBean;
 import com.baixiang.model.response.Response;
 import com.baixiang.service.*;
 import com.baixiang.utils.FileUtil;
@@ -25,7 +26,6 @@ import java.util.List;
 import static com.baixiang.config.PropertiesConfig.POSTER_PATH;
 import static com.baixiang.config.PropertiesConfig.SCREEN_SHOT_PATH;
 import static com.baixiang.config.PropertiesConfig.TORRENT_PATH;
-import static com.baixiang.utils.FileUtil.*;
 import static com.baixiang.utils.Urls.*;
 
 /**
@@ -50,14 +50,16 @@ public class MovieController {
     PropertiesConfig propertiesConfig;
 
     @Autowired
-    MovieImageService movieImageService;
+    ImageService imageService;
 
 
     @RequestMapping(value = API_MOVIE_DETAIL, method = RequestMethod.POST)
-    public Response<Movie> getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
+    public Response getMovieDetail(@RequestParam(value = "movieId") Long movieId) {
         Movie movie = movieService.getById(movieId);
         logger.info("movie=" + movie.toString());
-        return new Response<>(movie, null);
+        MovieWrapBean movieWrapBean = new MovieWrapBean(movie);
+        movieWrapBean.initScreenshotList(imageService);
+        return new Response<>(movieWrapBean, null);
     }
 
     @RequestMapping(value = API_DELETE_MOVIE, method = RequestMethod.POST)
@@ -81,29 +83,13 @@ public class MovieController {
         return new Response<>(new BaseBean(200), null);
     }
 
-    @RequestMapping(value = API_UPLOAD_IMAGE, method = RequestMethod.POST)
-    public Response uploadImage(@RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
-        if (null != imageFile) {
-            MovieImage movieImage = new MovieImage();
-            String imageFileName = saveFile(imageFile, SCREEN_SHOT_PATH);
-            if (!imageFileName.equals(null)) {
-                movieImage.setUrl(SCREEN_SHOT_PATH + imageFileName);
-                movieImage.setImageName(imageFileName);
-            }
-            movieImage = movieImageService.save(movieImage);
-            if (movieImage.getId() != 0) {
-                return new Response<BaseBean>(new BaseBean(1), null);
-            }
-        }
-        return new Response<BaseBean>(new BaseBean(2), null);
-    }
 
     @RequestMapping(value = API_EDIT_MOVIE, method = RequestMethod.POST)
     public Response postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                               @RequestParam(value = "movieTitle") String movieTitle,
                               @RequestParam(value = "movieInfo") String movieInfo,
                               @RequestParam(value = "poster", required = false) MultipartFile poster,
-                              @RequestParam(value = "screenShotList", required = false) MultipartFile[] screenShotList,
+                              @RequestParam(value = "screenShotList", required = false) Long[] screenShotList,
                               @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
                               @RequestParam(value = "movieDate", required = false) String movieDate,
                               @RequestParam(value = "tagList", required = false) String[] tagList,
@@ -129,15 +115,14 @@ public class MovieController {
             }
         }
         if (screenShotList.length > 0) {
-            for (int i = 0; i < screenShotList.length; i++) {
-                MultipartFile screenShot = screenShotList[i];
-                MovieImage movieImage = new MovieImage();
-                String imageFileName = saveFile(screenShot, SCREEN_SHOT_PATH);
-                if (!imageFileName.equals(null)) {
-                    movieImage.setUrl(SCREEN_SHOT_PATH + imageFileName);
-                    movieImage.setImageName(imageFileName);
+            movie.cleanScreenshotId();
+            movie.cleanScreenshotUrl();
+            for (Long screenshotId : screenShotList) {
+                Image image = imageService.findById(screenshotId);
+                if (null != image) {
+                    movie.addScreenshotUrl(image.getUrl());
+                    movie.addScreenshotId(screenshotId);
                 }
-                movie.addScreenShot(movieImage);
             }
         }
         if (torrentList.length > 0) {

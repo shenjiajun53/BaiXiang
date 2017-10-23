@@ -77,9 +77,9 @@
         <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieInfo==null}">介绍</h2>
         <div th:utext="${movie.baseInfo.movieInfo}" style="margin-bottom: 1em"></div>
 
-        <div style="margin-bottom: 5px" th:hidden="${movie.baseInfo.screenShots.size()==0}">截图</div>
-        <div th:each="screenShot :${movie.baseInfo.screenShots}" style="margin-bottom: 1em">
-            <img th:src="@{${screenShot.url}}" style="width: 200px"/>
+        <div style="margin-bottom: 5px" th:hidden="${movie.baseInfo.screenshotUrlSet.size()==0}">截图</div>
+        <div th:each="screenShot :${movie.baseInfo.screenshotUrlSet}" style="margin-bottom: 1em">
+            <img th:src="@{${screenShot}}" style="width: 200px"/>
         </div>
 
         <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieTorrents.size()==0}">种子下载</h2>

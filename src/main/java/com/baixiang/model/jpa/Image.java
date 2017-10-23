@@ -11,17 +11,23 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "movie_images")
-public class MovieImage implements Serializable {
+@Table(name = "images")
+public class Image implements Serializable {
+    public static final String TYPE_POSTER = "poster";
+    public static final String TYPE_AVATAR = "avatar";
+    public static final String TYPE_SCREENSHOT = "screenshot";
+
     @Id
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String url;
 
     private String imageName;
 
-    public MovieImage() {
+    private String type;
+
+    public Image() {
     }
 
     public long getId() {
@@ -48,10 +54,17 @@ public class MovieImage implements Serializable {
         this.imageName = imageName;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {
-        return "MovieImage{" +
+        return "Image{" +
                 "id=" + id +
                 ", url='" + url + '\'' +
                 ", imageName='" + imageName + '\'' +

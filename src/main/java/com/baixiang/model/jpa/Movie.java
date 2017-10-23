@@ -1,8 +1,6 @@
 package com.baixiang.model.jpa;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -106,7 +104,27 @@ public class Movie implements Serializable {
         setCreateDate(new Date());
     }
 
-    public void addScreenShot(MovieImage screenShot) {
+    public void cleanScreenshotId() {
+        this.screenshotIdSet.clear();
+    }
+
+    public void addScreenshotId(long screenshotId) {
+        if (!this.screenshotIdSet.contains(screenshotId)) {
+            this.screenshotIdSet.add(screenshotId);
+        }
+    }
+
+    public void cleanScreenshotUrl() {
+        this.screenshotUrlSet.clear();
+    }
+
+    public void addScreenshotUrl(String screenshotUrl) {
+        if (!this.screenshotUrlSet.contains(screenshotUrl)) {
+            this.screenshotUrlSet.add(screenshotUrl);
+        }
+    }
+
+    public void addScreenShot(Image screenShot) {
         if (!this.screenshotIdSet.contains(screenShot.getId())) {
             this.screenshotIdSet.add(screenShot.getId());
         }
@@ -115,7 +133,7 @@ public class Movie implements Serializable {
         }
     }
 
-    public void removeScreenShot(MovieImage screenShot) {
+    public void removeScreenShot(Image screenShot) {
         this.screenshotIdSet.remove(screenShot.getId());
         this.screenshotUrlSet.remove(screenShot.getUrl());
     }

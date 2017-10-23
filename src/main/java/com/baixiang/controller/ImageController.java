@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+import static com.baixiang.config.PropertiesConfig.POSTER_PATH;
 import static com.baixiang.config.PropertiesConfig.SCREEN_SHOT_PATH;
 import static com.baixiang.utils.Urls.API_UPLOAD_IMAGE;
 
@@ -35,14 +36,20 @@ public class ImageController {
                                 @RequestParam(value = "type", required = true) String type) {
         if (null != imageFile) {
             Image image = new Image();
-            String imageFileName = saveFile(imageFile, SCREEN_SHOT_PATH);
-            if (!imageFileName.equals(null)) {
-                image.setUrl(SCREEN_SHOT_PATH + imageFileName);
-                image.setImageName(imageFileName);
-            }
+            String imageFileName;
             if (type.equals(Image.TYPE_SCREENSHOT)) {
+                imageFileName = saveFile(imageFile, SCREEN_SHOT_PATH);
+                if (!imageFileName.equals(null)) {
+                    image.setUrl(SCREEN_SHOT_PATH + imageFileName);
+                    image.setImageName(imageFileName);
+                }
                 image.setType(Image.TYPE_SCREENSHOT);
             } else if (type.equals(Image.TYPE_POSTER)) {
+                imageFileName = saveFile(imageFile, POSTER_PATH);
+                if (!imageFileName.equals(null)) {
+                    image.setUrl(POSTER_PATH + imageFileName);
+                    image.setImageName(imageFileName);
+                }
                 image.setType(Image.TYPE_POSTER);
             }
             image = imageService.save(image);

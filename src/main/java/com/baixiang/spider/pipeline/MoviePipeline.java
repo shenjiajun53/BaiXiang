@@ -2,10 +2,12 @@ package com.baixiang.spider.pipeline;
 
 import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.Actor;
+import com.baixiang.model.jpa.Image;
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.MovieTag;
 import com.baixiang.model.common.SpiderMovieBean;
 import com.baixiang.service.ActorService;
+import com.baixiang.service.ImageService;
 import com.baixiang.service.MovieService;
 import com.baixiang.service.TagService;
 import com.baixiang.utils.FileUtil;
@@ -52,6 +54,9 @@ public class MoviePipeline implements Pipeline {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private ImageService imageService;
+
     @Override
     public void process(ResultItems resultItems, Task task) {
 //        logger.info("result=" + resultItems.getRequest().getUrl());
@@ -91,7 +96,7 @@ public class MoviePipeline implements Pipeline {
             Actor actor = actorService.getActorUnique(actorName);
             movie.addActor(actor);
         }
-        if (TextUtils.isEmpty(movie.getPoster())) {
+        if (TextUtils.isEmpty(movie.getPosterUrl())) {
             setPoster(movie, spiderMovieBean.getPoster(), spiderMovieBean.getMovieName());
         }
     }
@@ -110,7 +115,13 @@ public class MoviePipeline implements Pipeline {
 //            logger.info(fileName);
             String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), POSTER_PATH, fileName);
             FileUtil.downLoadFile(filePath, moviePosterUrl);
-            movie.setPoster(POSTER_PATH + fileName);
+            Image image = new Image();
+            image.setUrl(POSTER_PATH + fileName);
+            image.setImageName(fileName);
+            image.setType(Image.TYPE_POSTER);
+            image = imageService.save(image);
+            movie.setPosterUrl(image.getUrl());
+            movie.setPosterId(image.getId());
         }
     }
 }

@@ -63,7 +63,7 @@
 
         <div th:if="${null==movie.doubanInfo}">
             <h1 th:text="${movie.baseInfo.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
-            <img th:src="@{${movie.baseInfo.poster}}" style="width: 200px;margin-bottom: 1em"/>
+            <img th:src="@{${movie.baseInfo.posterUrl}}" style="width: 200px;margin-bottom: 1em"/>
         </div>
 
         <h2 style="margin-bottom: 10px" th:hidden="${movie.baseInfo.actorSet.size()==0}">演员表</h2>

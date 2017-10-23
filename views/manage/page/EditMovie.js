@@ -29,7 +29,8 @@ export default class EditMovie extends React.Component {
             movie: null,
             movieInfo: null,
             movieTitle: null,
-            poster: {file: null, url: null},
+            posterUrl: "",
+            posterId: -1,
             screenShotList: [],
             torrentList: [],
             checkedTags: [],
@@ -91,7 +92,8 @@ export default class EditMovie extends React.Component {
                     checkedTags: tagSet,
                     checkAll: baseInfo.movieTagSet.length === movieTypeOptions.length,
                     isIndeterminate: baseInfo.movieTagSet.length !== 0 && baseInfo.movieTagSet.length < movieTypeOptions.length,
-                    poster: {file: null, url: baseInfo.poster},
+                    posterUrl: baseInfo.posterUrl,
+                    posterId: baseInfo.posterId,
                     actorList: baseInfo.actorSet,
                     torrentList: baseInfo.movieTorrents,
                     screenShotList: json.result.screenshotList
@@ -186,11 +188,18 @@ export default class EditMovie extends React.Component {
                 let imageId = result.id;
                 if (imageId > 0) {
                     console.log("upload image succeed");
-                    let oldScreenshotList = this.state.screenShotList;
-                    oldScreenshotList.push(result);
-                    this.setState({
-                        screenshotList: oldScreenshotList
-                    })
+                    if (type === "poster") {
+                        this.setState({
+                            posterUrl: result.url,
+                            posterId: imageId
+                        })
+                    } else if (type === "screenshot") {
+                        let oldScreenshotList = this.state.screenShotList;
+                        oldScreenshotList.push(result);
+                        this.setState({
+                            screenshotList: oldScreenshotList
+                        })
+                    }
                 }
             }
         ).catch(
@@ -208,7 +217,7 @@ export default class EditMovie extends React.Component {
         }
         formData.append('movieInfo', this.state.movieInfo);
         formData.append('movieTitle', this.state.movieTitle);
-        formData.append('poster', this.state.poster.file);
+        formData.append('poster', this.state.posterId);
         for (let i = 0; i < this.state.screenShotList.length; i++) {
             formData.append('screenShotList', this.state.screenShotList[i].id);
         }
@@ -340,10 +349,11 @@ export default class EditMovie extends React.Component {
                        }}/>
 
                 <div>
-                    <ImageItem src={this.state.poster.url} style={{marginBottom: 16, width: 400}}
+                    <ImageItem src={this.state.posterUrl} style={{marginBottom: 16, width: 400}}
                                onCloseClick={() => {
                                    this.setState({
-                                       poster: {file: null, url: null}
+                                       posterUrl: "",
+                                       posterId: -1
                                    })
                                }}/>
                     <div/>
@@ -361,14 +371,7 @@ export default class EditMovie extends React.Component {
                                let file = this.refs.posterInput.files[0];
                                console.info("file=" + file.name);
                                if (file) {
-                                   // 获取 window 的 URL 工具
-                                   // let URL = window.URL || window.webkitURL;
-                                   // 通过 file 生成目标 url
-                                   let url = window.URL.createObjectURL(file);
-                                   console.info("url=" + url);
-                                   this.setState({
-                                       poster: {file: file, url: url}
-                                   })
+                                   this.uploadImage("poster", file)
                                }
                            }}
                     />
@@ -425,7 +428,7 @@ export default class EditMovie extends React.Component {
                            onChange={(e) => {
                                let files = this.refs.screenShotInput.files;
                                if (files) {
-                                   for(let i=0;i<files.length;i++){
+                                   for (let i = 0; i < files.length; i++) {
                                        this.uploadImage("screenshot", files[i]);
                                    }
                                    // files.map((file, index) => {

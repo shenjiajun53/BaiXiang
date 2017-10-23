@@ -29,7 +29,8 @@ public class Movie implements Serializable {
     @Column(columnDefinition = "LONGTEXT")
     private String movieInfo;
 
-    private String poster;
+    private long posterId;
+    private String posterUrl;
 
     //@Temporal注释用来指定java.util.Date 或java.util.Calendar 属性与数据库类型date,time 或timestamp 中的那一种类型进行映射
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -219,12 +220,20 @@ public class Movie implements Serializable {
         this.movieInfo = movieInfo;
     }
 
-    public String getPoster() {
-        return poster;
+    public long getPosterId() {
+        return posterId;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setPosterId(long posterId) {
+        this.posterId = posterId;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 
     public Set<Long> getScreenshotIdSet() {
@@ -342,7 +351,8 @@ public class Movie implements Serializable {
                 ", version=" + version +
                 ", movieName='" + movieName + '\'' +
                 ", movieInfo='" + movieInfo + '\'' +
-                ", poster='" + poster + '\'' +
+                ", posterId=" + posterId +
+                ", posterUrl='" + posterUrl + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 ", releaseDate='" + releaseDate + '\'' +

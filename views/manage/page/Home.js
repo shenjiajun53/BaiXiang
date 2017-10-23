@@ -65,7 +65,7 @@ class Home extends Component {
                                     style={{
                                         width: 200
                                     }} bodyStyle={{padding: 0}}>
-                                    <img src={Urls.CONTEXT_PATH + movieInfo.poster} alt={movieInfo.movieName}
+                                    <img src={Urls.CONTEXT_PATH + movieInfo.posterUrl} alt={movieInfo.movieName}
                                          width="100%"/>
                                     <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
                                 </Card>

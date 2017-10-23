@@ -88,7 +88,7 @@ public class MovieController {
     public Response postMovie(@RequestParam(value = "movieId", required = false) String movieId,
                               @RequestParam(value = "movieTitle") String movieTitle,
                               @RequestParam(value = "movieInfo") String movieInfo,
-                              @RequestParam(value = "poster", required = false) MultipartFile poster,
+                              @RequestParam(value = "poster", required = false) long posterId,
                               @RequestParam(value = "screenShotList", required = false) Long[] screenShotList,
                               @RequestParam(value = "torrentList", required = false) MultipartFile[] torrentList,
                               @RequestParam(value = "movieDate", required = false) String movieDate,
@@ -108,13 +108,14 @@ public class MovieController {
             movie.setReleaseDate(movieDate);
         }
 
-        if (null != poster) {
-            String posterFileName = saveFile(poster, POSTER_PATH);
-            if (!posterFileName.equals(null)) {
-                movie.setPoster(POSTER_PATH + posterFileName);
+        if (posterId > 0) {
+            Image image = imageService.findById(posterId);
+            if (null != image) {
+                movie.setPosterId(posterId);
+                movie.setPosterUrl(image.getUrl());
             }
         }
-        if (screenShotList.length > 0) {
+        if (null != screenShotList && screenShotList.length > 0) {
             movie.cleanScreenshotId();
             movie.cleanScreenshotUrl();
             for (Long screenshotId : screenShotList) {

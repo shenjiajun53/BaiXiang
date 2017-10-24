@@ -11,6 +11,7 @@
     <!-- 引入组件库 -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
+    <script type="text/javascript" th:src="@{/vendor-15.6.1.bundle.js}"></script>
     <script type="text/javascript" th:src="@{/VueComponents-1.0.0.bundle.js}"></script>
     <link rel="stylesheet" th:href="@{/css/default.css}">
 </head>
@@ -98,7 +99,7 @@
 
 <script th:inline="javascript">
     let tagSet;
-    let tagList=new Array();
+    let tagList = new Array();
     if ([[${movie!=null}]] && [[${movie.baseInfo.movieTagSet!=null}]]) {
         tagSet = [[${movie.baseInfo.movieTagSet}]];
         tagSet.map((tag, index) => {

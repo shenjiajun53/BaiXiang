@@ -73,7 +73,7 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: production ? '#cheap-module-eval-source-map' : "cheap-module-source-map ",
+    // devtool: production ? '#cheap-module-eval-source-map' : "cheap-module-source-map ",
     plugins: production ? [
             new webpack.DefinePlugin({
                 'process.env': {

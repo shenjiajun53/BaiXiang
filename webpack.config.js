@@ -5,26 +5,25 @@ const webpack = require('webpack');
 const path = require('path');
 
 //命令行 webpack --minimize 压缩
-const minimize = process.argv.indexOf('--minimize') !== -1;
+const production = process.argv.indexOf('--minimize') !== -1;
 
 module.exports = {
     // 页面入口文件配置
     entry: {
         index: path.resolve(__dirname + '/views/service/js/index.js'),
-        signin: path.resolve(__dirname + '/views/service/js/signin.js'),
         header: path.resolve(__dirname + '/views/service/js/header.js'),
-        movie_list: path.resolve(__dirname + '/views/service/js/movie_list.js'),
         side_bar: path.resolve(__dirname + '/views/service/js/side_bar.js'),
         VueComponents: path.resolve(__dirname + '/views/service/component/VueComponents.js'),
         UrlUtil: path.resolve(__dirname + '/views/utils/UrlUtil.js'),
         ManageApp: path.resolve(__dirname + '/views/manage/ManageApp.js'),
         UserApp: path.resolve(__dirname + '/views/user/UserApp.js'),
         PureReactApp: path.resolve(__dirname + '/views/reactSizeTest/ReactSizeTestApp.js'),
+        vendor: ['react']
     },
     // 入口文件输出配置
     output: {
         path: path.resolve(__dirname + '/src/main/resources/static'),
-        filename: '[name].bundle.js'
+        filename: '[name]-1.0.0.bundle.js'
     },
     module: {
         rules: [
@@ -74,25 +73,51 @@ module.exports = {
     performance: {
         hints: false
     },
-    devtool: '#eval-source-map'
+    devtool: production ? '#cheap-module-eval-source-map' : "cheap-module-source-map ",
+    plugins: production ? [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: '"production"'
+                }
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                sourceMap: true,
+                compress: {
+                    warnings: false
+                }
+            }),
+            new webpack.LoaderOptionsPlugin({
+                minimize: true
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'vendor',
+                filename: 'vendor-15.6.1.bundle.js'
+            })
+        ] :
+        [
+            new webpack.optimize.CommonsChunkPlugin({
+                name: 'vendor',
+                filename: 'vendor-15.6.1.bundle.js'
+            }),
+        ]
 };
-if (process.env.NODE_ENV === 'production') {
-    module.exports.devtool = '#source-map'
-    // http://vue-loader.vuejs.org/en/workflow/production.html
-    module.exports.plugins = (module.exports.plugins || []).concat([
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true,
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        })
-    ])
-}
+// if (process.env.NODE_ENV === 'production') {
+//     module.exports.devtool = '#source-map'
+//     // http://vue-loader.vuejs.org/en/workflow/production.html
+//     module.exports.plugins = (module.exports.plugins || []).concat([
+//         new webpack.DefinePlugin({
+//             'process.env': {
+//                 NODE_ENV: '"production"'
+//             }
+//         }),
+//         new webpack.optimize.UglifyJsPlugin({
+//             sourceMap: true,
+//             compress: {
+//                 warnings: false
+//             }
+//         }),
+//         new webpack.LoaderOptionsPlugin({
+//             minimize: true
+//         })
+//     ])
+// }

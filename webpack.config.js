@@ -7,6 +7,9 @@ const path = require('path');
 //命令行 webpack --minimize 压缩
 const production = process.argv.indexOf('--minimize') !== -1;
 
+const version = 1;
+const vendorVersion = 1;
+
 module.exports = {
     // 页面入口文件配置
     entry: {
@@ -23,7 +26,7 @@ module.exports = {
     // 入口文件输出配置
     output: {
         path: path.resolve(__dirname + '/src/main/resources/static'),
-        filename: '[name]-1.0.0.bundle.js'
+        filename: '[name]-' + version + '.bundle.js'
     },
     module: {
         rules: [
@@ -91,13 +94,13 @@ module.exports = {
             }),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
-                filename: 'vendor-15.6.1.bundle.js'
+                filename: 'vendor-' + vendorVersion + '.bundle.js'
             })
         ] :
         [
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
-                filename: 'vendor-15.6.1.bundle.js'
+                filename: 'vendor-' + vendorVersion + '.bundle.js'
             }),
         ]
 };

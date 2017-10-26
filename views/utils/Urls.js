@@ -7,6 +7,8 @@ import UrlUtil from "./UrlUtil";
 let CONTEXT_PATH = exports.CONTEXT_PATH = "";
 //url
 exports.BASE_URL = CONTEXT_PATH + "/";
+exports.MOVIE_LIST = CONTEXT_PATH + "/movie_list";
+exports.MOVIE_DETAIL = CONTEXT_PATH + "/movie_detail";
 exports.SIGN_IN = CONTEXT_PATH + "/user/sign_in";
 exports.SIGN_UP = CONTEXT_PATH + "/user/sign_up";
 exports.SIGN_OUT = CONTEXT_PATH + "/user/sign_out";

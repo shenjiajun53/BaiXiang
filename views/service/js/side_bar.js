@@ -63,7 +63,7 @@ let header = new Vue({
         },
         handleSelect(movie) {
             console.log(movie);
-            window.location.href = Urls.MANAGE_EDIT_MOVIE + '?movieId=' + movie.id;
+            window.location.href = Urls.MOVIE_DETAIL + '?movieId=' + movie.id;
         }
     }
 });

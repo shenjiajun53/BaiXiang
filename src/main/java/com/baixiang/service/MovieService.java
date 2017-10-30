@@ -60,8 +60,8 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
-    public List<Movie> getNewest() {
-        return movieRepository.findTop20ByOrderByIdDesc();
+    public Page<Movie> getNewest(Pageable pageable) {
+        return movieRepository.findAllByOrderByUpdateDateDesc(pageable);
     }
 
     public Movie getById(long id) {

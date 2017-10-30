@@ -10,6 +10,7 @@ import com.baixiang.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -178,10 +179,10 @@ public class MovieController {
     }
 
     //    @RequestMapping(value = "/api/getRecommendMovies", method = RequestMethod.GET)
-    @RequestMapping(value = API_GET_RECOMMEND_MOVIES, method = RequestMethod.GET)
-    private Response<List<Movie>> getRecommendMovie() {
-        Pageable pageable = new PageRequest(0, 20);
-        List<Movie> moviePage = movieService.getNewest();
+    @RequestMapping(value = API_GET_LAST_CHANGE_MOVIES, method = RequestMethod.POST)
+    private Response getLastChangeMovies(@RequestParam(value = "page") int page) {
+        Pageable pageable = new PageRequest(page, 10);
+        Page<Movie> moviePage = movieService.getNewest(pageable);
         return new Response<>(moviePage, null);
     }
 

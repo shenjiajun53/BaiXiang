@@ -1,7 +1,7 @@
 package com.baixiang.utils;
 
 public final class Urls {
-//    public final static String CONTEXT_PATH = "/baixiang";
+    //    public final static String CONTEXT_PATH = "/baixiang";
     //url
     public final static String BASE_URL = "/";
     public final static String MOVIE_LIST = "/movie_list";
@@ -21,6 +21,7 @@ public final class Urls {
     public final static String API_USER_SIGN_UP = "/api/signUp";
     public final static String API_USER_SIGN_OUT = "/api/SignOut";
     public final static String API_GET_RECOMMEND_MOVIES = "/api/getRecommendMovies";
+    public final static String API_GET_LAST_CHANGE_MOVIES = "/api/getLastChangeMovies";
     public final static String API_GET_ALL_TAGS = "/api/getAllTags";
     public final static String API_MOVIE_DETAIL = "/api/movieDetail";
     public final static String API_DELETE_MOVIE = "/api/delete_movie";

@@ -2,7 +2,7 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import {Card} from 'antd';
+import {Card, Pagination} from 'antd';
 
 // import moment from "moment";
 import Urls from "../../utils/Urls"
@@ -13,12 +13,22 @@ class Home extends Component {
         super(props);
         this.state = {
             movieList: null,
+            currentPage: 0,
+            total: 0,
+            pageSize: 0
         }
     }
 
     componentDidMount() {
-        fetch(Urls.API_GET_RECOMMEND_MOVIES, {
-            method: "get",
+        this.getPage(0);
+    }
+
+    getPage(page) {
+        let data = new FormData();
+        data.append("page", page);
+        fetch(Urls.API_GET_LAST_CHANGE_MOVIES, {
+            method: "post",
+            body: data,
             credentials: 'include'     //很重要，设置session,cookie可用
         }).then(
             (response) => {
@@ -26,9 +36,11 @@ class Home extends Component {
             }
         ).then(
             (json) => {
-                // console.log("response=" + JSON.stringify(json));
+                console.log("response=" + JSON.stringify(json));
                 this.setState({
-                    movieList: json.result
+                    movieList: json.result.content,
+                    total: json.result.totalElements,
+                    pageSize: json.result.size
                 })
             }
         ).catch(
@@ -36,11 +48,6 @@ class Home extends Component {
                 console.error('parsing failed', ex);
             });
     }
-
-    // onCardClick(movie) {
-    //     // console.log("blogId=" + blog._id);
-    //     window.location = "/BlogDetail/" + movie.id;
-    // }
 
     render() {
         let movieListView;
@@ -76,16 +83,24 @@ class Home extends Component {
             );
         }
         return (
-            <div style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                marginTop: 16,
-                marginLeft: 32,
-                marginBottom: 16,
-                marginRight: 32
-            }}>
-                {movieListView}
+            <div>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    marginTop: 16,
+                    marginLeft: 32,
+                    marginBottom: 16,
+                    marginRight: 32
+                }}>
+                    {movieListView}
+                </div>
+                <Pagination showQuickJumper={true}
+                            pageSize={this.state.pageSize}
+                            total={this.state.total}
+                            onChange={(page, pageSize) => {
+                                this.getPage(page);
+                            }}/>
             </div>
         );
     }

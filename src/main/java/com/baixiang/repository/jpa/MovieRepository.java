@@ -40,6 +40,8 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     List<Movie> findTop20ByOrderByIdDesc();
 
+    Page<Movie> findAllByOrderByUpdateDateDesc(Pageable pageable);
+
     List<Movie> getByMovieNameContaining(String nameStr);
 
     List<Movie> getTop10ByMovieNameContaining(String nameStr);

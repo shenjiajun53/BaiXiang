@@ -28,6 +28,7 @@
     "iview": "^2.0.0-rc.12",
     "jquery": "^3.2.1",
     "jsx-loader": "^0.13.2",
+    "material-ui": "^0.19.4",
     "moment": "^2.17.1",
     "net": "^1.0.2",
     "react": "^16.0.0",
@@ -41,7 +42,7 @@
     "vue-class-component": "^5.0.1",
     "vue-loader": "^12.0.3",
     "vue-template-compiler": "^2.3.3",
-    "webpack": "^2.6.1"
+    "webpack": "^2.7.0"
   },
   "scripts": {
     "build": "webpack",

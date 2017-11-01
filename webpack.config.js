@@ -21,6 +21,7 @@ module.exports = {
         ManageApp: path.resolve(__dirname + '/views/manage/ManageApp.js'),
         UserApp: path.resolve(__dirname + '/views/user/UserApp.js'),
         PureReactApp: path.resolve(__dirname + '/views/reactSizeTest/ReactSizeTestApp.js'),
+        MaterialApp: path.resolve(__dirname + '/views/materialUITest/MaterialApp.js'),
         vendor: ['react']
     },
     // 入口文件输出配置

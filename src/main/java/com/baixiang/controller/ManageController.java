@@ -50,4 +50,11 @@ public class ManageController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "material_test")
+    public ModelAndView material() {
+        ModelAndView modelAndView = new ModelAndView("/manage/material_test");
+
+        return modelAndView;
+    }
+
 }

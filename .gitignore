@@ -26,3 +26,4 @@ nbdist/
 ### Customize ###
 node_modules/
 myapplication.log
+package-lock.json

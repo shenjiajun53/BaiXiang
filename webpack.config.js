@@ -26,7 +26,7 @@ module.exports = {
     },
     // 入口文件输出配置
     output: {
-        path: path.resolve(__dirname + '/src/main/resources/static'),
+        path: path.resolve(__dirname + '/src/main/resources/static/build'),
         filename: '[name]-' + version + '.bundle.js'
     },
     module: {

@@ -1,6 +1,8 @@
 {
   "presets": [
-    "vue-app"
+//    "es2015",
+//    "react",
+//    "vue-app"
   ],
   "plugins": [
     [

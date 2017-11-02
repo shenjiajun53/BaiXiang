@@ -2,12 +2,39 @@
  * Created by shenjiajun on 2017/1/29.
  */
 import React, {Component} from 'react';
-import {Card, Pagination} from 'antd';
+import {Card, Pagination, Table} from 'antd';
 
 // import moment from "moment";
 import Urls from "../../utils/Urls"
 
 // injectTapEventPlugin();
+const columns = [
+    {
+        title: 'Id',
+        dataIndex: 'id',
+        key: 'id',
+        width: 150,
+    },
+    {
+        title: 'Name',
+        dataIndex: 'movieName',
+        key: 'movieName',
+        width: 150,
+    },
+    {
+        title: 'movieInfo',
+        dataIndex: 'movieInfo',
+        key: 'movieInfo',
+        width: 150,
+    },
+    {
+        title: 'imdbUrl',
+        dataIndex: 'imdbUrl',
+        key: 'imdbUrl',
+        width: 150,
+    }
+];
+
 class Home extends Component {
     constructor(props) {
         super(props);
@@ -52,36 +79,27 @@ class Home extends Component {
     render() {
         let movieListView;
 
-        // if(null != this.state.blogList){
-        //     for (let i = 0; i < this.state.blogList.length; i++) {
-        //         blogListView.push(<div key={this.state.blogList[i]._id}>
-        //             <h1>{this.state.blogList[i].blogTitle}</h1>
-        //             <div>{this.state.blogList[i].blogContent}</div>
-        //         </div>);
-        //     }
+        // if (null !== this.state.movieList) {
+        //     movieListView = this.state.movieList.map(
+        //         (movieInfo) => {
+        //             return (
+        //                 <div style={{marginBottom: "10px", marginRight: "10px"}}
+        //                      key={movieInfo.id}>
+        //                     <a href={Urls.MANAGE_EDIT_MOVIE + movieInfo.id}>
+        //                         <Card
+        //                             style={{
+        //                                 width: 200
+        //                             }} bodyStyle={{padding: 0}}>
+        //                             <img src={Urls.CONTEXT_PATH + movieInfo.posterUrl} alt={movieInfo.movieName}
+        //                                  width="100%"/>
+        //                             <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
+        //                         </Card>
+        //                     </a>
+        //                 </div>
+        //             );
+        //         }
+        //     );
         // }
-
-        if (null !== this.state.movieList) {
-            movieListView = this.state.movieList.map(
-                (movieInfo) => {
-                    return (
-                        <div style={{marginBottom: "10px", marginRight: "10px"}}
-                             key={movieInfo.id}>
-                            <a href={Urls.MANAGE_EDIT_MOVIE + movieInfo.id}>
-                                <Card
-                                    style={{
-                                        width: 200
-                                    }} bodyStyle={{padding: 0}}>
-                                    <img src={Urls.CONTEXT_PATH + movieInfo.posterUrl} alt={movieInfo.movieName}
-                                         width="100%"/>
-                                    <div style={{padding: "5px"}}>{movieInfo.movieName}</div>
-                                </Card>
-                            </a>
-                        </div>
-                    );
-                }
-            );
-        }
         return (
             <div>
                 <div style={{
@@ -95,6 +113,7 @@ class Home extends Component {
                 }}>
                     {movieListView}
                 </div>
+                <Table columns={columns} dataSource={this.state.movieList}/>
                 <Pagination showQuickJumper={true}
                             pageSize={this.state.pageSize}
                             total={this.state.total}

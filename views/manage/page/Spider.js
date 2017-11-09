@@ -2,11 +2,9 @@ import React from 'react';
 
 import {Switch, Button} from "antd";
 import Urls from "../../utils/Urls"
-import SockJS from "sockjs-client";
-import Stomp from "stompjs"
+import ServiceMessageView from "../component/ServiceMessageView";
 
 
-let stompClient = null;
 export default class Spider extends React.Component {
 
     constructor() {
@@ -87,29 +85,7 @@ export default class Spider extends React.Component {
                         }}/>
                 <br/>
 
-                <Button onClick={() => {
-                    let socket = new SockJS('/gs-guide-websocket');
-                    stompClient = Stomp.over(socket);
-                    stompClient.connect({}, function (frame) {
-                        console.log('Connected: ' + frame);
-                        stompClient.subscribe('/topic/greetings', function (greeting) {
-                            console.info("message=" + greeting);
-                        });
-                    });
-                }}>连接</Button>
-
-                <Button onClick={() => {
-                    if (stompClient !== null) {
-                        stompClient.disconnect();
-                    }
-                    console.log("Disconnected");
-                }}>断开</Button>
-
-                <Button onClick={() => {
-                    if (stompClient !== null) {
-                        stompClient.send("/app/hello", {}, "hello");
-                    }
-                }}>发送</Button>
+                <ServiceMessageView/>
             </div>
         );
     }

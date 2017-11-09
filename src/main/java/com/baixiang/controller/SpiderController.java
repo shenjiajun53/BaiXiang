@@ -51,7 +51,7 @@ public class SpiderController {
 
     @RequestMapping(value = API_START_DOUBAN_PATCH, method = RequestMethod.POST)
     public void startDouban() {
-        doubanPatchService.startDoubanPatch();
+        doubanPatchService.start();
     }
 
     @RequestMapping(value = API_STOP_DOUBAN_PATCH, method = RequestMethod.POST)

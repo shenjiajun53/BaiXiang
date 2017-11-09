@@ -112,9 +112,9 @@ public class BtTianTangProcessor implements PageProcessor {
         if (titleStr == null) {
             //skip this page
             page.setSkip(true);
-            logger.info("skip movie page title=null " + page.getUrl());
+            LogUtil.info(BtTianTangProcessor.class,"skip movie page title=null " + page.getUrl());
         }
-        logger.info("Parse Movie " + titleStr);
+        LogUtil.info(BtTianTangProcessor.class,"Parse Movie " + titleStr);
         SpiderMovieBean spiderMovieBean = new SpiderMovieBean();
         spiderMovieBean.setMovieName(titleStr);
         spiderMovieBean.setMovieInfo(page.getHtml().xpath("//p[@class='minfos']").toString());
@@ -156,7 +156,7 @@ public class BtTianTangProcessor implements PageProcessor {
             spiderMovieBean.setActorList(actorList);
         } else {
             page.setSkip(true);
-            logger.info("skip movie page content=null " + page.getUrl());
+            LogUtil.info(BtTianTangProcessor.class,"skip movie page content=null " + page.getUrl());
         }
 
         page.putField(SPIDER_MOVIE_BEAN, spiderMovieBean);
@@ -184,7 +184,7 @@ public class BtTianTangProcessor implements PageProcessor {
                 String torrentName = filter[0].replaceAll("◎名　　称　", "");
                 torrentName = torrentName.replaceAll("<p>", "");
                 spiderTorrentBean.setTorrentName(torrentName);
-                logger.info("Parse Torrent " + torrentName);
+                LogUtil.info(BtTianTangProcessor.class,"Parse Torrent " + torrentName);
                 break;
             }
         }

@@ -11,7 +11,6 @@ public class WebSocketService {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     public void sendMessage(String message) {
-        LogUtil.info(WebSocketService.class, message);
         simpMessagingTemplate.convertAndSend("/toApp/message", message);
     }
 }

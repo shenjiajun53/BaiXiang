@@ -23,8 +23,6 @@ public class DoubanPatchService {
     private MovieService movieService;
     @Autowired
     private DoubanMovieService doubanMovieService;
-    @Autowired
-    private WebSocketService webSocketService;
 
     private int currentNum = 0;
     private int movieIndex = 0;
@@ -56,7 +54,7 @@ public class DoubanPatchService {
                 pageNumber = moviePage.getTotalPages();
                 currentNum = 0;
             } else {
-                webSocketService.sendMessage("get movie finished");
+                LogUtil.info("get movie finished");
             }
         }
 
@@ -78,8 +76,7 @@ public class DoubanPatchService {
             return;
         }
         String url = String.format(Urls.DOUBAN_GET_MOVIE_INFO, movie.getDoubanId());
-//        logger.info("url=" + url);
-        webSocketService.sendMessage("url=" + url);
+        LogUtil.info("url=" + url);
         Request request = new Request.Builder().tag("get_movie_info").url(url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -95,10 +92,10 @@ public class DoubanPatchService {
                     doubanMovieBean.setMovieId(movie.getId());
                     doubanMovieService.save(doubanMovieBean);
                 }
-                webSocketService.sendMessage(doubanMovieBean.toString());
+                LogUtil.info(doubanMovieBean.toString());
                 getNext();
                 if (doubanMovieBean.getCode() == 112) {
-                    webSocketService.sendMessage(doubanMovieBean.getMsg());
+                    LogUtil.info(doubanMovieBean.getMsg());
                     stop();
                 }
             }

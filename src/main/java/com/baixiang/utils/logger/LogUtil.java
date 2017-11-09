@@ -1,12 +1,18 @@
 package com.baixiang.utils.logger;
 
+import com.baixiang.service.WebSocketService;
 import org.apache.http.util.TextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Created by shenjj on 2017/5/24.
  */
+@Component
 public class LogUtil {
     private static final String TAG = "LogUtil";
     public static final int DEBUG = 3;
@@ -33,7 +39,19 @@ public class LogUtil {
     private static final String BOTTOM_BORDER = BOTTOM_LEFT_CORNER + DOUBLE_DIVIDER + DOUBLE_DIVIDER;
     private static final String MIDDLE_BORDER = MIDDLE_CORNER + SINGLE_DIVIDER + SINGLE_DIVIDER;
 
-//    public static Logger logger;
+    //    public static Logger logger;
+    @Autowired
+    private WebSocketService webSocketService;
+
+    private static WebSocketService staticWebSocketService;
+
+    private static LogUtil logUtil;
+
+    @PostConstruct
+    public void init() {
+        info("logutil init");
+        staticWebSocketService = webSocketService;
+    }
 
     public void test() {
 
@@ -133,6 +151,10 @@ public class LogUtil {
         if (null == logger) {
             logger = LoggerFactory.getLogger(tag);
         }
+        if(null!=staticWebSocketService){
+            staticWebSocketService.sendMessage(line);
+        }
+
         switch (logType) {
             case ERROR:
                 logger.error(line);

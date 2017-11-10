@@ -6,74 +6,69 @@
 
 </head>
 <body>
-<div th:fragment="header" id="header">
+<div th:fragment="header" id="header" class="header">
+    <div style="display:flex;flex:1;flex-direction: row;">
+        <a class="topItem" style=";font-size: large;margin-right: 10px;"
+           th:href="@{/}"
+           @click="reLocation('/')">
+            首页
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=最新'}"
+        >
+            最新
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=动画'}"
+        >
+            动画
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=动作'}"
+        >
+            动作
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=科幻'}"
+        >
+            科幻
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=美剧'}"
+        >
+            美剧
+        </a>
+        <a class="topItem" style=";font-size: large;margin-right: 10px"
+           th:href="@{'/movie_list?tag=日剧'}"
+        >
+            日剧
+        </a>
+    </div>
 
-    <el-card :body-style="{ padding: '0px' }">
-        <div class="topBar">
-            <div style="display:flex;flex:1;flex-direction: row;">
-                <a class="topItem" style=";font-size: large;margin-right: 10px;"
-                   th:href="@{/}"
-                   @click="reLocation('/')">
-                    首页
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=最新'}"
-                >
-                    最新
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=动画'}"
-                >
-                    动画
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=动作'}"
-                >
-                    动作
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=科幻'}"
-                >
-                    科幻
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=美剧'}"
-                >
-                    美剧
-                </a>
-                <a class="topItem" style=";font-size: large;margin-right: 10px"
-                   th:href="@{'/movie_list?tag=日剧'}"
-                >
-                    日剧
-                </a>
-            </div>
-
-            <div style="">
-                <el-dropdown @command="reLocation" th:if="${user==null}">
+    <div style="">
+        <el-dropdown @command="reLocation" th:if="${user==null}">
                 <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
                     用户<i class="el-icon-caret-bottom el-icon--right"></i>
                  </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item :command="signInUrl">登录</el-dropdown-item>
-                        <el-dropdown-item :command="signUpUrl">注册</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :command="signInUrl">登录</el-dropdown-item>
+                <el-dropdown-item :command="signUpUrl">注册</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
 
-                <el-dropdown @command="reLocation" th:if="${user!=null}">
+        <el-dropdown @command="reLocation" th:if="${user!=null}">
                 <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
                     用户<i class="el-icon-caret-bottom el-icon--right"></i>
                  </span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item :command="manageUrl">管理页</el-dropdown-item>
-                        <el-dropdown-item :command="signInUrl">设置</el-dropdown-item>
-                        <el-dropdown-item :command="signOutUrl">退出</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :command="manageUrl">管理页</el-dropdown-item>
+                <el-dropdown-item :command="signInUrl">设置</el-dropdown-item>
+                <el-dropdown-item :command="signOutUrl">退出</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
 
 
-            </div>
-        </div>
-    </el-card>
+    </div>
 
 </div>
 </body>

@@ -9,7 +9,7 @@
 <div th:fragment="header" id="header">
 
     <el-card :body-style="{ padding: '0px' }">
-        <div class="topBar">
+        <div class="topBar default-primary-color">
             <div style="display:flex;flex:1;flex-direction: row;">
                 <a class="topItem" style=";font-size: large;margin-right: 10px;"
                    th:href="@{/}"
@@ -48,7 +48,7 @@
                 </a>
             </div>
 
-            <div style="">
+            <div style="display: none">
                 <el-dropdown @command="reLocation" th:if="${user==null}">
                 <span class="el-dropdown-link topItem" style="flex: 1;font-size: large;color: #FFFFFF">
                     用户<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -64,7 +64,6 @@
                     用户<i class="el-icon-caret-bottom el-icon--right"></i>
                  </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item :command="manageUrl">管理页</el-dropdown-item>
                         <el-dropdown-item :command="signInUrl">设置</el-dropdown-item>
                         <el-dropdown-item :command="signOutUrl">退出</el-dropdown-item>
                     </el-dropdown-menu>

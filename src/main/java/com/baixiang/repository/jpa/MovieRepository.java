@@ -34,7 +34,7 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     List<Movie> getByMovieName(String movieName);
 
     //    @Query("select m from Movie as m order by m.viewTimes desc limit 0, 25")
-    List<Movie> findTop15ByOrderByViewTimes();
+    List<Movie> findTop15ByOrderByViewTimesDesc();
 
     List<Movie> findTop20ByOrderById();
 

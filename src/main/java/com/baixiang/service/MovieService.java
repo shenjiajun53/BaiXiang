@@ -39,6 +39,11 @@ public class MovieService {
         return movie;
     }
 
+    public Movie simpleSave(Movie movie) {
+        movieRepository.saveAndFlush(movie);
+        return movie;
+    }
+
     public void delete(long id) {
 //        Movie movie=movieRepository.getById(id);
 //        movie.getActorSet().clear();
@@ -93,7 +98,7 @@ public class MovieService {
     }
 
     public List<Movie> getHostest() {
-        return movieRepository.findTop15ByOrderByViewTimes();
+        return movieRepository.findTop15ByOrderByViewTimesDesc();
     }
 
     public int getSizeByTag(String tag) {

@@ -39,10 +39,10 @@
     }
 
     a:visited {
-        color: #E91E63;
+        color: #607D8B;
     }
 
     a:hover {
-        color: #C2185B;
+        color: #455A64;
     }
 </style>

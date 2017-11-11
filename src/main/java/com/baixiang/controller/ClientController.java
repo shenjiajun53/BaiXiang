@@ -45,12 +45,14 @@ public class ClientController {
     @RequestMapping(value = Urls.BASE_URL, method = RequestMethod.GET)
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("/service/index");
-        Pageable pageable = new PageRequest(0, 20);
-        Page<Movie> movieArrayList = movieService.getByTag("推荐", pageable);
+        Page<Movie> movieArrayList = movieService.getByTag("推荐", new PageRequest(0, 20));
 //        logger.info(movieArrayList.toString());
         modelAndView.addObject("movieList", movieArrayList);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);
+        Page<Movie> newList = movieService.getNewest(new PageRequest(0, 15));
+        modelAndView.addObject("newList", newList);
+
         modelAndView.addObject("user", userService.getUserBeanBySession());
         return modelAndView;
     }
@@ -83,6 +85,8 @@ public class ClientController {
         modelAndView.addObject("maxPage", maxPage);
         ArrayList<Movie> hotList = (ArrayList<Movie>) movieService.getHostest();
         modelAndView.addObject("hotList", hotList);
+        Page<Movie> newList = movieService.getNewest(new PageRequest(0, 15));
+        modelAndView.addObject("newList", newList);
         modelAndView.addObject("user", userService.getUserBeanBySession());
         return modelAndView;
     }
@@ -99,7 +103,7 @@ public class ClientController {
                 viewTimes = 0L;
             }
             movie.setViewTimes(++viewTimes);
-            movieService.save(movie);
+            movieService.simpleSave(movie);
             modelAndView.addObject("movie", new MovieWrapBean(movie, doubanMovieService.getById(movie.getDoubanId())));
 //            modelAndView.addObject("movie", movie);
 //            modelAndView.addObject("doubanInfo", doubanMovieService.getById(movie.getDoubanId()));

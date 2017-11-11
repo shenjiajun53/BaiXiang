@@ -3,7 +3,18 @@
         <div v-if="showFirstBtn"><a :href="originHref+'&page='+1" class="character-item">首页</a></div>
         <div v-if="showPreBtn"><a :href="originHref+'&page='+(currentPage-1)" class="character-item">上一页</a></div>
         <div v-for="pageItem in pageList">
-            <a :href="originHref+'&page='+pageItem.itemValue" class="number-item">{{pageItem.itemValue}}</a>
+            <div v-if="pageItem.itemValue==currentPage">
+                <a :href="originHref+'&page='+pageItem.itemValue"
+                   class="number-item selected">
+                    {{pageItem.itemValue}}
+                </a>
+            </div>
+            <div v-else>
+                <a :href="originHref+'&page='+pageItem.itemValue"
+                   class="number-item">
+                    {{pageItem.itemValue}}
+                </a>
+            </div>
         </div>
         <div v-if="showNextBtn"><a :href="originHref+'&page='+(currentPage+1)" class="character-item">下一页</a></div>
         <div v-if="showLastBtn"><a :href="originHref+'&page='+maxPage" class="character-item">末页</a></div>
@@ -12,6 +23,7 @@
 
 <script>
     import UrlUtil from "../../../utils/UrlUtil";
+
     let currentPage = Number(new UrlUtil().getQueryString("page"));
     if (currentPage === 0) {
         currentPage = 1;
@@ -20,7 +32,7 @@
     //    console.log("href=" + window.location.href);
     //    console.log("tag=" + currentTag);
 
-    export default{
+    export default {
         name: 'pagination',
         props: {
             maxPage: {
@@ -103,6 +115,10 @@
         width: 1em;
         padding: 0.5em;
         border-radius: 2em;
+    }
+
+    .selected {
+        background-color: #C2185B;
     }
 
     .character-item {

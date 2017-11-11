@@ -16,96 +16,87 @@
     <link rel="stylesheet" th:href="@{/css/default.css}">
 </head>
 <body>
-<el-container id="container">
-    <el-header>
-        <div th:replace="layout/header::header"></div>
-    </el-header>
+<div th:replace="layout/header::header"></div>
 
-    <el-main>
-        <div id="vertical-container">
+<div id="vertical-container">
 
-            <breadcrumb :breadcrumb-list="breadcrumbList"/>
+    <breadcrumb :breadcrumb-list="breadcrumbList"/>
 
-            <div style="display: flex;flex-direction: column;align-items: flex-start">
+    <div style="display: flex;flex-direction: column;align-items: flex-start">
 
 
-                <div th:if="${null!=movie.doubanInfo}">
-                    <h1 th:text="${movie.doubanInfo.title+' '+movie.doubanInfo.original_title}"
-                        style="margin-top:0.5em;margin-bottom: 1em"></h1>
-                    <div><img th:src="@{${movie.doubanInfo.images.large}}" style="width: auto;margin-bottom: 1em"/>
-                    </div>
-                    <div>
-                        <span>别名：</span>
-                        <span th:each="subName :${movie.doubanInfo.aka}">
+        <div th:if="${null!=movie.doubanInfo}">
+            <h1 th:text="${movie.doubanInfo.title+' '+movie.doubanInfo.original_title}"
+                style="margin-top:0.5em;margin-bottom: 1em"></h1>
+            <div><img th:src="@{${movie.doubanInfo.images.large}}" style="width: auto;margin-bottom: 1em"/></div>
+            <div>
+                <span>别名：</span>
+                <span th:each="subName :${movie.doubanInfo.aka}">
                     <span th:text="${subName}"></span>
                 </span>
-                    </div>
-                    <div><span th:text="'豆瓣评分：'+${movie.doubanInfo.rating.average}">0</span></div>
-                    <div><a th:href="${movie.doubanInfo.share_url}">豆瓣链接</a></div>
+            </div>
+            <div><span th:text="'豆瓣评分：'+${movie.doubanInfo.rating.average}">0</span></div>
+            <div><a th:href="${movie.doubanInfo.share_url}">豆瓣链接</a></div>
 
-                    <div th:if="${null!=movie.doubanInfo.current_season}"
-                         th:text="第+${movie.doubanInfo.current_season}+季"></div>
-                    <div th:if="${null!=movie.doubanInfo.episodes_count}"
-                         th:text="共+${movie.doubanInfo.episodes_count}+集"></div>
+            <div th:if="${null!=movie.doubanInfo.current_season}"
+                 th:text="第+${movie.doubanInfo.current_season}+季"></div>
+            <div th:if="${null!=movie.doubanInfo.episodes_count}"
+                 th:text="共+${movie.doubanInfo.episodes_count}+集"></div>
 
-                    <div>
-                        <span>国家：</span>
-                        <span th:each="nation :${movie.doubanInfo.countries}">
+            <div>
+                <span>国家：</span>
+                <span th:each="nation :${movie.doubanInfo.countries}">
                     <span th:text="${nation}"></span>
                 </span>
-                    </div>
-                    <div th:text="'上映时间：'+${movie.doubanInfo.year}"></div>
+            </div>
+            <div th:text="'上映时间：'+${movie.doubanInfo.year}"></div>
 
-                    <h2 style="margin-bottom: 10px"
-                        th:hidden="${movie.doubanInfo.directors.size()==0}">
-                        导演</h2>
-                    <div th:if="${movie.doubanInfo.directors.size()>0}">
+            <h2 style="margin-bottom: 10px"
+                th:hidden="${movie.doubanInfo.directors.size()==0}">
+                导演</h2>
+            <div th:if="${movie.doubanInfo.directors.size()>0}">
                 <span th:each="director,iter : ${movie.doubanInfo.directors}" style="margin-bottom: 1em">
                     <a th:text="${director.name}" th:href="@{${'/movie_list?actor='+director.name}}"></a>
                     <span th:if="${iter.count<movie.doubanInfo.directors.size()}"> | </span>
                 </span>
-                    </div>
-                </div>
+            </div>
+        </div>
 
-                <div th:if="${null==movie.doubanInfo}">
-                    <h1 th:text="${movie.baseInfo.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
-                    <img th:src="@{${movie.baseInfo.posterUrl}}" style="width: 200px;margin-bottom: 1em"/>
-                </div>
+        <div th:if="${null==movie.doubanInfo}">
+            <h1 th:text="${movie.baseInfo.movieName}" style="margin-top:0.5em;margin-bottom: 1em"></h1>
+            <img th:src="@{${movie.baseInfo.posterUrl}}" style="width: 200px;margin-bottom: 1em"/>
+        </div>
 
-                <h2 style="margin-bottom: 10px" th:hidden="${movie.baseInfo.actorSet.size()==0}">演员表</h2>
-                <div>
+        <h2 style="margin-bottom: 10px" th:hidden="${movie.baseInfo.actorSet.size()==0}">演员表</h2>
+        <div>
         <span th:each="actor,iter: ${movie.baseInfo.actorSet}" style="margin-bottom: 1em">
             <a th:text="${actor.actorName}" th:href="@{${'/movie_list?actor='+actor.actorName}}"></a>
             <span th:if="${iter.count<movie.baseInfo.actorSet.size()}"> | </span>
         </span>
-                </div>
-
-                <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieInfo==null}">介绍</h2>
-                <div th:utext="${movie.baseInfo.movieInfo}" style="margin-bottom: 1em"></div>
-
-                <div style="margin-bottom: 5px" th:hidden="${movie.baseInfo.screenshotUrlSet.size()==0}">截图</div>
-                <div th:each="screenShot :${movie.baseInfo.screenshotUrlSet}" style="margin-bottom: 1em">
-                    <img th:src="@{${screenShot}}" style="width: 200px"/>
-                </div>
-
-                <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieTorrents.size()==0}">种子下载</h2>
-                <div th:each="torrent :${movie.baseInfo.movieTorrents}"
-                     style="margin-bottom: 5px;display: flex;flex-direction:row;align-items: center">
-                    <a th:hidden="${torrent.magnetUrl==null}" th:text="${torrent.torrentName}"
-                       th:href="@{${torrent.magnetUrl}}"></a>
-                    <a th:hidden="${torrent.magnetUrl!=null||torrent.filePath==null}" th:text="${torrent.torrentName}"
-                       th:href="@{${torrent.filePath}}"></a>
-                    <a th:hidden="${torrent.filePath==null}" th:href="@{${torrent.filePath}}">
-                        <img th:src="@{'/res/ic_file_download_pink_500_24dp.png'}" alt="下载"></a>
-                </div>
-            </div>
         </div>
-    </el-main>
-</el-container>
+
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieInfo==null}">介绍</h2>
+        <div th:utext="${movie.baseInfo.movieInfo}" style="margin-bottom: 1em"></div>
+
+        <div style="margin-bottom: 5px" th:hidden="${movie.baseInfo.screenshotUrlSet.size()==0}">截图</div>
+        <div th:each="screenShot :${movie.baseInfo.screenshotUrlSet}" style="margin-bottom: 1em">
+            <img th:src="@{${screenShot}}" style="width: 200px"/>
+        </div>
+
+        <h2 style="margin-bottom: 5px" th:hidden="${movie.baseInfo.movieTorrents.size()==0}">种子下载</h2>
+        <div th:each="torrent :${movie.baseInfo.movieTorrents}"
+             style="margin-bottom: 5px;display: flex;flex-direction:row;align-items: center">
+            <a th:hidden="${torrent.magnetUrl==null}" th:text="${torrent.torrentName}"
+               th:href="@{${torrent.magnetUrl}}"></a>
+            <a th:hidden="${torrent.magnetUrl!=null||torrent.filePath==null}" th:text="${torrent.torrentName}"
+               th:href="@{${torrent.filePath}}"></a>
+            <a th:hidden="${torrent.filePath==null}" th:href="@{${torrent.filePath}}">
+                <img th:src="@{'/res/ic_file_download_pink_500_24dp.png'}" alt="下载"></a>
+        </div>
+    </div>
+</div>
 </body>
 
-
-<script type="text/javascript" th:src="@{/build/header-1.bundle.js}"></script>
 <script th:inline="javascript">
     let tagSet;
     let tagList = new Array();
@@ -117,7 +108,7 @@
     }
 
     new Vue({
-        el: "#container",
+        el: "#vertical-container",
         data() {
             return {
                 breadcrumbList: [{url: "/", itemName: "首页"},
@@ -131,4 +122,6 @@
         }
     })
 </script>
+
+<script type="text/javascript" th:src="@{/build/header-1.bundle.js}"></script>
 </html>

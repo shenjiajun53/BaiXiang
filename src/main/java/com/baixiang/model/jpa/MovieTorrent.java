@@ -24,6 +24,8 @@ public class MovieTorrent implements Serializable {
     @Column(columnDefinition = "LONGTEXT")
     private String magnetUrl;
 
+    private String size;
+
 
      /*
      * @ManyToOne指明OrderItem和Order之间为多对一关系，多个OrderItem实例关联的都是同一个Order对象。
@@ -85,6 +87,14 @@ public class MovieTorrent implements Serializable {
 
     public void setMagnetUrl(String magnetUrl) {
         this.magnetUrl = magnetUrl;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
     @Override

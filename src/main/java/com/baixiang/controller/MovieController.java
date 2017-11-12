@@ -1,6 +1,5 @@
 package com.baixiang.controller;
 
-import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.*;
 import com.baixiang.model.response.BaseBean;
 import com.baixiang.model.response.MovieWrapBean;
@@ -47,8 +46,6 @@ public class MovieController {
 
     @Autowired
     TorrentService torrentService;
-    @Autowired
-    PropertiesConfig propertiesConfig;
 
     @Autowired
     ImageService imageService;
@@ -203,7 +200,7 @@ public class MovieController {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
                 String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-                String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), dirPath, fileName);
+                String filePath = FileUtil.getFilePath(dirPath, fileName);
                 File file = new File(filePath);
                 multipartFile.transferTo(file);
                 return fileName;

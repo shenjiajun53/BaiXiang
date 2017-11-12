@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Configuration
+//@Component
 public class PropertiesConfig {
 
     @Autowired
@@ -21,6 +23,7 @@ public class PropertiesConfig {
     @Value("${file.default-path}")
     private String rootPath;
 
+    public static String ROOT_PATH = "";
     public static final String PROJECT_PATH = System.getProperty("user.dir");
     public static final String STATIC_PATH = PROJECT_PATH + "/src/main/webapp";
     public static final String POSTER_PATH = "/files/movie/posters/";
@@ -29,12 +32,14 @@ public class PropertiesConfig {
 
     @PostConstruct
     public void init() {
-        LogUtil.info("I'm  init  method  using  @PostConstrut.... PropertiesConfig");
+        LogUtil.info("init PropertiesConfig");
+        ROOT_PATH = rootPath;
+        LogUtil.info("ROOT_PATH=" + ROOT_PATH);
     }
 
     @PreDestroy
-    public void dostory() {
-        LogUtil.info("I'm  destory method  using  @PreDestroy..... PropertiesConfig");
+    public void destroy() {
+        LogUtil.info("destroy PropertiesConfig");
     }
 
 

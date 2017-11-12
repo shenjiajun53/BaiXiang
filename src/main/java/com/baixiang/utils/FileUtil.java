@@ -1,10 +1,9 @@
 package com.baixiang.utils;
 
-import com.baixiang.config.PropertiesConfig;
-import com.baixiang.utils.logger.LogUtil;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -16,15 +15,29 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.baixiang.config.PropertiesConfig.ROOT_PATH;
+
 /**
  * Created by shenjj on 2017/4/17.
  */
+@Component
 public final class FileUtil {
 
+//    @Autowired
+//    private PropertiesConfig propertiesConfig;
+//
+//    private static PropertiesConfig staticPropertiesConfig;
+//
+//    @PostConstruct
+//    public void init() {
+//        LogUtil.info("init FileUtil");
+//        staticPropertiesConfig = propertiesConfig;
+//    }
 
-    private FileUtil() {
-        throw new UnsupportedOperationException("u can't instantiate me...");
-    }
+
+//    private FileUtil() {
+//        throw new UnsupportedOperationException("u can't instantiate me...");
+//    }
 
     /**
      * 根据文件路径获取文件
@@ -1370,9 +1383,9 @@ public final class FileUtil {
     }
 
 
-    public static String getFilePath(String rootPath, String dirPath, String fileName) {
-        FileUtil.createOrExistsDir(rootPath + dirPath);
-        String filePath = rootPath + dirPath + fileName;
+    public static String getFilePath(String dirPath, String fileName) {
+        FileUtil.createOrExistsDir(ROOT_PATH + dirPath);
+        String filePath = ROOT_PATH + dirPath + fileName;
         return filePath;
     }
 

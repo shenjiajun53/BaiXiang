@@ -1,6 +1,5 @@
 package com.baixiang.spider.pipeline;
 
-import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.Actor;
 import com.baixiang.model.jpa.Image;
 import com.baixiang.model.jpa.Movie;
@@ -41,9 +40,6 @@ public class MoviePipeline implements Pipeline {
 //    public final static String MOVIE_POSTER = "movie_poster";
 //    public final static String MOVIE_TAGS = "movie_tags";
 //    public final static String MOVIE_ACTORS = "movie_actors";
-
-    @Autowired
-    private PropertiesConfig propertiesConfig;
 
     @Autowired
     private MovieService movieService;
@@ -113,7 +109,7 @@ public class MoviePipeline implements Pipeline {
         if (!TextUtils.isEmpty(moviePosterUrl)) {
             String fileName = System.currentTimeMillis() + "-" + movieTitle + ".jpg";
 //            logger.info(fileName);
-            String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), POSTER_PATH, fileName);
+            String filePath = FileUtil.getFilePath(POSTER_PATH, fileName);
             FileUtil.downLoadFile(filePath, moviePosterUrl);
             Image image = new Image();
             image.setUrl(POSTER_PATH + fileName);

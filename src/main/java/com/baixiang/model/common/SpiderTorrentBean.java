@@ -6,6 +6,7 @@ public class SpiderTorrentBean {
     private String torrentName;
     private String magnetUrl;
     private String torrentUrl;
+    private String torrentSize;
 
     public String getMovieName() {
         return movieName;
@@ -37,6 +38,14 @@ public class SpiderTorrentBean {
 
     public void setTorrentUrl(String torrentUrl) {
         this.torrentUrl = torrentUrl;
+    }
+
+    public String getTorrentSize() {
+        return torrentSize;
+    }
+
+    public void setTorrentSize(String torrentSize) {
+        this.torrentSize = torrentSize;
     }
 
     @Override

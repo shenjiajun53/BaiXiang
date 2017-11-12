@@ -1,6 +1,5 @@
 package com.baixiang.controller;
 
-import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.Image;
 import com.baixiang.model.response.BaseBean;
 import com.baixiang.model.response.Response;
@@ -27,9 +26,6 @@ import static com.baixiang.utils.Urls.API_UPLOAD_IMAGE;
 public class ImageController {
     @Autowired
     ImageService imageService;
-
-    @Autowired
-    PropertiesConfig propertiesConfig;
 
     @RequestMapping(value = API_UPLOAD_IMAGE, method = RequestMethod.POST)
     public Response uploadImage(@RequestParam(value = "imageFile", required = true) MultipartFile imageFile,
@@ -66,7 +62,7 @@ public class ImageController {
             try {
                 System.out.printf("filename=" + multipartFile.getOriginalFilename());
                 String fileName = System.currentTimeMillis() + "-" + multipartFile.getOriginalFilename();
-                String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), dirPath, fileName);
+                String filePath = FileUtil.getFilePath(dirPath, fileName);
                 File file = new File(filePath);
                 multipartFile.transferTo(file);
                 return fileName;

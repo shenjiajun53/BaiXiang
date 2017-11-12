@@ -1,6 +1,5 @@
 package com.baixiang.spider.pipeline;
 
-import com.baixiang.config.PropertiesConfig;
 import com.baixiang.model.jpa.Movie;
 import com.baixiang.model.jpa.MovieTorrent;
 import com.baixiang.model.common.SpiderTorrentBean;
@@ -34,9 +33,6 @@ public class TorrentPipeline implements Pipeline {
 //    public final static String TORRENT_MOVIE_TITLE = "torrent_movie_title";
 
     @Autowired
-    private PropertiesConfig propertiesConfig;
-
-    @Autowired
     private MovieService movieService;
 
     @Autowired
@@ -61,12 +57,14 @@ public class TorrentPipeline implements Pipeline {
                     setTorrentFile(torrentUrl, torrentName, movieTorrent);
                 }
                 movieTorrent.setMagnetUrl(magnetUrl);
+                movieTorrent.setSize(spiderTorrentBean.getTorrentSize());
                 torrentService.update(movieTorrent);
             } else if (!TextUtils.isEmpty(movieTitle) &&
                     movieService.getIncludeName(movieTitle).size() > 0) {
                 MovieTorrent movieTorrent = new MovieTorrent();
                 movieTorrent.setTorrentName(torrentName);
                 movieTorrent.setMagnetUrl(magnetUrl);
+                movieTorrent.setSize(spiderTorrentBean.getTorrentSize());
                 setTorrentFile(torrentUrl, torrentName, movieTorrent);
                 Movie movie = movieService.getIncludeName(movieTitle).get(0);
                 movie.addTorrent(movieTorrent);
@@ -88,7 +86,7 @@ public class TorrentPipeline implements Pipeline {
     public void setTorrentFile(String torrentUrl, String torrentName, MovieTorrent movieTorrent) {
         if (!TextUtils.isEmpty(torrentUrl)) {
             String fileName = System.currentTimeMillis() + "-" + torrentName + ".torrent";
-            String filePath = FileUtil.getFilePath(propertiesConfig.getRootPath(), TORRENT_PATH, fileName);
+            String filePath = FileUtil.getFilePath(TORRENT_PATH, fileName);
             FileUtil.downLoadFile(filePath, torrentUrl);
             movieTorrent.setFilePath(TORRENT_PATH + fileName);
         }

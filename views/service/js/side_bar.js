@@ -3,19 +3,19 @@
  */
 import Urls from "../../utils/Urls";
 
-Vue.component('my-item-zh', {
-    functional: true,
-    render: function (h, ctx) {
-        var item = ctx.props.item;
-        return h('li', ctx.data, [
-            h('div', {style: {textOverflow: "ellipsis", overFlow: "hidden"}}, [item.movieName]),
-            // h('span', {style: {color: "#b4b4b4", fontSize: "12px"}}, [item.movieInfo])
-        ]);
-    },
-    props: {
-        item: {type: Object, required: true}
-    }
-});
+// Vue.component('my-item-zh', {
+//     functional: true,
+//     render: function (h, ctx) {
+//         var item = ctx.props.item;
+//         return h('li', ctx.data, [
+//             h('div', {style: {textOverflow: "ellipsis", overFlow: "hidden"}}, [item.movieName]),
+//             // h('span', {style: {color: "#b4b4b4", fontSize: "12px"}}, [item.movieInfo])
+//         ]);
+//     },
+//     props: {
+//         item: {type: Object, required: true}
+//     }
+// });
 
 let header = new Vue({
     el: "#side_bar",
@@ -31,7 +31,7 @@ let header = new Vue({
             console.log(this.activeName);
 
         },
-        searchMovie(queryString, cb) {
+        searchMovie(queryString, callback) {
             console.log(queryString);
             let formData = new FormData();
             formData.append("searchStr", queryString);
@@ -49,7 +49,7 @@ let header = new Vue({
                     let result = json.result;
                     // var results = queryString ? result.filter(this.createStateFilter(queryString)) : result;
                     console.log(JSON.stringify(result));
-                    cb(result);
+                    callback(result);
                 }
             ).catch(
                 (ex) => {
@@ -64,6 +64,9 @@ let header = new Vue({
         handleSelect(movie) {
             console.log(movie);
             window.location.href = Urls.MOVIE_DETAIL + '?movieId=' + movie.id;
+        },
+        handleIconClick(){
+
         }
     }
 });

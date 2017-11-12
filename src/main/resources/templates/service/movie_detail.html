@@ -28,7 +28,8 @@
         <div th:if="${null!=movie.doubanInfo}">
             <h1 th:text="${movie.doubanInfo.title+' '+movie.doubanInfo.original_title}"
                 style="margin-top:0.5em;margin-bottom: 1em"></h1>
-            <div><img th:src="@{${movie.baseInfo.posterUrl}}" style="width: auto;max-width: 350px;margin-bottom: 1em"/></div>
+            <div><img th:src="@{${movie.baseInfo.posterUrl}}" style="width: auto;max-width: 350px;margin-bottom: 1em"/>
+            </div>
             <div>
                 <span>别名：</span>
                 <span th:each="subName :${movie.doubanInfo.aka}">
@@ -90,6 +91,8 @@
                th:href="@{${torrent.magnetUrl}}"></a>
             <a th:hidden="${torrent.magnetUrl!=null||torrent.filePath==null}" th:text="${torrent.torrentName}"
                th:href="@{${torrent.filePath}}"></a>
+            <span style="margin-left: 10px;margin-right: 10px" th:hidden="${torrent.size==null}"
+                  th:text="${torrent.size}"></span>
             <a th:hidden="${torrent.filePath==null}" th:href="@{${torrent.filePath}}">
                 <img th:src="@{'/res/ic_file_download_pink_500_24dp.png'}" alt="下载"></a>
         </div>
